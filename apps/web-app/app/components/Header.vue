@@ -11,7 +11,7 @@
           @click="isMobileMenuOpened = true"
         />
 
-        <Logo />
+        <!-- <Logo /> -->
       </div>
 
       <div class="hidden lg:flex">
