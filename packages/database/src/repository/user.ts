@@ -21,7 +21,7 @@ export class User {
     return user
   }
 
-  static async update(id: string, data: Partial<UserDraft>) {
+  static async update(id: string, data: Omit<Partial<UserDraft>, 'id' | 'createdAt'>) {
     const [user] = await useDatabase()
       .update(users)
       .set({
