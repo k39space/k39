@@ -8,10 +8,8 @@
 
 <script setup lang="ts">
 useHead({
-  script: [
-    {
-      src: '/js/wthgiyojuv0xgxgrpn5wd6xz.min.js',
-    },
-  ],
+  script: [{
+    src: '/js/wthgiyojuv0xgxgrpn5wd6xz.min.js',
+  }],
 })
 </script>

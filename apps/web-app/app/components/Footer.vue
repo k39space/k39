@@ -1,5 +1,5 @@
 <template>
-  <USeparator icon="i-lucide-construction" class="mt-16" />
+  <USeparator icon="i-lucide-waves" class="mt-16" />
 
   <footer>
     <div class="py-8 lg:py-12 border-b border-default">

@@ -3,25 +3,15 @@ function _useApp() {
 
   const isMobileMenuOpened = ref(false)
 
-  // const mainNavigationItems = computed(() => [{
-  //   label: 'Аватары',
-  //   to: '/avatar',
-  //   active: route.path.startsWith('/avatar'),
-  // }, {
-  //   label: 'Города',
-  //   to: '/geo/kaliningrad',
-  //   active: route.path.startsWith('/geo'),
-  // }, {
-  //   label: 'Компании',
-  //   to: '/org/papasha-beppe',
-  //   active: route.path.startsWith('/org'),
-  // }, {
-  //   label: 'Документация',
-  //   to: '/docs/getting-started',
-  //   active: route.path.startsWith('/docs'),
-  // }])
-
-  const mainNavigationItems = computed(() => [])
+  const mainNavigationItems = computed(() => [{
+    label: 'Пример страницы',
+    to: '/muza',
+    active: route.path.startsWith('/muza'),
+  }, {
+    label: 'Пример пользователя',
+    to: '/u/hmbanan666',
+    active: route.path.startsWith('/u'),
+  }])
 
   watch(
     () => route.fullPath,
