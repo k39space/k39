@@ -27,19 +27,7 @@
           <GithubButton />
         </div>
 
-        <USkeleton
-          v-if="!ready"
-          class="size-9 rounded-full"
-        />
-        <template v-else>
-          <UButton
-            v-if="!loggedIn"
-            to="/sign-in"
-            size="lg"
-            label="Войти"
-          />
-          <UserMenu v-else />
-        </template>
+        <UserHeaderBlock />
       </div>
     </UContainer>
   </header>
@@ -68,5 +56,4 @@
 
 <script setup lang="ts">
 const { isMobileMenuOpened, mainNavigationItems } = useApp()
-const { loggedIn, ready } = useUserSession()
 </script>

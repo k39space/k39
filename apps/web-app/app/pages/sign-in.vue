@@ -1,9 +1,15 @@
 <template>
   <div class="w-full h-screen mx-auto grid grid-cols-1 lg:grid-cols-2">
     <div
-      class="hidden lg:block bg-cover grayscale-100"
+      class="relative hidden lg:block bg-cover"
       style="background-image: url('/img/bg-pattern-1.jpg')"
-    />
+    >
+      <div class="absolute top-4 right-0">
+        <div class="-mr-4 py-3 pl-4 pr-8 w-fit bg-default rounded-md">
+          <Logo />
+        </div>
+      </div>
+    </div>
 
     <div class="my-4 flex flex-col justify-between items-center">
       <div class="flex grow flex-col justify-center items-center">

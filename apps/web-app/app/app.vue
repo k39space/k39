@@ -34,13 +34,25 @@ useHead({
   },
 })
 
-// const tariff = useTariffStore()
-// const city = useCityStore()
+const userStore = useUserStore()
 
-// onMounted(async () => {
-//   await Promise.all([
-//     tariff.update(),
-//     city.update(),
-//   ])
-// })
+let interval: NodeJS.Timeout
+
+onMounted(async () => {
+  await Promise.all([
+    userStore.update(),
+    userStore.updateOnline(),
+  ])
+
+  interval = setInterval(async () => {
+    await Promise.all([
+      userStore.update(),
+      userStore.updateOnline(),
+    ])
+  }, 30000)
+})
+
+onUnmounted(() => {
+  clearInterval(interval)
+})
 </script>

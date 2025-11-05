@@ -1,7 +1,7 @@
 <template>
   <UTooltip text="GitHub">
     <UButton
-      to="https://github.com/nextorders/k39"
+      to="https://github.com/k39space/k39"
       target="_blank"
       leading-icon="i-simple-icons:github"
       aria-label="GitHub"

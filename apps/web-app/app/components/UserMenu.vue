@@ -1,37 +1,44 @@
 <template>
+  <USkeleton v-if="!userStore.id" class="size-9 rounded-full" />
   <UDropdownMenu
+    v-else
     :items="userMenuItems"
     :ui="{
       content: 'w-56',
     }"
   >
-    <UAvatar
-      :src="user?.avatarUrl ?? undefined"
-      :alt="user?.name"
-      size="lg"
-      class="cursor-pointer hover:scale-95 duration-200"
-    />
+    <div class="relative">
+      <UTooltip text="Открыть меню">
+        <UAvatar
+          :src="userStore.avatarUrl"
+          :alt="`Аватар ${userStore.username}`"
+          size="lg"
+          class="cursor-pointer hover:scale-95 duration-200"
+        />
+      </UTooltip>
+    </div>
   </UDropdownMenu>
 </template>
 
 <script setup lang="ts">
 import type { DropdownMenuItem } from '@nuxt/ui'
 
-const { user, clear: signOut } = useUserSession()
+const { clear: signOut } = useUserSession()
+const userStore = useUserStore()
 
 const userMenuItems = computed<DropdownMenuItem[][]>(() => [
   [
     {
-      label: user.value?.name,
+      label: userStore.username,
       avatar: {
-        src: user.value?.avatarUrl ?? undefined,
+        src: userStore.avatarUrl,
       },
       type: 'label' as const,
     },
     {
       label: 'Моя страница',
       icon: 'i-lucide-user',
-      to: '/u/me',
+      to: `/u/${userStore.username}`,
       type: 'link' as const,
     },
   ],
