@@ -9,7 +9,7 @@ export default defineNuxtConfig({
   },
   site: {
     url: 'https://k39.info',
-    name: 'k39',
+    name: 'K39',
   },
   css: ['~/assets/css/styles.css'],
   i18n: {

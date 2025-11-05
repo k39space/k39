@@ -1,8 +1,8 @@
-import { repository } from '@k39/database'
+import { db } from '@k39/database'
 
 export default defineEventHandler(async () => {
   try {
-    await repository.checkHealth()
+    await db.checkHealth()
 
     return { ok: true }
   } catch (error) {
