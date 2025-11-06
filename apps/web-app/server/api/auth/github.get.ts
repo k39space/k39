@@ -1,6 +1,5 @@
 import type { UserGitHub } from '#auth-utils'
-import { db } from '@k39/database'
-import { createId } from '@paralleldrive/cuid2'
+import { findOrCreateUserByEmail } from '../../services/auth'
 
 const logger = useLogger('github')
 
@@ -12,46 +11,29 @@ export default defineOAuthGitHubEventHandler({
     logger.success('New auth', user, tokens)
 
     if (!user?.id || !user?.email) {
-      logger.error('GitHub OAuth error: Missing email')
+      logger.error('OAuth error: Missing email')
       return sendRedirect(event, '/sign-in')
     }
 
     const githubUser = user as unknown as UserGitHub
 
-    async function createUser() {
-      const user = await db.user.create({
-        email: githubUser.email,
-        name: githubUser?.name ?? 'Аноним',
-        username: createId(),
-        avatarUrl: githubUser?.avatar_url,
-      })
-
-      logger.success('New user created', user)
-
-      return user
-    }
-
-    const userInDB = await db.user.findByEmail(githubUser.email) ?? await createUser()
-    if (!userInDB) {
-      logger.error('GitHub OAuth error: User not found')
-      return sendRedirect(event, '/sign-in')
-    }
+    const userInDB = await findOrCreateUserByEmail({
+      email: githubUser.email,
+      name: githubUser?.name,
+    })
 
     await setUserSession(event, {
       user: {
         id: userInDB.id,
-        name: userInDB.name,
         email: userInDB.email,
-        avatarUrl: userInDB.avatarUrl,
       },
     })
 
-    // use redirectTo query param to redirect to the page the user was on before signing in
     const redirectTo = getCookie(event, 'redirectTo')
     return sendRedirect(event, redirectTo ?? '/')
   },
   onError(event, error) {
-    logger.error('GitHub OAuth error:', error)
+    logger.error('OAuth error:', error)
     return sendRedirect(event, '/sign-in')
   },
 })

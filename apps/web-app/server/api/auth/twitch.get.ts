@@ -1,6 +1,5 @@
 import type { UserTwitch } from '#auth-utils'
-import { db } from '@k39/database'
-import { createId } from '@paralleldrive/cuid2'
+import { findOrCreateUserByEmail } from '../../services/auth'
 
 const logger = useLogger('twitch')
 
@@ -12,46 +11,29 @@ export default defineOAuthTwitchEventHandler({
     logger.success('New auth', user, tokens)
 
     if (!user?.id || !user?.login || !user?.email) {
-      logger.error('Twitch OAuth error: missing name or email')
+      logger.error('OAuth error: missing name or email')
       return sendRedirect(event, '/sign-in')
     }
 
     const twitchUser = user as unknown as UserTwitch
 
-    async function createUser() {
-      const user = await db.user.create({
-        email: twitchUser.email,
-        name: twitchUser?.login,
-        username: createId(),
-        avatarUrl: twitchUser?.profile_image_url,
-      })
-
-      logger.success('New user created', user)
-
-      return user
-    }
-
-    const userInDB = await db.user.findByEmail(twitchUser.email) ?? await createUser()
-    if (!userInDB) {
-      logger.error('Twitch OAuth error: User not found')
-      return sendRedirect(event, '/sign-in')
-    }
+    const userInDB = await findOrCreateUserByEmail({
+      email: twitchUser.email,
+      name: twitchUser?.login,
+    })
 
     await setUserSession(event, {
       user: {
         id: userInDB.id,
-        name: userInDB.name,
         email: userInDB.email,
-        avatarUrl: userInDB.avatarUrl,
       },
     })
 
-    // use redirectTo query param to redirect to the page the user was on before signing in
     const redirectTo = getCookie(event, 'redirectTo')
     return sendRedirect(event, redirectTo ?? '/')
   },
   onError(event, error) {
-    logger.error('Twitch OAuth error:', error)
+    logger.error('OAuth error:', error)
     return sendRedirect(event, '/sign-in')
   },
 })

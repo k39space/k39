@@ -24,13 +24,13 @@ export default defineEventHandler(async (event) => {
         count: 12,
         top: [
           {
-            src: 'https://avatar.nextorders.ru/1245343.svg',
+            src: 'https://avatar.k39.online/1245343.svg',
           },
           {
-            src: 'https://avatar.nextorders.ru/1245354543.svg',
+            src: 'https://avatar.k39.online/1245354543.svg',
           },
           {
-            src: 'https://avatar.nextorders.ru/12452235343.svg',
+            src: 'https://avatar.k39.online/12452235343.svg',
           },
         ],
       },
@@ -38,13 +38,13 @@ export default defineEventHandler(async (event) => {
         count: 5,
         top: [
           {
-            src: 'https://avatar.nextorders.ru/124536543.svg',
+            src: 'https://avatar.k39.online/124536543.svg',
           },
           {
-            src: 'https://avatar.nextorders.ru/124522354543.svg',
+            src: 'https://avatar.k39.online/124522354543.svg',
           },
           {
-            src: 'https://avatar.nextorders.ru/1245642235343.svg',
+            src: 'https://avatar.k39.online/1245642235343.svg',
           },
         ],
       },
