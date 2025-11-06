@@ -11,16 +11,20 @@
       </div>
 
       <div class="absolute bottom-4 left-4 right-4">
-        <div class="py-4 px-6 max-w-lg bg-default rounded-md">
+        <div class="py-4 px-4 max-w-lg bg-default rounded-md flex flex-row gap-4">
+          <img
+            :src="quote.authorImage"
+            :alt="quote.author"
+            class="size-18 rounded-full"
+          >
+
           <div class="flex flex-col gap-2">
             <h3 class="text-lg/6 font-semibold">
-              &quot;Такой город, как Кенигсберг на Прегеле, можно признать подходящим
-              местом для расширения знания и человека, и света. Здесь и без путешествия можно
-              приобрести такое знание.&quot;
+              &quot;{{ quote.text }}&quot;
             </h3>
 
             <p class="text-sm/5 text-muted">
-              &mdash; Иммануил Кант, немецкий философ
+              &mdash; {{ quote.author }}
             </p>
           </div>
         </div>
@@ -95,4 +99,10 @@ const providers = ref([
     label: 'Войти через Twitch',
   },
 ])
+
+const quote = {
+  text: 'Такой город, как Кенигсберг на Прегеле, можно признать подходящим местом для расширения знания и человека, и света. Здесь и без путешествия можно приобрести такое знание.',
+  author: 'Иммануил Кант, немецкий философ',
+  authorImage: '/img/famous/immanuel-kant.jpg',
+}
 </script>
