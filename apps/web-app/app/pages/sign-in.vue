@@ -9,6 +9,22 @@
           <Logo />
         </div>
       </div>
+
+      <div class="absolute bottom-4 left-4 right-4">
+        <div class="py-3 pl-4 pr-8 w-fit bg-default rounded-md">
+          <div class="flex flex-col gap-2">
+            <h3 class="text-lg/5 font-semibold">
+              &quot;Такой город, как Кенигсберг на Прегеле, можно признать подходящим
+              местом для расширения знания и человека, и света. Здесь и без путешествия можно
+              приобрести такое знание.&quot;
+            </h3>
+
+            <p class="text-sm/5 text-muted">
+              &mdash; Иммануил Кант, немецкий философ
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="my-4 flex flex-col justify-between items-center">

@@ -6,7 +6,7 @@ export default defineEventHandler(async (event) => {
     if (!user?.id) {
       throw createError({
         statusCode: 404,
-        message: 'User not found',
+        statusMessage: 'User not found',
       })
     }
 

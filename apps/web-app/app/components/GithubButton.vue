@@ -6,7 +6,7 @@
       leading-icon="i-simple-icons:github"
       aria-label="GitHub"
       variant="ghost"
-      color="primary"
+      color="neutral"
       size="xl"
       class="p-2 gap-2"
     />

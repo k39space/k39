@@ -3,7 +3,7 @@
     <h1 class="text-4xl font-bold mb-4">
       {{ $t('error.title') }} {{ error?.statusCode }}
     </h1>
-    <p>{{ error?.message }}</p>
+    <p>{{ error?.statusMessage }}</p>
 
     <UButton
       variant="solid"
@@ -19,7 +19,7 @@
 <script setup lang="ts">
 const { error } = defineProps<{ error: {
   statusCode: number
-  message?: string
+  statusMessage?: string
 } }>()
 
 function handleError() {

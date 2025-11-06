@@ -16,6 +16,12 @@ export class User {
     })
   }
 
+  static async findByUsername(username: string) {
+    return useDatabase().query.users.findFirst({
+      where: (users, { eq }) => eq(users.username, username),
+    })
+  }
+
   static async create(data: UserDraft) {
     const [user] = await useDatabase().insert(users).values(data).returning()
     return user
