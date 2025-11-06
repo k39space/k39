@@ -5,10 +5,10 @@ FROM base AS builder
 WORKDIR /app
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 COPY packages ./packages
-COPY apps/web-app ./apps/web-app
+COPY apps/avatar ./apps/avatar
 RUN npm install --ignore-scripts -g pnpm && \
     pnpm i --frozen-lockfile && \
-    pnpm build --filter @k39/web-app
+    pnpm build --filter @k39/avatar
 
 # Production stage
 FROM base AS production
@@ -16,8 +16,8 @@ RUN apk add --no-cache curl
 WORKDIR /app
 
 # Copy built artifacts from builder
-COPY --from=builder /app/apps/web-app/.output .
-COPY docker/web-app/health-check.sh ./
+COPY --from=builder /app/apps/avatar/.output .
+COPY docker/avatar/health-check.sh ./
 
 # Running as non-root is a security best practice
 # Make the Health check script executable
@@ -29,7 +29,7 @@ USER appuser
 # Configuration
 ARG VERSION=nightly
 LABEL maintainer="hmbanan666@hotmail.com" \
-    description="k39 web app" \
+    description="k39 avatar" \
     version=${VERSION}
 ENV VERSION=${VERSION} \
     NODE_ENV=production \
