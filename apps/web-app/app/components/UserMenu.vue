@@ -11,7 +11,7 @@
       <UTooltip text="Открыть меню">
         <UAvatar
           :src="userStore.avatarUrl"
-          :alt="`Аватар ${userStore.username}`"
+          alt=""
           size="lg"
           class="cursor-pointer hover:scale-95 duration-200"
         />
