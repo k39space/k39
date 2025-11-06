@@ -1,4 +1,4 @@
-import type { UserDraft } from '../types'
+import type { UserDraft, User as UserType } from '../types'
 import { eq, sql } from 'drizzle-orm'
 import { useDatabase } from '../database'
 import { users } from '../tables'
@@ -10,21 +10,26 @@ export class User {
     })
   }
 
-  static async findByEmail(email: string) {
+  static async findByEmail(email: string): Promise<UserType | undefined> {
     return useDatabase().query.users.findFirst({
       where: (users, { eq }) => eq(users.email, email),
     })
   }
 
-  static async findByUsername(username: string) {
+  static async findByUsername(username: string): Promise<UserType | undefined> {
     return useDatabase().query.users.findFirst({
       where: (users, { eq }) => eq(users.username, username),
     })
   }
 
-  static async create(data: UserDraft) {
-    const [user] = await useDatabase().insert(users).values(data).returning()
-    return user
+  static async create(data: UserDraft): Promise<UserType> {
+    const result = await useDatabase().insert(users).values(data).returning()
+
+    if (result.length === 0) {
+      throw new Error('User creation failed: no data returned from DB')
+    }
+
+    return result[0] as UserType
   }
 
   static async update(id: string, data: Omit<Partial<UserDraft>, 'id' | 'createdAt'>) {

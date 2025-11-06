@@ -7,7 +7,7 @@ const logger = useLogger('user')
 export async function findOrCreateUserByEmail(data: { email: string, name?: string | null }): Promise<User> {
   const userInDB = await db.user.findByEmail(data.email)
   if (userInDB) {
-    return userInDB as User
+    return userInDB
   }
 
   const id = createId()
@@ -23,5 +23,5 @@ export async function findOrCreateUserByEmail(data: { email: string, name?: stri
 
   logger.success('New user created', newUser)
 
-  return newUser as User
+  return newUser
 }
