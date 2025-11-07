@@ -83,9 +83,6 @@ export default defineNuxtConfig({
   routeRules: {
     '/api/**': { cors: true },
   },
-  pinia: {
-    storesDirs: ['./app/stores/**'],
-  },
   experimental: {
     typedPages: true,
   },
