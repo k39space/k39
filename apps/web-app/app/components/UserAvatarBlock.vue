@@ -1,9 +1,7 @@
 <template>
   <div class="flex flex-row gap-4">
     <div class="relative flex flex-col items-center justify-center">
-      <RadialProgress :value="progress">
-        <img :src="user?.avatarUrl ?? undefined" class="size-28 rounded-full">
-      </RadialProgress>
+      <UserAvatarWithProgress :value="progress" :src="user?.avatarUrl" />
 
       <div v-if="user.level" class="absolute -bottom-2 left-0 right-0 flex flex-row justify-center items-center">
         <div class="w-8 h-5 bg-default ring-2 ring-default rounded-full flex flex-col items-center justify-center">
@@ -79,6 +77,12 @@ const canFollow = computed(() => userStore.id !== user.id)
 const progress = computed(() => getXpPercent(user.xp, user.xpToNextLevel))
 
 function getXpPercent(xp: number, xpToNextLevel: number) {
-  return Math.floor((xp / xpToNextLevel) * 100)
+  if (xpToNextLevel <= 0) {
+    return 0
+  }
+
+  const percent = Math.floor((xp / xpToNextLevel) * 100)
+
+  return Math.min(percent, 100)
 }
 </script>

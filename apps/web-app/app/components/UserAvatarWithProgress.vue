@@ -4,12 +4,12 @@
     :style="`--value: ${value};`"
   />
   <div class="absolute size-28 rounded-full">
-    <slot />
+    <img :src="src ?? ''" class="rounded-full">
   </div>
 </template>
 
 <script setup lang="ts">
-const { value } = defineProps<{ value: number }>()
+const { value } = defineProps<{ value: number, src?: string | null }>()
 </script>
 
 <style scoped>
