@@ -18,6 +18,9 @@ catalogs:
     '@iconify-json/circle-flags':
       specifier: ^1.2.10
       version: 1.2.10
+    '@iconify-json/fluent':
+      specifier: ^1.2.34
+      version: 1.2.34
     '@iconify-json/fluent-emoji-flat':
       specifier: ^1.2.5
       version: 1.2.5
@@ -217,6 +220,9 @@ importers:
       '@iconify-json/circle-flags':
         specifier: catalog:dev
         version: 1.2.10
+      '@iconify-json/fluent':
+        specifier: catalog:dev
+        version: 1.2.34
       '@iconify-json/fluent-emoji-flat':
         specifier: catalog:dev
         version: 1.2.5
@@ -1018,6 +1024,9 @@ packages:
 
   '@iconify-json/fluent-emoji-flat@1.2.5':
     resolution: {integrity: sha512-5ShoOHJ0ezYEIMfp2zvbRiZpL1Af8Prg5v9pElaIQhfqwbyD57pzrp70g/rK2EjigajBq9/cPrJXh224HaP3TQ==}
+
+  '@iconify-json/fluent@1.2.34':
+    resolution: {integrity: sha512-TXiotS96YhSf6urBmMBrBPOL2OJJghiv+FhLsd3J0PePZJEq460eg/LrnfVqKqEdLc38C3AesTNJAM8iB4N5UQ==}
 
   '@iconify-json/lucide@1.2.72':
     resolution: {integrity: sha512-kq/ZDUtCdBfjGxIMaUI+Ctt3dC/0sHmrUyTU1i04+8ehlo3/PUGKqrJd4C9J/kQl1jfcHpaUPqGUFvgZ9orhQg==}
@@ -7480,6 +7489,10 @@ snapshots:
       '@iconify/types': 2.0.0
 
   '@iconify-json/fluent-emoji-flat@1.2.5':
+    dependencies:
+      '@iconify/types': 2.0.0
+
+  '@iconify-json/fluent@1.2.34':
     dependencies:
       '@iconify/types': 2.0.0
 
