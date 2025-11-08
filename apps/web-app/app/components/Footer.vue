@@ -57,9 +57,11 @@
 <script setup lang="ts">
 import type { NavigationMenuItem } from '@nuxt/ui'
 
+const { app } = useAppConfig()
+
 const items: NavigationMenuItem[] = [{
   label: 'GitHub проекта',
-  to: 'https://github.com/k39space/k39',
+  to: app.githubUrl,
   target: '_blank',
 }]
 

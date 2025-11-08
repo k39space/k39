@@ -25,6 +25,7 @@
   },
   "devDependencies": {
     "@iconify-json/circle-flags": "catalog:dev",
+    "@iconify-json/fluent": "catalog:dev",
     "@iconify-json/fluent-emoji-flat": "catalog:dev",
     "@iconify-json/lucide": "catalog:dev",
     "@iconify-json/simple-icons": "catalog:dev",

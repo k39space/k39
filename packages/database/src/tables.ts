@@ -1,7 +1,7 @@
-import type { UserBadgeTaskStatus } from './types'
+import type { PageReviewModerationRequestStatus, PageReviewStatus, PageReviewVoteType, UserBadgeTaskStatus } from './types'
 import { cuid2 } from 'drizzle-cuid2/postgres'
 import { relations } from 'drizzle-orm'
-import { boolean, integer, jsonb, numeric, pgTable, timestamp, varchar } from 'drizzle-orm/pg-core'
+import { boolean, integer, jsonb, numeric, pgTable, text, timestamp, uniqueIndex, varchar } from 'drizzle-orm/pg-core'
 
 export const users = pgTable('users', {
   id: cuid2('id').defaultRandom().primaryKey(),
@@ -105,9 +105,63 @@ export const points = pgTable('points', {
   }),
 })
 
+export const pageReviews = pgTable('page_reviews', {
+  id: cuid2('id').defaultRandom().primaryKey(),
+  createdAt: timestamp('created_at', { precision: 3, mode: 'string' }).notNull().defaultNow(),
+  updatedAt: timestamp('updated_at', { precision: 3, mode: 'string' }).notNull().defaultNow(),
+  rating: integer('rating').notNull().default(0),
+  comment: text('comment'),
+  pros: text('pros'),
+  cons: text('cons'),
+  verified: boolean('verified').notNull().default(false),
+  status: varchar('status').notNull().default('draft').$type<PageReviewStatus>(),
+  likesCount: integer('likes_count').notNull().default(0),
+  dislikesCount: integer('dislikes_count').notNull().default(0),
+  voteBalance: integer('vote_balance').notNull().default(0),
+  pageId: cuid2('page_id').notNull().references(() => pages.id, {
+    onDelete: 'cascade',
+    onUpdate: 'cascade',
+  }),
+  userId: cuid2('user_id').notNull().references(() => users.id, {
+    onDelete: 'cascade',
+    onUpdate: 'cascade',
+  }),
+})
+
+export const pageReviewVotes = pgTable('page_review_votes', {
+  id: cuid2('id').defaultRandom().primaryKey(),
+  createdAt: timestamp('created_at', { precision: 3, mode: 'string' }).notNull().defaultNow(),
+  updatedAt: timestamp('updated_at', { precision: 3, mode: 'string' }).notNull().defaultNow(),
+  type: varchar('type').notNull().$type<PageReviewVoteType>(),
+  pageReviewId: cuid2('page_review_id').notNull().references(() => pageReviews.id, {
+    onDelete: 'cascade',
+    onUpdate: 'cascade',
+  }),
+  userId: cuid2('user_id').notNull().references(() => users.id, {
+    onDelete: 'cascade',
+    onUpdate: 'cascade',
+  }),
+}, (t) => [
+  uniqueIndex('unique_page_review_votes').on(t.pageReviewId, t.userId),
+])
+
+export const pageReviewModerationRequests = pgTable('page_review_moderation_requests', {
+  id: cuid2('id').defaultRandom().primaryKey(),
+  createdAt: timestamp('created_at', { precision: 3, mode: 'string' }).notNull().defaultNow(),
+  updatedAt: timestamp('updated_at', { precision: 3, mode: 'string' }).notNull().defaultNow(),
+  status: varchar('status').notNull().default('pending').$type<PageReviewModerationRequestStatus>(),
+  comment: text('comment'),
+  pageReviewId: cuid2('page_review_id').notNull().references(() => pageReviews.id, {
+    onDelete: 'cascade',
+    onUpdate: 'cascade',
+  }),
+})
+
 export const userRelations = relations(users, ({ many }) => ({
   badges: many(userBadges),
   badgeTasks: many(userBadgeTasks),
+  pageReviews: many(pageReviews),
+  pageReviewVotes: many(pageReviewVotes),
 }))
 
 export const badgeRelations = relations(badges, ({ many }) => ({
@@ -148,6 +202,37 @@ export const userBadgeTaskRelations = relations(userBadgeTasks, ({ one }) => ({
 
 export const pageRelations = relations(pages, ({ many }) => ({
   points: many(points),
+  reviews: many(pageReviews),
+}))
+
+export const pageReviewRelations = relations(pageReviews, ({ one, many }) => ({
+  moderationRequests: many(pageReviewModerationRequests),
+  page: one(pages, {
+    fields: [pageReviews.pageId],
+    references: [pages.id],
+  }),
+  user: one(users, {
+    fields: [pageReviews.userId],
+    references: [users.id],
+  }),
+}))
+
+export const pageReviewVoteRelations = relations(pageReviewVotes, ({ one }) => ({
+  pageReview: one(pageReviews, {
+    fields: [pageReviewVotes.pageReviewId],
+    references: [pageReviews.id],
+  }),
+  user: one(users, {
+    fields: [pageReviewVotes.userId],
+    references: [users.id],
+  }),
+}))
+
+export const pageReviewModerationRequestRelations = relations(pageReviewModerationRequests, ({ one }) => ({
+  pageReview: one(pageReviews, {
+    fields: [pageReviewModerationRequests.pageReviewId],
+    references: [pageReviews.id],
+  }),
 }))
 
 export const pointRelations = relations(points, ({ one }) => ({

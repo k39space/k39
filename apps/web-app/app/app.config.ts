@@ -1,4 +1,7 @@
 export default defineAppConfig({
+  app: {
+    githubUrl: 'https://github.com/k39space/k39',
+  },
   ui: {
     colors: {
       primary: 'black',

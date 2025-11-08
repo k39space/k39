@@ -28,8 +28,6 @@
           highlight
           class="flex-1 -ml-2.5"
         />
-
-        Ого
       </nav>
     </div>
   </UContainer>
@@ -66,7 +64,7 @@ const submenuItems = computed<NavigationMenuItem[]>(() => [
     exact: true,
   },
   {
-    label: 'Рецензии',
+    label: 'Отзывы',
     to: `/u/${user.value?.username}/reviews`,
     icon: 'i-lucide-user-star',
   },
