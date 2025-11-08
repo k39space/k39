@@ -33,7 +33,7 @@
 <script setup lang="ts">
 const { rating } = defineProps<{ rating: number }>()
 
-const stars: [number, number, number, number, number] = [0, 0, 0, 0, 0] as const
+const stars: [number, number, number, number, number] = [0, 0, 0, 0, 0]
 
 for (let i = 0; i < 5; i++) {
   if (i < Math.round(rating)) {

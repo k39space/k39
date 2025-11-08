@@ -1,18 +1,27 @@
-import type { PageReviewDraft } from '../types'
+import type { PageReviewDraft, PageReview as PageReviewType, PageReviewWithData } from '../types'
 import { eq, sql } from 'drizzle-orm'
 import { useDatabase } from '../database'
 import { pageReviews } from '../tables'
 
 export class PageReview {
-  static async find(id: string) {
+  static async find(id: string): Promise<PageReviewWithData | undefined> {
     return useDatabase().query.pageReviews.findFirst({
       where: (pageReviews, { eq }) => eq(pageReviews.id, id),
+      with: {
+        user: true,
+        page: true,
+      },
     })
   }
 
-  static async create(data: PageReviewDraft) {
-    const [review] = await useDatabase().insert(pageReviews).values(data).returning()
-    return review
+  static async create(data: PageReviewDraft): Promise<PageReviewType> {
+    const result = await useDatabase().insert(pageReviews).values(data).returning()
+
+    if (result.length === 0) {
+      throw new Error('Page creation failed: no data returned from DB')
+    }
+
+    return result[0] as PageReviewType
   }
 
   static async update(id: string, data: Omit<Partial<PageReviewDraft>, 'id' | 'createdAt'>) {

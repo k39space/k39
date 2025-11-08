@@ -32,6 +32,10 @@ export type PageWithData = Page & {
 export type PageReview = InferSelectModel<typeof tables.pageReviews>
 export type PageReviewDraft = InferInsertModel<typeof tables.pageReviews>
 export type PageReviewStatus = 'draft' | 'pending' | 'approved' | 'rejected' | 'hidden'
+export type PageReviewWithData = PageReview & {
+  user: User
+  page: Page
+}
 
 export type PageReviewVote = InferSelectModel<typeof tables.pageReviewVotes>
 export type PageReviewVoteDraft = InferInsertModel<typeof tables.pageReviewVotes>
