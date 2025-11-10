@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-row gap-4">
     <div class="shrink-0 relative flex flex-col justify-start">
-      <img src="/img/page-avatar/muza-avatar.jpg" class="size-32 rounded-lg border-2 border-default">
+      <img src="/img/page-avatar/muza-avatar.jpg" class="size-32 rounded-lg border border-default">
     </div>
 
     <div class="flex flex-col gap-3.5 justify-center">
