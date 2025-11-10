@@ -60,10 +60,13 @@ import type { NavigationMenuItem } from '@nuxt/ui'
 
 const { params } = useRoute('pageSlug___ru')
 
-const { data: page } = await useFetch(`/api/page/slug/${params.pageSlug}`)
+const { data: page, error } = await useFetch(`/api/page/slug/${params.pageSlug}`)
 
-if (!page.value) {
-  await navigateTo('/')
+if (!page.value || error.value) {
+  throw createError({
+    statusCode: 404,
+    message: 'Страница не найдена',
+  })
 }
 
 const userStore = useUserStore()

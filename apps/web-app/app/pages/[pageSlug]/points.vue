@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-const { params } = useRoute('pageSlug-reviews___ru')
+const { params } = useRoute('pageSlug-points___ru')
 
 const { data: page } = await useFetch(`/api/page/slug/${params.pageSlug}`)
 
