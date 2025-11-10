@@ -1,7 +1,7 @@
 <template>
   <div class="border border-default rounded-lg p-4 sm:p-5 flex flex-col gap-5">
     <div class="grid grid-cols-3 gap-4">
-      <NuxtLink :to="`/u/${review.user.username}`" class="col-span-2 w-fit motion-preset-slide-left transition hover:scale-98 duration-200">
+      <NuxtLink :to="`/u/${review.user.username}`" class="col-span-2 w-fit transition hover:scale-98 duration-200">
         <UserProfileCard :user="review.user" />
       </NuxtLink>
 

@@ -7,6 +7,7 @@
             v-for="review in page?.reviews"
             :key="review.id"
             :review="review"
+            class="motion-preset-slide-left"
           />
         </div>
         <div v-else class="text-muted">
