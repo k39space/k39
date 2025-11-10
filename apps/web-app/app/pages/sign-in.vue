@@ -54,7 +54,7 @@
       </div>
 
       <UButton
-        to="/"
+        :to="redirectTo"
         variant="link"
         icon="i-lucide-undo-2"
       >
