@@ -5,9 +5,9 @@ import { boolean, integer, jsonb, numeric, pgTable, text, timestamp, uniqueIndex
 
 export const users = pgTable('users', {
   id: cuid2('id').defaultRandom().primaryKey(),
-  createdAt: timestamp('created_at', { precision: 3, mode: 'string' }).notNull().defaultNow(),
-  updatedAt: timestamp('updated_at', { precision: 3, mode: 'string' }).notNull().defaultNow(),
-  onlineAt: timestamp('online_at', { precision: 3, mode: 'string' }).notNull().defaultNow(),
+  createdAt: timestamp('created_at', { precision: 3, withTimezone: true, mode: 'string' }).notNull().defaultNow(),
+  updatedAt: timestamp('updated_at', { precision: 3, withTimezone: true, mode: 'string' }).notNull().defaultNow(),
+  onlineAt: timestamp('online_at', { precision: 3, withTimezone: true, mode: 'string' }).notNull().defaultNow(),
   email: varchar('email').notNull().unique(),
   username: varchar('username').notNull().unique(),
   name: varchar('name').notNull(),
@@ -20,8 +20,8 @@ export const users = pgTable('users', {
 
 export const badges = pgTable('badges', {
   id: cuid2('id').defaultRandom().primaryKey(),
-  createdAt: timestamp('created_at', { precision: 3, mode: 'string' }).notNull().defaultNow(),
-  updatedAt: timestamp('updated_at', { precision: 3, mode: 'string' }).notNull().defaultNow(),
+  createdAt: timestamp('created_at', { precision: 3, withTimezone: true, mode: 'string' }).notNull().defaultNow(),
+  updatedAt: timestamp('updated_at', { precision: 3, withTimezone: true, mode: 'string' }).notNull().defaultNow(),
   title: varchar('title').notNull(),
   description: varchar('description'),
   imageUrl: varchar('image_url'),
@@ -31,8 +31,8 @@ export const badges = pgTable('badges', {
 
 export const badgeLevels = pgTable('badge_levels', {
   id: cuid2('id').defaultRandom().primaryKey(),
-  createdAt: timestamp('created_at', { precision: 3, mode: 'string' }).notNull().defaultNow(),
-  updatedAt: timestamp('updated_at', { precision: 3, mode: 'string' }).notNull().defaultNow(),
+  createdAt: timestamp('created_at', { precision: 3, withTimezone: true, mode: 'string' }).notNull().defaultNow(),
+  updatedAt: timestamp('updated_at', { precision: 3, withTimezone: true, mode: 'string' }).notNull().defaultNow(),
   levelNumber: integer('level_number').notNull().default(0),
   requiredXp: integer('required_xp').notNull().default(0),
   badgeId: cuid2('badge_id').notNull().references(() => badges.id, {
@@ -43,8 +43,8 @@ export const badgeLevels = pgTable('badge_levels', {
 
 export const userBadges = pgTable('user_badges', {
   id: cuid2('id').defaultRandom().primaryKey(),
-  createdAt: timestamp('created_at', { precision: 3, mode: 'string' }).notNull().defaultNow(),
-  updatedAt: timestamp('updated_at', { precision: 3, mode: 'string' }).notNull().defaultNow(),
+  createdAt: timestamp('created_at', { precision: 3, withTimezone: true, mode: 'string' }).notNull().defaultNow(),
+  updatedAt: timestamp('updated_at', { precision: 3, withTimezone: true, mode: 'string' }).notNull().defaultNow(),
   currentLevel: integer('current_level').notNull().default(0),
   totalXp: integer('total_xp').notNull().default(0),
   userId: cuid2('user_id').notNull().references(() => users.id, {
@@ -59,10 +59,10 @@ export const userBadges = pgTable('user_badges', {
 
 export const userBadgeTasks = pgTable('user_badge_tasks', {
   id: cuid2('id').defaultRandom().primaryKey(),
-  createdAt: timestamp('created_at', { precision: 3, mode: 'string' }).notNull().defaultNow(),
-  updatedAt: timestamp('updated_at', { precision: 3, mode: 'string' }).notNull().defaultNow(),
-  completedAt: timestamp('completed_at', { precision: 3, mode: 'string' }),
-  expiresAt: timestamp('expires_at', { precision: 3, mode: 'string' }),
+  createdAt: timestamp('created_at', { precision: 3, withTimezone: true, mode: 'string' }).notNull().defaultNow(),
+  updatedAt: timestamp('updated_at', { precision: 3, withTimezone: true, mode: 'string' }).notNull().defaultNow(),
+  completedAt: timestamp('completed_at', { precision: 3, withTimezone: true, mode: 'string' }),
+  expiresAt: timestamp('expires_at', { precision: 3, withTimezone: true, mode: 'string' }),
   rewardXp: integer('reward_xp').notNull().default(0),
   status: varchar('status').notNull().default('active').$type<UserBadgeTaskStatus>(),
 
@@ -85,8 +85,8 @@ export const userBadgeTasks = pgTable('user_badge_tasks', {
 
 export const pages = pgTable('pages', {
   id: cuid2('id').defaultRandom().primaryKey(),
-  createdAt: timestamp('created_at', { precision: 3, mode: 'string' }).notNull().defaultNow(),
-  updatedAt: timestamp('updated_at', { precision: 3, mode: 'string' }).notNull().defaultNow(),
+  createdAt: timestamp('created_at', { precision: 3, withTimezone: true, mode: 'string' }).notNull().defaultNow(),
+  updatedAt: timestamp('updated_at', { precision: 3, withTimezone: true, mode: 'string' }).notNull().defaultNow(),
   slug: varchar('slug').notNull(),
   title: varchar('title').notNull(),
   description: varchar('description'),
@@ -95,8 +95,8 @@ export const pages = pgTable('pages', {
 
 export const points = pgTable('points', {
   id: cuid2('id').defaultRandom().primaryKey(),
-  createdAt: timestamp('created_at', { precision: 3, mode: 'string' }).notNull().defaultNow(),
-  updatedAt: timestamp('updated_at', { precision: 3, mode: 'string' }).notNull().defaultNow(),
+  createdAt: timestamp('created_at', { precision: 3, withTimezone: true, mode: 'string' }).notNull().defaultNow(),
+  updatedAt: timestamp('updated_at', { precision: 3, withTimezone: true, mode: 'string' }).notNull().defaultNow(),
   title: varchar('name').notNull(),
   address: varchar('address').notNull(),
   pageId: cuid2('page_id').notNull().references(() => pages.id, {
@@ -107,8 +107,8 @@ export const points = pgTable('points', {
 
 export const pageReviews = pgTable('page_reviews', {
   id: cuid2('id').defaultRandom().primaryKey(),
-  createdAt: timestamp('created_at', { precision: 3, mode: 'string' }).notNull().defaultNow(),
-  updatedAt: timestamp('updated_at', { precision: 3, mode: 'string' }).notNull().defaultNow(),
+  createdAt: timestamp('created_at', { precision: 3, withTimezone: true, mode: 'string' }).notNull().defaultNow(),
+  updatedAt: timestamp('updated_at', { precision: 3, withTimezone: true, mode: 'string' }).notNull().defaultNow(),
   rating: integer('rating').notNull().default(0),
   comment: text('comment'),
   pros: text('pros'),
@@ -130,8 +130,8 @@ export const pageReviews = pgTable('page_reviews', {
 
 export const pageReviewVotes = pgTable('page_review_votes', {
   id: cuid2('id').defaultRandom().primaryKey(),
-  createdAt: timestamp('created_at', { precision: 3, mode: 'string' }).notNull().defaultNow(),
-  updatedAt: timestamp('updated_at', { precision: 3, mode: 'string' }).notNull().defaultNow(),
+  createdAt: timestamp('created_at', { precision: 3, withTimezone: true, mode: 'string' }).notNull().defaultNow(),
+  updatedAt: timestamp('updated_at', { precision: 3, withTimezone: true, mode: 'string' }).notNull().defaultNow(),
   type: varchar('type').notNull().$type<PageReviewVoteType>(),
   pageReviewId: cuid2('page_review_id').notNull().references(() => pageReviews.id, {
     onDelete: 'cascade',
@@ -147,8 +147,8 @@ export const pageReviewVotes = pgTable('page_review_votes', {
 
 export const pageReviewModerationRequests = pgTable('page_review_moderation_requests', {
   id: cuid2('id').defaultRandom().primaryKey(),
-  createdAt: timestamp('created_at', { precision: 3, mode: 'string' }).notNull().defaultNow(),
-  updatedAt: timestamp('updated_at', { precision: 3, mode: 'string' }).notNull().defaultNow(),
+  createdAt: timestamp('created_at', { precision: 3, withTimezone: true, mode: 'string' }).notNull().defaultNow(),
+  updatedAt: timestamp('updated_at', { precision: 3, withTimezone: true, mode: 'string' }).notNull().defaultNow(),
   status: varchar('status').notNull().default('pending').$type<PageReviewModerationRequestStatus>(),
   comment: text('comment'),
   pageReviewId: cuid2('page_review_id').notNull().references(() => pageReviews.id, {

@@ -38,6 +38,7 @@ catalogs:
     '@vueuse/core': ^14.0.0
     '@vueuse/nuxt': ^14.0.0
     aws4fetch: ^1.0.20
+    date-fns: ^4.1.0
     grammy: ^1.38.3
     ioredis: ^5.8.2
     libphonenumber-js: ^1.12.26

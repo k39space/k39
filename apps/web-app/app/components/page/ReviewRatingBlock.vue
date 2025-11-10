@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col gap-5">
+  <div class="flex flex-col gap-8">
     <div class="flex flex-col gap-2">
       <div class="flex flex-row gap-3.5">
         <h4 class="text-4xl font-bold">
