@@ -20,6 +20,7 @@
     "@pinia/nuxt": "catalog:integrations",
     "@vueuse/core": "catalog:integrations",
     "@vueuse/nuxt": "catalog:integrations",
+    "date-fns": "catalog:integrations",
     "pinia": "catalog:integrations",
     "zod": "catalog:integrations"
   },

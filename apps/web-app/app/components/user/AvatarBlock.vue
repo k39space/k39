@@ -1,16 +1,11 @@
 <template>
   <div class="flex flex-row gap-4">
-    <div class="relative flex flex-col items-center justify-center">
-      <UserAvatarWithProgress :value="progress" :src="user?.avatarUrl" />
-
-      <div v-if="user.level" class="absolute -bottom-2 left-0 right-0 flex flex-row justify-center items-center">
-        <div class="w-8 h-5 bg-default ring-2 ring-default rounded-full flex flex-col items-center justify-center">
-          <p class="font-semibold">
-            {{ user.level }}
-          </p>
-        </div>
-      </div>
-    </div>
+    <UserAvatarWithProgress
+      size="lg"
+      :percent="progressPercent"
+      :src="user.avatarUrl"
+      :level="user.level"
+    />
 
     <div class="flex flex-col gap-3.5 justify-center">
       <div class="flex flex-col gap-2">
@@ -66,6 +61,7 @@
 
 <script setup lang="ts">
 import type { User } from '@k39/database'
+import { getUserXpPercent } from '#shared/utils/user'
 
 const { user } = defineProps<{ user: User }>()
 
@@ -74,15 +70,5 @@ const userStore = useUserStore()
 const canEditProfile = computed(() => userStore.id === user.id)
 const canFollow = computed(() => userStore.id !== user.id)
 
-const progress = computed(() => getXpPercent(user.xp, user.xpToNextLevel))
-
-function getXpPercent(xp: number, xpToNextLevel: number) {
-  if (xpToNextLevel <= 0) {
-    return 0
-  }
-
-  const percent = Math.floor((xp / xpToNextLevel) * 100)
-
-  return Math.min(percent, 100)
-}
+const progressPercent = computed(() => getUserXpPercent(user.xp, user.xpToNextLevel))
 </script>

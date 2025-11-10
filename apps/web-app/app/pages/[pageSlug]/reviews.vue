@@ -1,12 +1,13 @@
 <template>
   <UContainer class="mt-4 max-w-5xl">
-    <div class="grid grid-cols-4 gap-6">
-      <div class="col-span-3">
-        <div v-if="page?.reviews.length" class="flex flex-col gap-2">
+    <div class="grid grid-cols-3 gap-10">
+      <div class="col-span-2">
+        <div v-if="page?.reviews.length" class="flex flex-col gap-6">
           <PageReviewCard
             v-for="review in page?.reviews"
             :key="review.id"
             :review="review"
+            class="motion-preset-slide-left"
           />
         </div>
         <div v-else class="text-muted">
@@ -14,7 +15,7 @@
         </div>
       </div>
 
-      <div class="col-span-1">
+      <div class="mt-4 col-span-1">
         <PageReviewRatingBlock />
       </div>
     </div>
