@@ -1,25 +1,47 @@
 <template>
-  <UContainer class="max-w-4xl">
-    <UBreadcrumb :items="breadcrumbItems" class="mt-4" />
+  <UContainer class="max-w-5xl">
+    <div class="mt-4 min-h-5">
+      <UBreadcrumb
+        v-if="items?.length"
+        :items="items"
+        class="motion-preset-slide-up"
+      />
+    </div>
 
     <div class="my-4 lg:py-6 flex flex-col gap-4">
-      <div class="flex flex-col lg:flex-row gap-2 justify-between items-center">
+      <div class="flex flex-col lg:flex-row gap-2 justify-between items-start">
         <PageAvatarBlock v-if="page" :page="page" />
 
-        <div class="flex flex-row gap-6">
-          <PageFollowers
-            :avatars="followers.top"
-            :count="followers.count"
-          />
+        <div class="flex flex-col gap-4">
+          <div class="flex flex-row gap-6">
+            <PageFollowers
+              :avatars="followers.top"
+              :count="followers.count"
+            />
 
-          <PageRating :rating="page?.rating ?? 0" />
+            <PageRating :rating="page?.rating ?? 0" :url="`/${page?.slug}/reviews`" />
+          </div>
+
+          <USkeleton v-if="!userStore.ready" class="w-full h-9" />
+          <div v-else>
+            <UButton
+              v-if="canFollow"
+              icon="i-lucide-user-plus"
+              size="lg"
+              color="neutral"
+              variant="soft"
+              block
+              label="Подписаться"
+              @click="userStore.loggedIn ? () => {} : tryActionThatRequiresAuth()"
+            />
+          </div>
         </div>
       </div>
     </div>
   </UContainer>
 
-  <UContainer class="max-w-4xl">
-    <div class="shrink-0 flex items-center justify-between border border-default rounded-xl px-4 sm:px-6 gap-1.5 overflow-x-auto min-h-[49px]">
+  <UContainer class="max-w-5xl">
+    <div class="shrink-0 flex items-center justify-between border border-default rounded-lg px-4 sm:px-6 gap-1.5 overflow-x-auto min-h-[49px]">
       <nav class="relative flex gap-1.5 [&>div]:min-w-0 items-center justify-between -mx-1 flex-1">
         <UNavigationMenu
           :items="submenuItems"
@@ -34,7 +56,7 @@
 </template>
 
 <script setup lang="ts">
-import type { BreadcrumbItem, NavigationMenuItem } from '@nuxt/ui'
+import type { NavigationMenuItem } from '@nuxt/ui'
 
 const { params } = useRoute('pageSlug___ru')
 
@@ -43,6 +65,12 @@ const { data: page } = await useFetch(`/api/page/slug/${params.pageSlug}`)
 if (!page.value) {
   await navigateTo('/')
 }
+
+const userStore = useUserStore()
+
+const canFollow = computed(() => true)
+
+const { items } = useBreadcrumb()
 
 const submenuItems = computed<NavigationMenuItem[]>(() => [
   {
@@ -55,23 +83,18 @@ const submenuItems = computed<NavigationMenuItem[]>(() => [
     label: 'Отзывы',
     to: `/${params.pageSlug}/reviews`,
     icon: 'i-lucide-user-star',
-  },
-])
-
-const breadcrumbItems = computed<BreadcrumbItem[]>(() => [
-  {
-    label: 'Главная',
-    icon: 'i-lucide-house',
-    to: '/',
+    badge: 8,
   },
   {
-    label: 'Страница кондитерской',
+    label: 'Филиалы',
+    to: `/${params.pageSlug}/points`,
     icon: 'i-lucide-map',
+    badge: 2,
   },
 ])
 
 const followers = ref({
-  count: 12,
+  count: 9,
   top: [
     {
       src: 'https://avatar.k39.online/12454343.svg',
@@ -83,9 +106,5 @@ const followers = ref({
       src: 'https://avatar.k39.online/124552235343.svg',
     },
   ],
-})
-
-useHead({
-  title: params.pageSlug,
 })
 </script>

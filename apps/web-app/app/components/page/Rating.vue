@@ -9,12 +9,16 @@
       </p>
     </div>
 
-    <div class="h-8 flex flex-row gap-0 items-center">
-      <RatingStars :rating="rating" />
-    </div>
+    <UTooltip text="Открыть отзывы">
+      <ULink :to="url" class="hover:opacity-80 transition duration-200">
+        <div class="h-8 flex items-center">
+          <RatingStars :rating="rating" />
+        </div>
+      </ULink>
+    </UTooltip>
   </div>
 </template>
 
 <script lang="ts" setup>
-defineProps<{ rating: number }>()
+defineProps<{ rating: number, url: string }>()
 </script>

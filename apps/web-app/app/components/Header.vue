@@ -33,7 +33,7 @@
               icon="i-lucide-bell"
               color="neutral"
               variant="ghost"
-              @click="tryActionThatRequiresLogin()"
+              @click="tryActionThatRequiresAuth()"
             />
           </UChip>
         </div>

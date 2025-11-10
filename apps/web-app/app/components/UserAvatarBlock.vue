@@ -56,7 +56,7 @@
             variant="soft"
             class="w-fit"
             label="Подписаться"
-            @click="tryActionThatRequiresLogin()"
+            @click="tryActionThatRequiresAuth()"
           />
         </template>
       </div>

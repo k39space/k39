@@ -1,6 +1,6 @@
 import SignInRequired from '~/components/modal/SignInRequired.vue'
 
-export function tryActionThatRequiresLogin() {
+export function tryActionThatRequiresAuth() {
   const route = useRoute()
   const overlay = useOverlay()
   const modalSignIn = overlay.create(SignInRequired)

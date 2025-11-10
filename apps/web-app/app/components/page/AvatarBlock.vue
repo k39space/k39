@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-row gap-4">
-    <div class="relative flex flex-col items-center justify-center">
+    <div class="shrink-0 relative flex flex-col justify-start">
       <img src="/img/page-avatar/muza-avatar.jpg" class="size-32 rounded-lg border-2 border-default">
     </div>
 
@@ -22,39 +22,8 @@
         </div> -->
       </div>
 
-      <USkeleton v-if="!userStore.ready" class="w-32 h-9" />
-      <div v-else>
-        <UButton
-          v-if="canEdit"
-          icon="i-lucide-edit"
-          size="lg"
-          color="neutral"
-          variant="soft"
-          class="w-fit"
-          label="Редактировать"
-        />
-
-        <template v-if="canFollow">
-          <UButton
-            v-if="userStore.loggedIn"
-            icon="i-lucide-user-plus"
-            size="lg"
-            color="neutral"
-            variant="soft"
-            class="w-fit"
-            label="Подписаться"
-          />
-          <UButton
-            v-else
-            icon="i-lucide-user-plus"
-            size="lg"
-            color="neutral"
-            variant="soft"
-            class="w-fit"
-            label="Подписаться"
-            @click="tryActionThatRequiresLogin()"
-          />
-        </template>
+      <div v-if="page.description" class="text-sm/5">
+        {{ page.description }}
       </div>
     </div>
   </div>
@@ -64,9 +33,4 @@
 import type { Page } from '@k39/database'
 
 defineProps<{ page: Page }>()
-
-const userStore = useUserStore()
-
-const canEdit = computed(() => false)
-const canFollow = computed(() => true)
 </script>
