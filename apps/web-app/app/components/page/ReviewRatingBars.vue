@@ -9,7 +9,7 @@
         {{ rating.rating }}
       </p>
       <UProgress
-        v-model="rating.percent"
+        :model-value="rating.percent"
         :ui="{
           indicator: 'bg-amber-300 motion-preset-slide-right',
           base: 'bg-elevated',
