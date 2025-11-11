@@ -1,6 +1,5 @@
 import type { StartedPostgreSqlContainer } from '@testcontainers/postgresql'
 import { resolve } from 'node:path'
-import process from 'node:process'
 import { PostgreSqlContainer } from '@testcontainers/postgresql'
 import { useCreateDatabase, useMigrateDatabase } from '../src/database'
 
@@ -21,7 +20,7 @@ async function initDb() {
   useCreateDatabase(container.getConnectionUri())
 
   // Run migrations
-  const migrationFolder = resolve(process.cwd(), 'packages/database/migrations')
+  const migrationFolder = resolve(__dirname, '../migrations')
   await useMigrateDatabase(migrationFolder)
 }
 
