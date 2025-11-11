@@ -45,9 +45,6 @@ catalogs:
     bumpp:
       specifier: ^10.3.1
       version: 10.3.1
-    dotenv:
-      specifier: ^17.2.3
-      version: 17.2.3
     eslint:
       specifier: ^9.39.1
       version: 9.39.1
@@ -281,9 +278,6 @@ importers:
       '@types/pg':
         specifier: 8.15.6
         version: 8.15.6
-      dotenv:
-        specifier: catalog:dev
-        version: 17.2.3
       drizzle-kit:
         specifier: 0.31.6
         version: 0.31.6
