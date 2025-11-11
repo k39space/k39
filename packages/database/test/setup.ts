@@ -1,7 +1,7 @@
 import type { StartedPostgreSqlContainer } from '@testcontainers/postgresql'
 import { PostgreSqlContainer } from '@testcontainers/postgresql'
 import { afterAll, beforeAll } from 'vitest'
-import { useCloseDatabase, useCreateDatabase, useMigrateDatabase } from '../src/database'
+import { useCreateDatabase, useDatabase, useMigrateDatabase } from '../src/database'
 
 let container: StartedPostgreSqlContainer | undefined
 
@@ -25,7 +25,7 @@ beforeAll(async () => {
 
 afterAll(async () => {
   if (container) {
-    await useCloseDatabase()
+    await useDatabase().$client.end()
     await container.stop()
   }
 })

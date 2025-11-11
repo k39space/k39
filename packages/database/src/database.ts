@@ -9,13 +9,6 @@ export function useCreateDatabase(databaseURL: string) {
   instance = createConnection(databaseURL)
 }
 
-export async function useCloseDatabase() {
-  if (instance) {
-    await instance.$client.end()
-    instance = null
-  }
-}
-
 export async function useMigrateDatabase() {
   if (!instance) {
     throw new Error('Database is not created')
