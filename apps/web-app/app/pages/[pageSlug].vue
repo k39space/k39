@@ -4,7 +4,9 @@
       <UBreadcrumb
         v-if="items?.length"
         :items="items"
-        class="motion-preset-slide-up"
+        :ui="{
+          item: 'motion-preset-slide-up',
+        }"
       />
     </div>
 
@@ -86,7 +88,7 @@ const submenuItems = computed<NavigationMenuItem[]>(() => [
     label: 'Отзывы',
     to: `/${params.pageSlug}/reviews`,
     icon: 'i-lucide-user-star',
-    badge: 8,
+    badge: page.value?.reviewsCount ? page.value.reviewsCount : undefined, // show if more than 0
   },
   {
     label: 'Филиалы',

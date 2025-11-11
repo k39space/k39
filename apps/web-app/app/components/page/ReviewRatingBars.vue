@@ -20,5 +20,5 @@
 </template>
 
 <script setup lang="ts">
-const { ratings } = defineProps<{ ratings: { rating: number, count: number, percent: number }[] }>()
+const { ratings } = defineProps<{ ratings: { rating: number, percent: number }[] }>()
 </script>

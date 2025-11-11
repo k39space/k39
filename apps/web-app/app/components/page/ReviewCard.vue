@@ -30,6 +30,13 @@
     </div>
 
     <div class="flex flex-col gap-3.5">
+      <div class="flex flex-row gap-2 items-center">
+        <RatingStars :rating="review.rating" />
+        <p class="text-sm/4 text-muted">
+          Оценка {{ review.rating }} из 5
+        </p>
+      </div>
+
       <div class="flex flex-col gap-1">
         <p class="text-base/5 font-bold">
           Достоинства
@@ -75,7 +82,7 @@
           icon="i-lucide-thumbs-down"
         />
         <p class="text-lg">
-          {{ review.voteBalance }}
+          {{ review.voteBalance > 0 ? '+' : '' }}{{ review.voteBalance }}
         </p>
         <UButton
           size="xl"
@@ -89,9 +96,9 @@
 </template>
 
 <script setup lang="ts">
-import type { PageWithData } from '@k39/database'
+import type { PageReviewWithUser } from '@k39/database'
 import { format } from 'date-fns'
 import { ru } from 'date-fns/locale'
 
-defineProps<{ review: PageWithData['reviews'][number] }>()
+defineProps<{ review: PageReviewWithUser }>()
 </script>

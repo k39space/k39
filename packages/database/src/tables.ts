@@ -1,4 +1,4 @@
-import type { PageReviewModerationRequestStatus, PageReviewStatus, PageReviewVoteType, UserBadgeTaskStatus } from './types'
+import type { PageReviewModerationRequestStatus, PageReviewStatus, PageReviewVoteType, UserBadgeTaskStatus } from './types/entities'
 import { cuid2 } from 'drizzle-cuid2/postgres'
 import { relations } from 'drizzle-orm'
 import { boolean, integer, jsonb, numeric, pgTable, text, timestamp, uniqueIndex, varchar } from 'drizzle-orm/pg-core'
@@ -91,6 +91,12 @@ export const pages = pgTable('pages', {
   title: varchar('title').notNull(),
   description: varchar('description'),
   rating: numeric('rating', { mode: 'number' }).notNull().default(0),
+  reviewsCount: integer('reviews_count').notNull().default(0),
+  reviewsCount5: integer('reviews_count_5').notNull().default(0),
+  reviewsCount4: integer('reviews_count_4').notNull().default(0),
+  reviewsCount3: integer('reviews_count_3').notNull().default(0),
+  reviewsCount2: integer('reviews_count_2').notNull().default(0),
+  reviewsCount1: integer('reviews_count_1').notNull().default(0),
 })
 
 export const points = pgTable('points', {

@@ -16,7 +16,15 @@
       </div>
 
       <div class="mt-4 col-span-1">
-        <PageReviewRatingBlock />
+        <PageReviewRatingBlock
+          :rating="page?.rating ?? 0"
+          :reviews-count="page?.reviewsCount ?? 0"
+          :reviews-count5="page?.reviewsCount5 ?? 0"
+          :reviews-count4="page?.reviewsCount4 ?? 0"
+          :reviews-count3="page?.reviewsCount3 ?? 0"
+          :reviews-count2="page?.reviewsCount2 ?? 0"
+          :reviews-count1="page?.reviewsCount1 ?? 0"
+        />
       </div>
     </div>
   </UContainer>
