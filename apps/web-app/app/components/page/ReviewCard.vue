@@ -37,32 +37,23 @@
         </p>
       </div>
 
-      <div class="flex flex-col gap-1">
-        <p class="text-base/5 font-bold">
-          Достоинства
-        </p>
-        <p class="text-base/6 whitespace-pre-wrap text-muted">
-          {{ review.pros }}
-        </p>
-      </div>
+      <PageReviewCardSection
+        v-if="review.pros"
+        title="Достоинства"
+        :content="review.pros"
+      />
 
-      <div class="flex flex-col gap-1">
-        <p class="text-base/5 font-bold">
-          Недостатки
-        </p>
-        <p class="text-base/6 whitespace-pre-wrap text-muted">
-          {{ review.cons }}
-        </p>
-      </div>
+      <PageReviewCardSection
+        v-if="review.cons"
+        title="Недостатки"
+        :content="review.cons"
+      />
 
-      <div class="flex flex-col gap-1">
-        <p class="text-base/5 font-bold">
-          Комментарий
-        </p>
-        <p class="text-base/6 whitespace-pre-wrap text-muted">
-          {{ review.comment }}
-        </p>
-      </div>
+      <PageReviewCardSection
+        v-if="review.comment"
+        title="Комментарий"
+        :content="review.comment"
+      />
     </div>
 
     <div class="flex flex-row gap-2 justify-between items-center">
