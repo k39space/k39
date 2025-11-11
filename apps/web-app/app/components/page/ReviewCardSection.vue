@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col gap-1">
-    <h3 class="text-lg/5 font-bold">
+    <h3 class="text-lg/5 font-semibold">
       {{ title }}
     </h3>
     <p class="text-base/6 whitespace-pre-wrap text-muted">

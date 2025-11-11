@@ -56,7 +56,7 @@
       />
 
       <div class="flex flex-col gap-2">
-        <h3 class="text-lg/5 font-bold">
+        <h3 class="text-lg/5 font-semibold">
           Фото
         </h3>
 
