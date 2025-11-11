@@ -1,7 +1,8 @@
 import type { StartedPostgreSqlContainer } from '@testcontainers/postgresql'
 import { resolve } from 'node:path'
 import { PostgreSqlContainer } from '@testcontainers/postgresql'
-import { useCreateDatabase, useMigrateDatabase } from '../src/database'
+import { afterAll, beforeAll } from 'vitest'
+import { useCloseDatabase, useCreateDatabase, useMigrateDatabase } from '../src/database'
 
 let container: StartedPostgreSqlContainer | undefined
 
@@ -10,11 +11,7 @@ async function initDb() {
     await container.stop()
   }
 
-  container = await new PostgreSqlContainer('postgres:18')
-    .withDatabase('testdb')
-    .withUsername('test')
-    .withPassword('test')
-    .start()
+  container = await new PostgreSqlContainer('postgres:18').start()
 
   // Init DB
   useCreateDatabase(container.getConnectionUri())
@@ -24,11 +21,13 @@ async function initDb() {
   await useMigrateDatabase(migrationFolder)
 }
 
-export async function cleanup() {
+beforeAll(async () => {
+  await initDb()
+})
+
+afterAll(async () => {
   if (container) {
+    await useCloseDatabase()
     await container.stop()
   }
-}
-
-// eslint-disable-next-line antfu/no-top-level-await
-await initDb()
+})

@@ -3,7 +3,9 @@ import { drizzle } from 'drizzle-orm/node-postgres'
 import pg from 'pg'
 import * as tables from './tables'
 
-export type Database = NodePgDatabase<typeof tables>
+export type Database = NodePgDatabase<typeof tables> & {
+  $client: pg.Pool
+}
 
 export function createConnection(connectionString: string): Database {
   const pool = new pg.Pool({ connectionString })
