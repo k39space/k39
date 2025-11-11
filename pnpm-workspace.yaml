@@ -44,6 +44,7 @@ catalogs:
     pinia: ^3.0.4
     zod: ^4.1.12
   test:
+    '@testcontainers/postgresql': ^11.8.0
     '@vitest/browser-playwright': ^4.0.8
     '@vitest/coverage-v8': ^4.0.8
     playwright: ^1.56.1

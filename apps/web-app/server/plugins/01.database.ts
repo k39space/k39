@@ -10,4 +10,11 @@ export default defineNitroPlugin(async () => {
   }
 
   useCreateDatabase(process.env.DATABASE_URL)
+
+  // In dev mode we don't execute migrations, for this we use the command `pnpm db:migrate` in `@k39/database`
+  if (import.meta.dev) {
+    return
+  }
+
+  await runTask('db:migrate')
 })

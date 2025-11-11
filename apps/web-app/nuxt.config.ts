@@ -83,6 +83,11 @@ export default defineNuxtConfig({
   routeRules: {
     '/api/**': { cors: true },
   },
+  nitro: {
+    experimental: {
+      tasks: true,
+    },
+  },
   experimental: {
     typedPages: true,
   },

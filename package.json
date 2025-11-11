@@ -31,6 +31,7 @@
     "@antfu/eslint-config": "catalog:dev",
     "@commitlint/cli": "catalog:dev",
     "@commitlint/config-conventional": "catalog:dev",
+    "@testcontainers/postgresql": "catalog:test",
     "@vitest/browser-playwright": "catalog:test",
     "@vitest/coverage-v8": "catalog:test",
     "bumpp": "catalog:dev",
