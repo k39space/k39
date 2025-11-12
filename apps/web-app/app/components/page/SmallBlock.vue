@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-row gap-4">
     <div class="shrink-0 relative flex flex-col justify-start">
-      <img src="/img/page-avatar/muza-avatar.jpg" class="size-32 rounded-lg border border-default">
+      <img src="/img/page-avatar/muza-avatar.jpg" class="size-24 rounded-lg border border-default">
     </div>
 
     <div class="flex flex-col gap-3.5 justify-center">
@@ -13,14 +13,18 @@
         <p class="text-base/4 text-muted">
           Кондитерская, кофейня, пекарня
         </p>
-
-        <!-- <div class="flex flex-row gap-2 items-center">
-          <img src="/img/badge/badge1.gif" class="size-8 border border-accented rounded-sm">
-          <p class="text-muted">
-            Знаток области X уровня
-          </p>
-        </div> -->
       </div>
+
+      <UButton
+        v-if="page"
+        :to="`/${page.slug}`"
+        color="neutral"
+        variant="soft"
+        icon="i-lucide-arrow-right"
+        label="Перейти"
+        block
+        class="max-w-40"
+      />
     </div>
   </div>
 </template>

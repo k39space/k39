@@ -5,10 +5,11 @@
       :percent="progressPercent"
       :src="user.avatarUrl"
       :level="user.level"
+      class="group-hover:scale-104 transition duration-200"
     />
 
     <div class="mt-1 flex flex-col gap-1 items-start justify-center">
-      <h3 class="text-lg/5 font-semibold">
+      <h3 class="text-lg/5 font-bold">
         {{ user?.name }}
       </h3>
 

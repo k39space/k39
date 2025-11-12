@@ -1,7 +1,10 @@
 <template>
   <div class="border border-default rounded-lg p-4 sm:p-5 flex flex-col gap-5">
     <div class="grid grid-cols-3 gap-4">
-      <NuxtLink :to="`/u/${review.user.username}`" class="col-span-2 w-fit transition hover:scale-98 duration-200">
+      <NuxtLink
+        :to="`/u/${review.user.username}`"
+        class="col-span-2 w-fit group transition hover:scale-98 duration-200"
+      >
         <UserProfileCard :user="review.user" />
       </NuxtLink>
 
@@ -13,6 +16,7 @@
             variant="outline"
             icon="i-lucide-share-2"
             class="w-fit"
+            @click="copyReviewUrlToClipboard()"
           />
           <UButton
             size="lg"
@@ -56,7 +60,7 @@
       />
 
       <div class="flex flex-col gap-2">
-        <h3 class="text-lg/5 font-semibold">
+        <h3 class="text-lg/5 font-bold">
           Фото
         </h3>
 
@@ -101,5 +105,9 @@ import type { PageReviewWithUser } from '@k39/database'
 import { format } from 'date-fns'
 import { ru } from 'date-fns/locale'
 
-defineProps<{ review: PageReviewWithUser }>()
+const { review } = defineProps<{ review: PageReviewWithUser }>()
+
+function copyReviewUrlToClipboard() {
+  navigator.clipboard.writeText(`${window.location.origin}/review/${review.id}`)
+}
 </script>

@@ -5,7 +5,7 @@
         v-for="i in stars"
         :key="i"
         name="fluent:star-28-filled"
-        class="size-6 text-dimmed/25"
+        class="size-6 text-dimmed/15"
       />
     </div>
     <div class="flex flex-row items-center gap-0">

@@ -23,7 +23,7 @@
         Поделитесь впечатлениями
       </h4>
 
-      <p class="text-base/5">
+      <p class="text-base/5 text-muted">
         Расскажите, что вам запомнилось — вашим отзывом вы согреете наше сердце
       </p>
 
@@ -35,7 +35,7 @@
         block
         class="mt-2.5 motion-preset-slide-up"
         label="Написать отзыв"
-        @click="tryActionThatRequiresAuth()"
+        @click="userStore.loggedIn ? navigateTo(`/review/my/${pageSlug}`) : tryActionThatRequiresAuth()"
       />
     </div>
   </div>
@@ -43,6 +43,7 @@
 
 <script lang="ts" setup>
 const props = defineProps<{
+  pageSlug: string
   rating: number
   reviewsCount: number
   reviewsCount5: number
@@ -52,19 +53,27 @@ const props = defineProps<{
   reviewsCount1: number
 }>()
 
-const ratingKeys = [5, 4, 3, 2, 1] as const
+const userStore = useUserStore()
 
-const ratings = computed(() => {
+const ratingMap = {
+  5: props.reviewsCount5,
+  4: props.reviewsCount4,
+  3: props.reviewsCount3,
+  2: props.reviewsCount2,
+  1: props.reviewsCount1,
+}
+
+const ratings = computed<{ rating: number, percent: number }[]>(() => {
   if (props.reviewsCount === 0) {
-    return ratingKeys.map((r) => ({ rating: r, percent: 0 }))
+    return Object.entries(ratingMap).map(([rating]) => ({
+      rating: Number(rating),
+      percent: 0,
+    }))
   }
 
-  return ratingKeys.map((r) => {
-    const count = props[`reviewsCount${r}` as keyof typeof props]
-    return {
-      rating: r,
-      percent: Math.round((count / props.reviewsCount) * 100),
-    }
-  })
+  return Object.entries(ratingMap).map(([rating, count]) => ({
+    rating: Number(rating),
+    percent: Math.round((count / props.reviewsCount) * 100),
+  }))
 })
 </script>
