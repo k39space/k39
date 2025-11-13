@@ -79,8 +79,8 @@ export default defineAppConfig({
     },
     toast: {
       slots: {
-        title: 'mb-0.5 text-lg/5 font-semibold',
-        description: 'text-sm/4',
+        title: 'mb-0.5 text-lg/5 font-semibold font-serif',
+        description: 'text-base/5',
         icon: 'size-8',
       },
     },

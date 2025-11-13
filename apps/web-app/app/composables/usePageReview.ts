@@ -31,7 +31,7 @@ function _usePageReview() {
       weight: 20,
     },
     {
-      label: 'Добавить фото',
+      label: 'Добавить фото к отзыву',
       completed: state.value.photos && state.value.photos.length > 0,
       weight: 20,
     },

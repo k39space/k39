@@ -1,1 +1,1 @@
-export * from './schemas/server/index'
+export * from './schemas/server'

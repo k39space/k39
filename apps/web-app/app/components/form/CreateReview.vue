@@ -162,13 +162,14 @@ async function onSubmit(event: FormSubmitEvent<CreatePageReviewClientSchema>) {
 
     await navigateTo(`/${pageSlug}/reviews`)
   } catch (error) {
-    console.error(error)
-
-    toast.add({
-      title: 'Ошибка при отправке отзыва',
-      description: error instanceof Error ? error.message : 'Пожалуйста, попробуйте еще раз.',
-      color: 'error',
-    })
+    if (isApiError(error)) {
+      toast.add({
+        title: 'Ошибка при отправке отзыва',
+        description: error.data.data.message ?? 'Пожалуйста, попробуйте еще раз.',
+        color: 'error',
+        icon: 'i-lucide-triangle-alert',
+      })
+    }
   } finally {
     isSubmitting.value = false
   }

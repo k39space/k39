@@ -1,5 +1,5 @@
 import * as z from 'zod'
-import { uploadImageSchema } from './upload-image.client'
+import { uploadImageSchema } from './upload-image'
 
 export const createPageReviewClientSchema = z.object({
   rating: z

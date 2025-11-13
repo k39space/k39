@@ -1,1 +1,1 @@
-export * from './page-review.server'
+export * from './page-review'

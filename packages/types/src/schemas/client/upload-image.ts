@@ -32,7 +32,7 @@ export const uploadImageSchema = z
         const reader = new FileReader()
         reader.onerror = () => resolve(false)
         reader.onload = (e) => {
-          const img = new HTMLImageElement()
+          const img = new Image()
           img.onerror = () => resolve(false)
           img.onload = () => {
             const meetsDimensions

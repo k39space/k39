@@ -1,4 +1,4 @@
-import { H3Error } from 'h3'
+import { createError, H3Error } from 'h3'
 import { ZodError } from 'zod'
 
 const logger = useLogger('error')

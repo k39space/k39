@@ -8,7 +8,7 @@ export default defineEventHandler(async (event) => {
     if (!pageId) {
       throw createError({
         statusCode: 400,
-        statusMessage: 'id is required',
+        statusMessage: 'Id is required',
       })
     }
 
@@ -55,8 +55,12 @@ export default defineEventHandler(async (event) => {
     const pageReviewInDb = await db.pageReview.findByPageIdAndUserId(pageId, userId)
     if (pageReviewInDb) {
       throw createError({
-        statusCode: 400,
-        statusMessage: 'You have already reviewed this page',
+        statusCode: 409,
+        statusMessage: 'Conflict',
+        data: {
+          code: 'PAGE_REVIEW_ALREADY_EXISTS',
+          message: 'У вас уже есть отзыв.',
+        },
       })
     }
 
