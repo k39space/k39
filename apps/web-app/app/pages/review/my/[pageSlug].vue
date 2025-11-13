@@ -13,6 +13,20 @@
     <div class="my-4 lg:py-6 flex flex-row gap-4 justify-between items-center">
       <PageSmallBlock v-if="page" :page="page" />
     </div>
+
+    <div class="grid grid-cols-3 gap-10">
+      <div class="col-span-2 border border-default rounded-lg h-fit p-4 sm:p-5 flex flex-col gap-5">
+        <FormCreateReview
+          v-if="page?.id"
+          :page-id="page.id"
+          :page-slug="page.slug"
+        />
+      </div>
+
+      <div class="mt-4 col-span-1">
+        <PageReviewEditProgress />
+      </div>
+    </div>
   </UContainer>
 </template>
 

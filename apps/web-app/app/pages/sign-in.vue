@@ -34,7 +34,7 @@
     <div class="my-4 flex flex-col justify-between items-center">
       <div class="flex grow flex-col justify-center items-center">
         <UContainer class="md:min-w-sm">
-          <h1 class="mb-10 text-2xl/6 font-bold text-center">
+          <h1 class="mb-10 text-3xl/6 font-bold text-center">
             Мы вас заждались!
           </h1>
 
@@ -49,6 +49,16 @@
               external
               block
             />
+          </div>
+
+          <div class="mt-6 mx-auto max-w-80 text-sm/5 text-muted text-center">
+            Используя кнопку, вы соглашаетесь с <ULink
+              to="/legal/privacy-policy"
+              target="_blank"
+              class="text-info"
+            >
+              Политикой конфиденциальности
+            </ULink>
           </div>
         </UContainer>
       </div>

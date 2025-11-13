@@ -16,6 +16,7 @@
   "dependencies": {
     "@k39/database": "workspace:*",
     "@neoconfetti/vue": "catalog:integrations",
+    "@nuxt/content": "catalog:integrations",
     "@nuxt/ui": "catalog:integrations",
     "@pinia/nuxt": "catalog:integrations",
     "@vueuse/core": "catalog:integrations",
@@ -31,6 +32,7 @@
     "@iconify-json/lucide": "catalog:dev",
     "@iconify-json/simple-icons": "catalog:dev",
     "@nuxt/devtools": "catalog:dev",
+    "@nuxt/hints": "catalog:dev",
     "@nuxt/image": "catalog:dev",
     "@nuxtjs/i18n": "catalog:dev",
     "@nuxtjs/seo": "catalog:dev",
