@@ -1,6 +1,6 @@
 import type { Buffer } from 'node:buffer'
-import { createPageReviewServerSchema } from '#shared/services/page'
 import { db } from '@k39/database'
+import { createPageReviewServerSchema } from '@k39/types/server'
 
 export default defineEventHandler(async (event) => {
   try {

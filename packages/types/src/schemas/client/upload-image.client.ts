@@ -16,7 +16,7 @@ function formatBytes(bytes: number, decimals = 2) {
   return `${Number.parseFloat((bytes / k ** i).toFixed(dm))} ${sizes[i]}`
 }
 
-export const imageSchema = z
+export const uploadImageSchema = z
   .instanceof(File, {
     error: 'Выберите фото.',
   })

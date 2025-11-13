@@ -13,8 +13,7 @@
     "typecheck": "nitro prepare && tsc --noEmit"
   },
   "dependencies": {
-    "@nextorders/avatar": "catalog:integrations",
-    "zod": "catalog:integrations"
+    "@nextorders/avatar": "catalog:integrations"
   },
   "devDependencies": {
     "@types/node": "catalog:types",

@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@k39/database": "workspace:*",
+    "@k39/types": "workspace:*",
     "@neoconfetti/vue": "catalog:integrations",
     "@nuxt/content": "catalog:integrations",
     "@nuxt/ui": "catalog:integrations",
@@ -22,8 +23,7 @@
     "@vueuse/core": "catalog:integrations",
     "@vueuse/nuxt": "catalog:integrations",
     "date-fns": "catalog:integrations",
-    "pinia": "catalog:integrations",
-    "zod": "catalog:integrations"
+    "pinia": "catalog:integrations"
   },
   "devDependencies": {
     "@iconify-json/circle-flags": "catalog:dev",

@@ -1,4 +1,5 @@
 import * as z from 'zod'
+import { uploadImageSchema } from './upload-image.client'
 
 export const createPageReviewClientSchema = z.object({
   rating: z
@@ -8,7 +9,7 @@ export const createPageReviewClientSchema = z.object({
   pros: z.string().optional(),
   cons: z.string().optional(),
   comment: z.string().optional(),
-  photos: imageSchema
+  photos: uploadImageSchema
     .array()
     .max(10, { error: 'Можно загрузить максимум 10 фотографий.' })
     .optional(),

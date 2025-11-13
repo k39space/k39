@@ -106,9 +106,9 @@
 </template>
 
 <script setup lang="ts">
+import type { CreatePageReviewClientSchema } from '@k39/types/client'
 import type { FormSubmitEvent } from '@nuxt/ui'
-import type { CreatePageReviewClientSchema } from '../../utils/review'
-import { createPageReviewClientSchema } from '../../utils/review'
+import { createPageReviewClientSchema } from '@k39/types/client'
 import PageReviewInstruction from '../modal/PageReviewInstruction.vue'
 
 const { pageId, pageSlug } = defineProps<{ pageId: string, pageSlug: string }>()

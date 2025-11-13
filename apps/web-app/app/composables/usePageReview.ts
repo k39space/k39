@@ -1,4 +1,4 @@
-import type { CreatePageReviewClientSchema } from '../utils/review'
+import type { CreatePageReviewClientSchema } from '@k39/types/client'
 
 function _usePageReview() {
   const state = ref<Partial<CreatePageReviewClientSchema>>({

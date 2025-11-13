@@ -1,0 +1,22 @@
+{
+  "name": "@k39/types",
+  "type": "module",
+  "version": "0.0.0",
+  "private": true,
+  "exports": {
+    ".": "./src/index.ts",
+    "./client": "./src/schemas/client/index.ts",
+    "./server": "./src/schemas/server/index.ts"
+  },
+  "scripts": {
+    "clean:modules": "rm -rf node_modules",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "zod": "4.1.12"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:types",
+    "typescript": "catalog:dev"
+  }
+}
