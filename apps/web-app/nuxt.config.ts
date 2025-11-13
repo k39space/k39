@@ -88,6 +88,7 @@ export default defineNuxtConfig({
   },
   routeRules: {
     '/api/**': { cors: true },
+    '/legal/**': { static: true },
   },
   experimental: {
     typedPages: true,
