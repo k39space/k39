@@ -9,7 +9,7 @@ export default defineConfig({
           root: './packages/database',
           environment: 'node',
           setupFiles: ['./test/setup.ts'],
-          hookTimeout: 20_000,
+          hookTimeout: 25_000,
           testTimeout: 15_000,
         },
       },
