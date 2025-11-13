@@ -14,6 +14,19 @@ export class PageReview {
     })
   }
 
+  static async findByPageIdAndUserId(pageId: string, userId: string): Promise<PageReviewWithData | undefined> {
+    return useDatabase().query.pageReviews.findFirst({
+      where: (pageReviews, { eq, and }) => and(
+        eq(pageReviews.pageId, pageId),
+        eq(pageReviews.userId, userId),
+      ),
+      with: {
+        user: true,
+        page: true,
+      },
+    })
+  }
+
   static async create(data: PageReviewDraft): Promise<PageReviewType> {
     const result = await useDatabase().insert(pageReviews).values(data).returning()
 

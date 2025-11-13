@@ -72,14 +72,20 @@ export default defineNuxtConfig({
     },
   },
   modules: [
+    // @nuxt/content must be after @nuxt/ui
     'nuxt-auth-utils',
     '@nuxtjs/seo',
     '@nuxt/ui',
+    '@nuxt/content',
     '@nuxtjs/i18n',
     '@nuxt/image',
     '@vueuse/nuxt',
     '@pinia/nuxt',
+    '@nuxt/hints',
   ],
+  content: {
+    experimental: { nativeSqlite: true },
+  },
   routeRules: {
     '/api/**': { cors: true },
   },

@@ -59,18 +59,21 @@ import type { NavigationMenuItem } from '@nuxt/ui'
 
 const { app } = useAppConfig()
 
-const items: NavigationMenuItem[] = [{
-  label: 'GitHub проекта',
-  to: app.githubUrl,
-  target: '_blank',
-}]
+const items: NavigationMenuItem[] = [
+  {
+    label: 'GitHub проекта',
+    to: app.githubUrl,
+    target: '_blank',
+    icon: 'i-simple-icons:github',
+  },
+]
 
 const columns: { label: string, children: NavigationMenuItem[] }[] = [{
-  label: 'Навигация',
+  label: 'Юридическая информация',
   children: [
     {
-      label: 'Главная',
-      to: '/',
+      label: 'Политика конфиденциальности',
+      to: '/legal/privacy-policy',
     },
   ],
 }]
