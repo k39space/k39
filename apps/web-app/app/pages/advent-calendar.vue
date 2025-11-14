@@ -1,0 +1,57 @@
+<template>
+  <UPageHero
+    orientation="vertical"
+    :title="title"
+    :description="description"
+    :ui="{
+      wrapper: 'lg:px-8',
+      title: 'wrap-break-word',
+      description: 'mx-auto max-w-4xl',
+    }"
+  >
+    <template #headline>
+      <div class="group w-fit mx-auto">
+        <UBadge
+          size="lg"
+          color="neutral"
+          variant="soft"
+          :ui="{
+            base: 'px-4',
+          }"
+          class="group-hover:hidden"
+        >
+          Скоро! 🎉
+        </UBadge>
+      </div>
+    </template>
+  </UPageHero>
+
+  <UContainer class="max-w-4xl">
+    <AdventCalendar />
+  </UContainer>
+
+  <UContainer class="mt-12 max-w-4xl">
+    <UIcon name="fluent-emoji-flat:christmas-tree" class="size-18 mx-auto" />
+  </UContainer>
+
+  <UContainer class="max-w-4xl">
+    <div>
+      Этот адвент‑календарь поможет вам создать праздничное настроение шаг за шагом. Каждый день — новое задание, идея или маленький подарок, который сделает декабрь особенным.
+    </div>
+  </UContainer>
+</template>
+
+<script setup lang="ts">
+const title = 'От декабря к Новому году: адвент‑календарь 2025→2026'
+const description = '31 день предвкушения праздника: ежедневный адвент‑календарь с заданиями, сюрпризами и вдохновением. Проведите декабрь осознанно — от первого дня до новогодней ночи!'
+
+useHead({
+  title,
+  meta: [
+    {
+      name: 'description',
+      content: description,
+    },
+  ],
+})
+</script>

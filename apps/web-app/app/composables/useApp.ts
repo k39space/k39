@@ -3,15 +3,24 @@ function _useApp() {
 
   const isMobileMenuOpened = ref(false)
 
-  const mainNavigationItems = computed(() => [{
-    label: 'Пример страницы',
-    to: '/muza',
-    active: route.path.startsWith('/muza'),
-  }, {
-    label: 'Пример пользователя',
-    to: '/u/c2z0rqydtcgirpbmri713izd',
-    active: route.path.startsWith('/u'),
-  }])
+  const mainNavigationItems = computed(() => [
+    {
+      label: 'Адвент-календарь',
+      to: '/advent-calendar',
+      icon: 'fluent-flat:calendar-ltr-20-regular',
+      active: route.path.startsWith('/advent-calendar'),
+    },
+    {
+      label: 'Пример страницы',
+      to: '/muza',
+      active: route.path.startsWith('/muza'),
+    },
+    {
+      label: 'Пример пользователя',
+      to: '/u/c2z0rqydtcgirpbmri713izd',
+      active: route.path.startsWith('/u'),
+    },
+  ])
 
   watch(
     () => route.fullPath,
