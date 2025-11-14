@@ -11,10 +11,7 @@
         name="rating"
         required
       >
-        <USelect
-          v-model="state.rating"
-          :items="ratings"
-        />
+        <USelect v-model="state.rating" :items="ratings" />
       </UFormField>
 
       <div>
