@@ -1,0 +1,3 @@
+<template>
+  Mobile
+</template>

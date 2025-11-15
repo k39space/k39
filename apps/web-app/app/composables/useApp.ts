@@ -7,7 +7,7 @@ function _useApp() {
     {
       label: 'Адвент-календарь',
       to: '/advent-calendar',
-      icon: 'fluent-flat:calendar-ltr-20-regular',
+      icon: 'fluent-emoji-flat:snowflake',
       active: route.path.startsWith('/advent-calendar'),
     },
     {

@@ -28,7 +28,8 @@
   </UPageHero>
 
   <UContainer class="max-w-5xl">
-    <AdventCalendar />
+    <AdventMobileCalendar v-if="isMobile" />
+    <AdventDesktopCalendar v-else />
   </UContainer>
 
   <UContainer class="mt-12 max-w-3xl">
@@ -64,6 +65,9 @@
 <script setup lang="ts">
 const title = 'От декабря к Новому году: адвент‑календарь 2025→2026'
 const description = '31 день предвкушения праздника: ежедневный адвент‑календарь с заданиями, сюрпризами и вдохновением. Проведите декабрь осознанно — от первого дня до новогодней ночи!'
+
+const { width } = useWindowSize()
+const isMobile = computed(() => width.value < 600)
 
 useHead({
   title,

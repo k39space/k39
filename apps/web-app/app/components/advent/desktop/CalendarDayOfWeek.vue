@@ -1,8 +1,8 @@
 <template>
   <div
-    class="p-2 bg-amber-200 text-neutral-900 text-center font-semibold"
+    class="p-2 text-amber-800 text-base/5 text-center font-serif border-r border-b border-amber-800/10 nth-[7n]:border-r-0"
     :class="[
-      isWeekend && 'bg-rose-400 text-white',
+      isWeekend && 'font-semibold',
     ]"
   >
     {{ day }}
