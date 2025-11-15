@@ -25,8 +25,8 @@
               name="i-lucide-pointer"
               class="size-6 text-orange-800/75 motion-preset-pulse motion-preset-seesaw"
               :class="[
-                getRandomDelay(),
-                getRandomDuration(),
+                randomDelay,
+                randomDuration,
               ]"
             />
             <UIcon
@@ -53,17 +53,15 @@ const { day } = defineProps<{ day: AdventDay }>()
 
 const canOpen = computed(() => !day.isOpened && day.canOpen)
 
-function getRandomDelay() {
+const randomDelay = computed(() => {
   const delays = ['motion-delay-100', 'motion-delay-200', 'motion-delay-300', 'motion-delay-500', 'motion-delay-700']
-
   return delays[Math.floor(Math.random() * delays.length)]
-}
+})
 
-function getRandomDuration() {
+const randomDuration = computed(() => {
   const durations = ['motion-duration-1000', 'motion-duration-1200', 'motion-duration-1400', 'motion-duration-1600', 'motion-duration-1800']
-
   return durations[Math.floor(Math.random() * durations.length)]
-}
+})
 
 const overlay = useOverlay()
 const modalAdventModalCalendarDay = overlay.create(AdventModalCalendarDay)

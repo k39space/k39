@@ -5,5 +5,4 @@ export interface AdventDay {
   canOpen: boolean
   isCompleted: boolean
   img?: string
-  background?: 'regular' | 'special'
 }

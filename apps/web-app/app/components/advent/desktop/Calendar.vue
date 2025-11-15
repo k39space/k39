@@ -50,7 +50,7 @@ const days = ref<AdventDay[]>([
   {
     dayNumber: 5,
     isDayOver: false,
-    isOpened: true,
+    isOpened: false,
     canOpen: false,
     isCompleted: false,
   },
