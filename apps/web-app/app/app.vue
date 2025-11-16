@@ -36,6 +36,7 @@ useHead({
 
 const userStore = useUserStore()
 const badgeStore = useBadgeStore()
+const adventStore = useAdventStore()
 
 let interval: NodeJS.Timeout
 
@@ -44,6 +45,7 @@ onMounted(async () => {
     userStore.update(),
     userStore.updateOnline(),
     badgeStore.update(),
+    adventStore.update(),
   ])
 
   interval = setInterval(async () => {

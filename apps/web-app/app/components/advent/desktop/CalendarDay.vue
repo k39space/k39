@@ -1,46 +1,44 @@
 <template>
-  <div class="p-2.5 text-neutral-900 aspect-square border-r border-b border-amber-800/10 nth-[7n]:border-r-0 nth-[29]:border-b-0 nth-[30]:border-b-0 nth-[31]:border-b-0">
-    <div
-      class="h-full w-full bg-amber-800/5 rounded-md hover:bg-amber-800/10 hover:scale-98 active:scale-95 duration-200"
-      @click="openDay()"
-    >
-      <div class="h-full w-full grid grid-cols-2">
-        <div class="h-full w-full flex flex-col justify-center items-center">
-          <div
-            class="text-lg/6 font-semibold font-serif text-orange-800/50"
-            :class="[
-              day.isDayOver && 'text-2xl/6! text-orange-800/75',
-            ]"
-          >
-            {{ day.dayNumber }}
-          </div>
+  <div
+    class="h-full w-full bg-amber-800/5 rounded-md hover:bg-amber-800/10 hover:scale-98 active:scale-95 duration-200 motion-preset-slide-left"
+    @click="openDay()"
+  >
+    <div class="h-full w-full grid grid-cols-2">
+      <div class="aspect-square h-full w-full flex flex-col justify-center items-center">
+        <div
+          class="text-lg/6 font-semibold font-serif text-orange-800/50"
+          :class="[
+            day.isDayOver && 'text-2xl/6! text-orange-800/75',
+          ]"
+        >
+          {{ day.dayNumber }}
         </div>
-        <div class="h-full w-full flex flex-col justify-center items-center" />
+      </div>
+      <div class="h-full w-full flex flex-col justify-center items-center" />
 
-        <div class="h-full w-full flex flex-col justify-center items-center" />
-        <div class="h-full w-full flex flex-col justify-center items-center">
-          <div v-if="!day.img">
-            <UIcon
-              v-if="canOpen"
-              name="i-lucide-pointer"
-              class="size-6 text-orange-800/75 motion-preset-pulse motion-preset-seesaw"
-              :class="[
-                randomDelay,
-                randomDuration,
-              ]"
-            />
-            <UIcon
-              v-else
-              name="i-lucide-circle-question-mark"
-              class="size-10 text-orange-800/15"
-            />
-          </div>
-          <img
+      <div class="h-full w-full flex flex-col justify-center items-center" />
+      <div class="aspect-square h-full w-full flex flex-col justify-center items-center">
+        <div v-if="!day.img">
+          <UIcon
+            v-if="canOpen"
+            name="i-lucide-pointer"
+            class="size-6 text-orange-800/75 motion-preset-pulse motion-preset-seesaw"
+            :class="[
+              randomDelay,
+              randomDuration,
+            ]"
+          />
+          <UIcon
             v-else
-            :src="day.img"
-            class="size-10"
-          >
+            name="i-lucide-circle-question-mark"
+            class="size-10 text-orange-800/15"
+          />
         </div>
+        <img
+          v-else
+          :src="day.img"
+          class="size-10"
+        >
       </div>
     </div>
   </div>

@@ -2,7 +2,7 @@
   <ClientOnly>
     <div
       v-if="isShown"
-      v-confetti="{ particleCount: 240, duration: 5000, stageHeight: 3000, stageWidth: width, force: 0.1 }"
+      v-confetti="{ particleCount: 240, duration: 5000, stageHeight: 4000, stageWidth: width, force: 0.1 }"
       class="z-10 mx-auto h-full w-dvw fixed inset-0 overflow-y-hidden overscroll-y-none"
     />
   </ClientOnly>

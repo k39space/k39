@@ -20,7 +20,9 @@
         class="w-64 shrink-0"
       >
         <template #default>
-          <div class="w-full h-auto aspect-square ring ring-default bg-neutral rounded-xl" />
+          <div class="w-full h-auto aspect-square flex flex-col justify-center items-center ring ring-default bg-neutral-100 rounded-lg">
+            <UIcon name="i-lucide-image" class="size-10 text-muted/25" />
+          </div>
         </template>
         <template #body>
           <UUser
