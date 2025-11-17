@@ -7,8 +7,8 @@
     :overlay="true"
   >
     <template #body>
-      <div class="px-8 flex flex-col gap-2 items-center">
-        <p class="text-base/5 text-center">
+      <div class="flex flex-col gap-2 items-center">
+        <p class="text-base/5">
           ???
         </p>
       </div>

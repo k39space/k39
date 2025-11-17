@@ -5,20 +5,10 @@ function _useApp() {
 
   const mainNavigationItems = computed(() => [
     {
-      label: 'Адвент-календарь',
+      label: 'Адвент-календарь 2025→2026',
       to: '/advent-calendar',
       icon: 'fluent-emoji-flat:snowflake',
       active: route.path.startsWith('/advent-calendar'),
-    },
-    {
-      label: 'Пример страницы',
-      to: '/muza',
-      active: route.path.startsWith('/muza'),
-    },
-    {
-      label: 'Пример пользователя',
-      to: '/u/c2z0rqydtcgirpbmri713izd',
-      active: route.path.startsWith('/u'),
     },
   ])
 

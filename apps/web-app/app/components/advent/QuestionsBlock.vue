@@ -1,5 +1,5 @@
 <template>
-  <h2 class="mb-6 text-3xl/7 font-bold text-center">
+  <h2 class="mb-4 text-3xl/8 font-bold text-center">
     Частые вопросы и ответы
   </h2>
 

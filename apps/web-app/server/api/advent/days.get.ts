@@ -7,6 +7,7 @@ const days: AdventDay[] = [
     isOpened: false,
     canOpen: false,
     isCompleted: false,
+    type: 'story',
   },
   {
     dayNumber: 2,
@@ -14,6 +15,7 @@ const days: AdventDay[] = [
     isOpened: false,
     canOpen: false,
     isCompleted: false,
+    type: 'share',
   },
   {
     dayNumber: 3,
@@ -21,6 +23,7 @@ const days: AdventDay[] = [
     isOpened: false,
     canOpen: false,
     isCompleted: false,
+    type: 'riddle',
   },
   {
     dayNumber: 4,
@@ -28,6 +31,7 @@ const days: AdventDay[] = [
     isOpened: false,
     canOpen: false,
     isCompleted: false,
+    type: 'light',
   },
   {
     dayNumber: 5,
@@ -35,6 +39,7 @@ const days: AdventDay[] = [
     isOpened: false,
     canOpen: false,
     isCompleted: false,
+    type: 'story',
   },
   {
     dayNumber: 6,
@@ -42,6 +47,7 @@ const days: AdventDay[] = [
     isOpened: false,
     canOpen: false,
     isCompleted: false,
+    type: 'message',
   },
   {
     dayNumber: 7,
@@ -49,6 +55,7 @@ const days: AdventDay[] = [
     isOpened: false,
     canOpen: false,
     isCompleted: false,
+    type: 'community-trees',
   },
   {
     dayNumber: 8,
@@ -56,6 +63,7 @@ const days: AdventDay[] = [
     isOpened: false,
     canOpen: false,
     isCompleted: false,
+    type: 'message',
   },
   {
     dayNumber: 9,
@@ -63,6 +71,7 @@ const days: AdventDay[] = [
     isOpened: false,
     canOpen: false,
     isCompleted: false,
+    type: 'story',
   },
   {
     dayNumber: 10,
@@ -70,6 +79,7 @@ const days: AdventDay[] = [
     isOpened: false,
     canOpen: false,
     isCompleted: false,
+    type: 'fortune-cookie',
   },
   {
     dayNumber: 11,
@@ -77,6 +87,7 @@ const days: AdventDay[] = [
     isOpened: false,
     canOpen: false,
     isCompleted: false,
+    type: 'deer',
   },
   {
     dayNumber: 12,
@@ -84,6 +95,7 @@ const days: AdventDay[] = [
     isOpened: false,
     canOpen: false,
     isCompleted: false,
+    type: 'story',
   },
   {
     dayNumber: 13,
@@ -91,6 +103,7 @@ const days: AdventDay[] = [
     isOpened: false,
     canOpen: false,
     isCompleted: false,
+    type: 'negativity',
   },
   {
     dayNumber: 14,
@@ -98,6 +111,7 @@ const days: AdventDay[] = [
     isOpened: false,
     canOpen: false,
     isCompleted: false,
+    type: 'present-idea',
   },
   {
     dayNumber: 15,
@@ -105,6 +119,7 @@ const days: AdventDay[] = [
     isOpened: false,
     canOpen: false,
     isCompleted: false,
+    type: 'story',
   },
   {
     dayNumber: 16,
@@ -112,6 +127,7 @@ const days: AdventDay[] = [
     isOpened: false,
     canOpen: false,
     isCompleted: false,
+    type: 'association-with-food',
   },
   {
     dayNumber: 17,
@@ -119,6 +135,7 @@ const days: AdventDay[] = [
     isOpened: false,
     canOpen: false,
     isCompleted: false,
+    type: 'polar-bear',
   },
   {
     dayNumber: 18,
@@ -126,6 +143,7 @@ const days: AdventDay[] = [
     isOpened: false,
     canOpen: false,
     isCompleted: false,
+    type: 'community-wish',
   },
   {
     dayNumber: 19,
@@ -133,6 +151,7 @@ const days: AdventDay[] = [
     isOpened: false,
     canOpen: false,
     isCompleted: false,
+    type: 'story',
   },
   {
     dayNumber: 20,
@@ -140,6 +159,7 @@ const days: AdventDay[] = [
     isOpened: false,
     canOpen: false,
     isCompleted: false,
+    type: 'message',
   },
   {
     dayNumber: 21,
@@ -147,6 +167,7 @@ const days: AdventDay[] = [
     isOpened: false,
     canOpen: false,
     isCompleted: false,
+    type: 'community-goals',
   },
   {
     dayNumber: 22,
@@ -154,6 +175,7 @@ const days: AdventDay[] = [
     isOpened: false,
     canOpen: false,
     isCompleted: false,
+    type: 'favorite-music',
   },
   {
     dayNumber: 23,
@@ -161,6 +183,7 @@ const days: AdventDay[] = [
     isOpened: false,
     canOpen: false,
     isCompleted: false,
+    type: 'message',
   },
   {
     dayNumber: 24,
@@ -168,6 +191,7 @@ const days: AdventDay[] = [
     isOpened: false,
     canOpen: false,
     isCompleted: false,
+    type: 'favorite-film',
   },
   {
     dayNumber: 25,
@@ -175,6 +199,7 @@ const days: AdventDay[] = [
     isOpened: false,
     canOpen: false,
     isCompleted: false,
+    type: 'story',
   },
   {
     dayNumber: 26,
@@ -182,6 +207,7 @@ const days: AdventDay[] = [
     isOpened: false,
     canOpen: false,
     isCompleted: false,
+    type: 'message',
   },
   {
     dayNumber: 27,
@@ -189,6 +215,7 @@ const days: AdventDay[] = [
     isOpened: false,
     canOpen: false,
     isCompleted: false,
+    type: 'companion',
   },
   {
     dayNumber: 28,
@@ -196,6 +223,7 @@ const days: AdventDay[] = [
     isOpened: false,
     canOpen: false,
     isCompleted: false,
+    type: 'message',
   },
   {
     dayNumber: 29,
@@ -203,6 +231,7 @@ const days: AdventDay[] = [
     isOpened: false,
     canOpen: false,
     isCompleted: false,
+    type: 'penguin',
   },
   {
     dayNumber: 30,
@@ -210,6 +239,7 @@ const days: AdventDay[] = [
     isOpened: false,
     canOpen: false,
     isCompleted: false,
+    type: 'message',
   },
   {
     dayNumber: 31,
@@ -217,19 +247,31 @@ const days: AdventDay[] = [
     isOpened: false,
     canOpen: false,
     isCompleted: false,
+    type: 'community-food-table',
   },
 ]
 
 export default defineEventHandler(async (event) => {
   try {
+    const dayNow = 0
+
     const userInDB = await db.user.find(event.context?.user?.id)
     if (!userInDB) {
       // Return base objects
-      return days
+      return days.map((day) => ({
+        ...day,
+        isDayOver: dayNow >= day.dayNumber,
+        canOpen: dayNow >= day.dayNumber,
+        isOpened: false,
+      }))
     }
 
     // Return days with user data
-    return days
+    return days.map((day) => ({
+      ...day,
+      isDayOver: dayNow >= day.dayNumber,
+      isOpened: dayNow >= day.dayNumber,
+    }))
   } catch (error) {
     throw errorResolver(error)
   }
