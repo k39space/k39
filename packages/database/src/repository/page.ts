@@ -30,6 +30,12 @@ export class Page {
     })
   }
 
+  static async list() {
+    return useDatabase().query.pages.findMany({
+      limit: 100,
+    })
+  }
+
   static async create(data: PageDraft): Promise<PageType> {
     const result = await useDatabase().insert(pages).values(data).returning()
 

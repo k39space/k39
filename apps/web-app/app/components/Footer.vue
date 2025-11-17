@@ -68,13 +68,24 @@ const items: NavigationMenuItem[] = [
   },
 ]
 
-const columns: { label: string, children: NavigationMenuItem[] }[] = [{
-  label: 'Юридическая информация',
-  children: [
-    {
-      label: 'Политика конфиденциальности',
-      to: '/legal/privacy-policy',
-    },
-  ],
-}]
+const columns: { label: string, children: NavigationMenuItem[] }[] = [
+  {
+    label: 'Бизнес-страницы',
+    children: [
+      {
+        label: 'Каталог',
+        to: '/pages',
+      },
+    ],
+  },
+  {
+    label: 'Юридическая информация',
+    children: [
+      {
+        label: 'Политика конфиденциальности',
+        to: '/legal/privacy-policy',
+      },
+    ],
+  },
+]
 </script>
