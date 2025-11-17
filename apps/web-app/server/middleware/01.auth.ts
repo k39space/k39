@@ -14,6 +14,7 @@ const routesWithoutAuth = [
   '/api/user/username',
   '/api/badge/list',
   '/api/page/slug',
+  '/api/page/list',
   '/api/page/review/id',
   '/api/advent/days',
 ]
