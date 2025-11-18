@@ -111,6 +111,8 @@ const overlay = useOverlay()
 const modalAdventModalCalendarDay = overlay.create(AdventModalCalendarDay)
 const modalAdventModalStory = overlay.create(AdventModalStory)
 
+const toast = useToast()
+
 const { pop } = useConfetti()
 
 function openDay() {
@@ -121,6 +123,13 @@ function openDay() {
 
   // It's locked
   if (!day.canOpen) {
+    toast.add({
+      title: 'Заперто!',
+      description: 'Этот день ещё не наступил или его что-то блокирует.',
+      icon: 'i-lucide-lock',
+      color: 'error',
+      duration: 2000,
+    })
     return
   }
 
