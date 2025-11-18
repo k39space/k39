@@ -32,11 +32,11 @@
     <AdventDesktopCalendar v-else />
   </UContainer>
 
-  <UContainer class="mt-12 max-w-3xl">
+  <UContainer class="mt-20 max-w-3xl">
     <img
       src="/img/advent/santa-claus-256.gif"
       alt="Санта"
-      class="size-28 rounded-xl"
+      class="mb-4 mx-auto size-28 rounded-xl"
     >
     <p class="italic">
       Этот адвент‑календарь поможет вам создать праздничное настроение шаг за шагом. Каждый день — новое задание, идея или маленький подарок, который сделает декабрь особенным. Полностью бесплатно.
@@ -56,7 +56,7 @@
     <img
       src="/img/advent/christmas-tree-256.gif"
       alt="Елка"
-      class="ml-auto size-28 rounded-xl"
+      class="mb-4 mx-auto size-28 rounded-xl"
     >
     <AdventQuestionsBlock />
   </UContainer>
@@ -68,6 +68,14 @@ const description = '31 день предвкушения праздника: е
 
 const { width } = useWindowSize()
 const isMobile = computed(() => width.value < 800)
+
+useSeoMeta({
+  ogImage: '/img/advent/calendar-og-image.jpg',
+  twitterTitle: title,
+  twitterDescription: description,
+  twitterImage: '/img/advent/calendar-og-image.jpg',
+  twitterCard: 'summary_large_image',
+})
 
 useHead({
   title,

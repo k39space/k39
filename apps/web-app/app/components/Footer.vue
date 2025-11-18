@@ -70,10 +70,10 @@ const items: NavigationMenuItem[] = [
 
 const columns: { label: string, children: NavigationMenuItem[] }[] = [
   {
-    label: 'Бизнес-страницы',
+    label: 'Калининград и область',
     children: [
       {
-        label: 'Каталог',
+        label: 'Каталог бизнес-страниц',
         to: '/pages',
       },
     ],
