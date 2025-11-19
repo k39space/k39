@@ -44,6 +44,7 @@ catalogs:
     ioredis: ^5.8.2
     libphonenumber-js: ^1.12.26
     pinia: ^3.0.4
+    sharp: ^0.34.5
   test:
     '@testcontainers/postgresql': ^11.8.1
     '@vitest/browser-playwright': ^4.0.8

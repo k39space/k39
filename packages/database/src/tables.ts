@@ -1,4 +1,4 @@
-import type { PageReviewModerationRequestStatus, PageReviewStatus, PageReviewVoteType, UserBadgeTaskStatus } from './types/entities'
+import type { PageReviewModerationRequestStatus, PageReviewStatus, PageReviewVoteType, PhotoVersionFormat, PhotoVersionSize, UserBadgeTaskStatus } from './types/entities'
 import { cuid2 } from 'drizzle-cuid2/postgres'
 import { relations } from 'drizzle-orm'
 import { boolean, integer, jsonb, numeric, pgTable, text, timestamp, uniqueIndex, varchar } from 'drizzle-orm/pg-core'
@@ -151,6 +151,20 @@ export const pageReviewVotes = pgTable('page_review_votes', {
   uniqueIndex('unique_page_review_votes').on(t.pageReviewId, t.userId),
 ])
 
+export const pageReviewPhotos = pgTable('page_review_photos', {
+  id: cuid2('id').defaultRandom().primaryKey(),
+  createdAt: timestamp('created_at', { precision: 3, withTimezone: true, mode: 'string' }).notNull().defaultNow(),
+  updatedAt: timestamp('updated_at', { precision: 3, withTimezone: true, mode: 'string' }).notNull().defaultNow(),
+  pageReviewId: cuid2('page_review_id').notNull().references(() => pageReviews.id, {
+    onDelete: 'cascade',
+    onUpdate: 'cascade',
+  }),
+  photoId: cuid2('photo_id').notNull().references(() => photos.id, {
+    onDelete: 'cascade',
+    onUpdate: 'cascade',
+  }),
+})
+
 export const pageReviewModerationRequests = pgTable('page_review_moderation_requests', {
   id: cuid2('id').defaultRandom().primaryKey(),
   createdAt: timestamp('created_at', { precision: 3, withTimezone: true, mode: 'string' }).notNull().defaultNow(),
@@ -158,6 +172,34 @@ export const pageReviewModerationRequests = pgTable('page_review_moderation_requ
   status: varchar('status').notNull().default('pending').$type<PageReviewModerationRequestStatus>(),
   comment: text('comment'),
   pageReviewId: cuid2('page_review_id').notNull().references(() => pageReviews.id, {
+    onDelete: 'cascade',
+    onUpdate: 'cascade',
+  }),
+})
+
+export const photos = pgTable('photos', {
+  id: cuid2('id').defaultRandom().primaryKey(),
+  createdAt: timestamp('created_at', { precision: 3, withTimezone: true, mode: 'string' }).notNull().defaultNow(),
+  updatedAt: timestamp('updated_at', { precision: 3, withTimezone: true, mode: 'string' }).notNull().defaultNow(),
+  uploadedAt: timestamp('uploaded_at', { precision: 3, withTimezone: true, mode: 'string' }).notNull().defaultNow(),
+  format: varchar('format').notNull(),
+  name: varchar('name').notNull(),
+  originalName: varchar('original_name'),
+  width: integer('width').notNull(),
+  height: integer('height').notNull(),
+  sizeBytes: integer('size_bytes').notNull(),
+})
+
+export const photoVersions = pgTable('photo_versions', {
+  id: cuid2('id').defaultRandom().primaryKey(),
+  createdAt: timestamp('created_at', { precision: 3, withTimezone: true, mode: 'string' }).notNull().defaultNow(),
+  updatedAt: timestamp('updated_at', { precision: 3, withTimezone: true, mode: 'string' }).notNull().defaultNow(),
+  format: varchar('format').notNull().$type<PhotoVersionFormat>(),
+  size: varchar('size').notNull().$type<PhotoVersionSize>(),
+  width: integer('width').notNull(),
+  height: integer('height').notNull(),
+  sizeBytes: integer('size_bytes').notNull(),
+  photoId: cuid2('photo_id').notNull().references(() => photos.id, {
     onDelete: 'cascade',
     onUpdate: 'cascade',
   }),
@@ -213,6 +255,7 @@ export const pageRelations = relations(pages, ({ many }) => ({
 
 export const pageReviewRelations = relations(pageReviews, ({ one, many }) => ({
   moderationRequests: many(pageReviewModerationRequests),
+  photos: many(pageReviewPhotos),
   page: one(pages, {
     fields: [pageReviews.pageId],
     references: [pages.id],
@@ -220,6 +263,17 @@ export const pageReviewRelations = relations(pageReviews, ({ one, many }) => ({
   user: one(users, {
     fields: [pageReviews.userId],
     references: [users.id],
+  }),
+}))
+
+export const pageReviewPhotoRelations = relations(pageReviewPhotos, ({ one }) => ({
+  pageReview: one(pageReviews, {
+    fields: [pageReviewPhotos.pageReviewId],
+    references: [pageReviews.id],
+  }),
+  photo: one(photos, {
+    fields: [pageReviewPhotos.photoId],
+    references: [photos.id],
   }),
 }))
 
@@ -245,5 +299,17 @@ export const pointRelations = relations(points, ({ one }) => ({
   page: one(pages, {
     fields: [points.pageId],
     references: [pages.id],
+  }),
+}))
+
+export const photoRelations = relations(photos, ({ many }) => ({
+  versions: many(photoVersions),
+  pageReviewPhotos: many(pageReviewPhotos),
+}))
+
+export const photoVersionRelations = relations(photoVersions, ({ one }) => ({
+  photo: one(photos, {
+    fields: [photoVersions.photoId],
+    references: [photos.id],
   }),
 }))

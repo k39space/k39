@@ -38,6 +38,9 @@ export type PageReviewWithData = PageReview & {
   page: Page
 }
 
+export type PageReviewPhoto = InferSelectModel<typeof tables.pageReviewPhotos>
+export type PageReviewPhotoDraft = InferInsertModel<typeof tables.pageReviewPhotos>
+
 export type PageReviewVote = InferSelectModel<typeof tables.pageReviewVotes>
 export type PageReviewVoteDraft = InferInsertModel<typeof tables.pageReviewVotes>
 
@@ -46,3 +49,9 @@ export type PageReviewModerationRequestDraft = InferInsertModel<typeof tables.pa
 
 export type Point = InferSelectModel<typeof tables.points>
 export type PointDraft = InferInsertModel<typeof tables.points>
+
+export type Photo = InferSelectModel<typeof tables.photos>
+export type PhotoDraft = InferInsertModel<typeof tables.photos>
+
+export type PhotoVersion = InferSelectModel<typeof tables.photoVersions>
+export type PhotoVersionDraft = InferInsertModel<typeof tables.photoVersions>

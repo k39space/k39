@@ -22,8 +22,10 @@
     "@pinia/nuxt": "catalog:integrations",
     "@vueuse/core": "catalog:integrations",
     "@vueuse/nuxt": "catalog:integrations",
+    "aws4fetch": "catalog:integrations",
     "date-fns": "catalog:integrations",
-    "pinia": "catalog:integrations"
+    "pinia": "catalog:integrations",
+    "sharp": "catalog:integrations"
   },
   "devDependencies": {
     "@iconify-json/circle-flags": "catalog:dev",

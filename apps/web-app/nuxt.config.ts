@@ -70,6 +70,16 @@ export default defineNuxtConfig({
         clientSecret: '',
       },
     },
+    s3: {
+      bucket: '',
+      region: '',
+      endpoint: '',
+      accessKeyId: '',
+      secretAccessKey: '',
+    },
+    public: {
+      photoUrl: '',
+    },
   },
   modules: [
     // @nuxt/content must be after @nuxt/ui

@@ -1,7 +1,7 @@
-import type { PageReviewDraft, PageReview as PageReviewType, PageReviewWithData } from '../types'
+import type { PageReviewDraft, PageReviewPhoto, PageReviewPhotoDraft, PageReview as PageReviewType, PageReviewWithData } from '../types'
 import { eq, sql } from 'drizzle-orm'
 import { useDatabase } from '../database'
-import { pageReviews } from '../tables'
+import { pageReviewPhotos, pageReviews } from '../tables'
 
 export class PageReview {
   static async find(id: string): Promise<PageReviewWithData | undefined> {
@@ -10,6 +10,7 @@ export class PageReview {
       with: {
         user: true,
         page: true,
+        photos: true,
       },
     })
   }
@@ -23,6 +24,7 @@ export class PageReview {
       with: {
         user: true,
         page: true,
+        photos: true,
       },
     })
   }
@@ -35,6 +37,16 @@ export class PageReview {
     }
 
     return result[0] as PageReviewType
+  }
+
+  static async createPhoto(data: PageReviewPhotoDraft): Promise<PageReviewPhoto> {
+    const result = await useDatabase().insert(pageReviewPhotos).values(data).returning()
+
+    if (result.length === 0) {
+      throw new Error('Page review photo creation failed: no data returned from DB')
+    }
+
+    return result[0] as PageReviewPhoto
   }
 
   static async update(id: string, data: Omit<Partial<PageReviewDraft>, 'id' | 'createdAt'>) {

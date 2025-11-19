@@ -1,6 +1,7 @@
-import type { Buffer } from 'node:buffer'
 import { db } from '@k39/database'
 import { createPageReviewServerSchema } from '@k39/types/server'
+import { createId } from '@paralleldrive/cuid2'
+import { createAndUploadOriginalPhoto, IMAGE_MAX_COUNT_TO_UPLOAD, validatePhoto } from '~~/server/services/photo'
 
 export default defineEventHandler(async (event) => {
   try {
@@ -30,14 +31,23 @@ export default defineEventHandler(async (event) => {
     }
 
     const fields: Record<string, string> = {}
-    const files: { data: Buffer, name?: string, filename?: string, type?: string }[] = []
+    const photos: OriginalPhoto[] = []
 
     for (const item of formData) {
       if (!item.name) {
         continue
       }
       if (item.name === 'photos') {
-        files.push(item)
+        const itemValidated = await validatePhoto(item)
+
+        if (itemValidated.ok && photos.length < IMAGE_MAX_COUNT_TO_UPLOAD) {
+          photos.push({
+            ...item,
+            id: createId(),
+            metadata: itemValidated.metadata,
+          })
+        }
+
         continue
       }
 
@@ -72,6 +82,23 @@ export default defineEventHandler(async (event) => {
       cons: data.cons,
       comment: data.comment,
     })
+
+    // Upload Photos
+    for (const photo of photos) {
+      await createAndUploadOriginalPhoto({
+        id: photo.id,
+        buffer: photo.data,
+        metadata: photo.metadata,
+      })
+    }
+
+    // Pin photos
+    for (const photo of photos) {
+      await db.pageReview.createPhoto({
+        pageReviewId: review.id,
+        photoId: photo.id,
+      })
+    }
 
     return {
       ok: true,
