@@ -8,23 +8,21 @@
       :class="getStarClass(star)"
       @click="setRating(star)"
       @mouseenter="() => localRating = star"
-      @mouseleave="() => localRating = modelValue ?? 0"
+      @mouseleave="() => localRating = props.modelValue ?? 0"
     />
   </div>
 </template>
 
 <script setup lang="ts">
-const { modelValue } = defineProps<{
+const props = defineProps<{
   modelValue?: number
 }>()
 
-const emit = defineEmits<{
-  (e: 'update:modelValue', value: number): void
-}>()
+const emit = defineEmits(['update:modelValue', 'blur', 'change'])
 
 defineModel<number>()
 
-const localRating = ref(modelValue ?? 0)
+const localRating = ref(props.modelValue ?? 0)
 
 function getStarClass(position: number) {
   const isFilled = position <= localRating.value
@@ -38,5 +36,7 @@ function getStarClass(position: number) {
 function setRating(stars: number) {
   localRating.value = stars
   emit('update:modelValue', stars)
+  emit('change')
+  emit('blur')
 }
 </script>
