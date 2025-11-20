@@ -87,7 +87,7 @@ export const categories = pgTable('categories', {
   id: cuid2('id').defaultRandom().primaryKey(),
   createdAt: timestamp('created_at', { precision: 3, withTimezone: true, mode: 'string' }).notNull().defaultNow(),
   updatedAt: timestamp('updated_at', { precision: 3, withTimezone: true, mode: 'string' }).notNull().defaultNow(),
-  slug: varchar('slug').notNull(),
+  slug: varchar('slug').notNull().unique(),
   title: varchar('title').notNull(),
   description: varchar('description'),
 })
@@ -96,7 +96,7 @@ export const pages = pgTable('pages', {
   id: cuid2('id').defaultRandom().primaryKey(),
   createdAt: timestamp('created_at', { precision: 3, withTimezone: true, mode: 'string' }).notNull().defaultNow(),
   updatedAt: timestamp('updated_at', { precision: 3, withTimezone: true, mode: 'string' }).notNull().defaultNow(),
-  slug: varchar('slug').notNull(),
+  slug: varchar('slug').notNull().unique(),
   title: varchar('title').notNull(),
   description: varchar('description'),
   rating: numeric('rating', { mode: 'number' }).notNull().default(0),
@@ -132,7 +132,9 @@ export const pageCategories = pgTable('page_categories', {
     onDelete: 'cascade',
     onUpdate: 'cascade',
   }),
-})
+}, (t) => [
+  uniqueIndex('unique_page_categories').on(t.pageId, t.categoryId),
+])
 
 export const pageReviews = pgTable('page_reviews', {
   id: cuid2('id').defaultRandom().primaryKey(),

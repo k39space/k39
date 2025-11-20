@@ -17,7 +17,14 @@
 <script setup lang="ts">
 const { params } = useRoute('pages-categorySlug___ru')
 
-const { data: category } = await useFetch(`/api/category/slug/${params.categorySlug}`)
+const { data: category, error } = await useFetch(`/api/category/slug/${params.categorySlug}`)
+
+if (!category.value || error.value) {
+  throw createError({
+    statusCode: 404,
+    message: 'Категория не найдена',
+  })
+}
 
 const { items, setItems } = useBreadcrumb()
 
