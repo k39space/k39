@@ -10,9 +10,7 @@
           {{ page?.title }}
         </h1>
 
-        <p class="text-base/4 text-muted">
-          Кондитерская, кофейня, пекарня
-        </p>
+        <PageCategoriesList :categories="page.categories" />
 
         <!-- <div class="flex flex-row gap-2 items-center">
           <img src="/img/badge/badge1.gif" class="size-8 border border-accented rounded-sm">
@@ -30,7 +28,7 @@
 </template>
 
 <script setup lang="ts">
-import type { Page } from '@k39/database'
+import type { PageWithData } from '@k39/database'
 
-defineProps<{ page: Page }>()
+const { page } = defineProps<{ page: PageWithData }>()
 </script>

@@ -46,6 +46,8 @@ const { data: page } = await useFetch(`/api/page/slug/${params.pageSlug}`)
 const { data: pageReviews } = await useFetch(`/api/page/id/${page.value?.id}/review/list`)
 const { data: myReview } = await useFetch(`/api/page/id/${page.value?.id}/review/my`)
 
+const mainCategory = computed(() => page.value?.categories[0]?.category)
+
 useBreadcrumb().setItems([
   {
     label: 'Главная',
@@ -53,7 +55,7 @@ useBreadcrumb().setItems([
     to: '/',
   },
   {
-    label: `Кондитерская ${page.value?.title}`,
+    label: `${mainCategory.value?.title ?? ''} «${page.value?.title}»`,
     icon: 'i-lucide-layout-template',
     to: `/${page.value?.slug}`,
   },
@@ -65,6 +67,6 @@ useBreadcrumb().setItems([
 ])
 
 useHead({
-  title: `Отзывы ${page.value?.title}`,
+  title: `Отзывы «${page.value?.title}»`,
 })
 </script>

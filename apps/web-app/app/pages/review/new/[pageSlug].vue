@@ -51,7 +51,7 @@ setItems([
     to: '/',
   },
   {
-    label: `Кондитерская ${page.value?.title}`,
+    label: `${page.value?.categories[0]?.category?.title ?? ''} ${page.value?.title}`,
     icon: 'i-lucide-layout-template',
     to: `/${page.value?.slug}`,
   },
@@ -63,6 +63,6 @@ setItems([
 ])
 
 useHead({
-  title: `Мой отзыв ${page.value?.title}`,
+  title: `Новый отзыв «${page.value?.title}»`,
 })
 </script>

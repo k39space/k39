@@ -22,10 +22,19 @@ export type UserBadgeDraft = InferInsertModel<typeof tables.userBadges>
 export type UserBadgeTask = InferSelectModel<typeof tables.userBadgeTasks>
 export type UserBadgeTaskDraft = InferInsertModel<typeof tables.userBadgeTasks>
 
+export type Category = InferSelectModel<typeof tables.categories>
+export type CategoryDraft = InferInsertModel<typeof tables.categories>
+
 export type Page = InferSelectModel<typeof tables.pages>
 export type PageDraft = InferInsertModel<typeof tables.pages>
 export type PageWithData = Page & {
-  reviews: PageReviewWithUser[]
+  categories: PageCategoryWithData[]
+}
+
+export type PageCategory = InferSelectModel<typeof tables.pageCategories>
+export type PageCategoryDraft = InferInsertModel<typeof tables.pageCategories>
+export type PageCategoryWithData = PageCategory & {
+  category: Category
 }
 
 export type PageReview = InferSelectModel<typeof tables.pageReviews>

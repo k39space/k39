@@ -9,6 +9,8 @@ const { params } = useRoute('pageSlug___ru')
 
 const { data: page } = await useFetch(`/api/page/slug/${params.pageSlug}`)
 
+const mainCategory = computed(() => page.value?.categories[0]?.category)
+
 useBreadcrumb().setItems([
   {
     label: 'Главная',
@@ -16,13 +18,13 @@ useBreadcrumb().setItems([
     to: '/',
   },
   {
-    label: `Кондитерская ${page.value?.title}`,
+    label: `${mainCategory.value?.title ?? ''} «${page.value?.title}»`,
     icon: 'i-lucide-layout-template',
     class: 'text-dimmed font-normal',
   },
 ])
 
 useHead({
-  title: page.value?.title,
+  title: `${mainCategory.value?.title ?? ''} «${page.value?.title}»`,
 })
 </script>
