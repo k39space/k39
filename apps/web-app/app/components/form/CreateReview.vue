@@ -11,7 +11,7 @@
         name="rating"
         required
       >
-        <USelect v-model="state.rating" :items="ratings" />
+        <RatingStarsSelector v-model="state.rating" />
       </UFormField>
 
       <div>
@@ -120,8 +120,6 @@ const toast = useToast()
 
 const overlay = useOverlay()
 const modalPageReviewInstruction = overlay.create(PageReviewInstruction)
-
-const ratings = computed(() => Array.from({ length: 5 }, (_, i) => i + 1))
 
 const userStore = useUserStore()
 
