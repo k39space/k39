@@ -29,6 +29,17 @@ export class PageReview {
     })
   }
 
+  static async listByPageId(pageId: string) {
+    return useDatabase().query.pageReviews.findMany({
+      where: (pageReviews, { eq }) => eq(pageReviews.pageId, pageId),
+      with: {
+        user: true,
+        photos: true,
+      },
+      limit: 100,
+    })
+  }
+
   static async create(data: PageReviewDraft): Promise<PageReviewType> {
     const result = await useDatabase().insert(pageReviews).values(data).returning()
 

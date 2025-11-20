@@ -1,43 +1,20 @@
 <template>
-  <div class="flex flex-col gap-8">
-    <div class="flex flex-col gap-2">
-      <div class="flex flex-row gap-3.5">
-        <h4 class="text-4xl font-bold">
-          {{ rating.toFixed(1) }}
-        </h4>
-
-        <div class="flex flex-col">
-          <RatingStars :rating="rating" />
-
-          <p class="text-sm text-muted">
-            {{ reviewsCount }} {{ pluralizationRu(reviewsCount, ['отзыв', 'отзыва', 'отзывов']) }}
-          </p>
-        </div>
-      </div>
-
-      <PageReviewRatingBars :ratings="ratings" />
-    </div>
-
-    <div class="flex flex-col gap-2">
-      <h4 class="text-xl/5 font-bold">
-        Поделитесь впечатлениями
+  <div class="flex flex-col gap-2">
+    <div class="flex flex-row gap-3.5">
+      <h4 class="text-4xl font-bold">
+        {{ rating.toFixed(1) }}
       </h4>
 
-      <p class="text-base/5 text-muted">
-        Расскажите, что вам запомнилось — вашим отзывом вы согреете наше сердце
-      </p>
+      <div class="flex flex-col">
+        <RatingStars :rating="rating" />
 
-      <UButton
-        icon="i-lucide-edit"
-        size="xl"
-        color="primary"
-        variant="solid"
-        block
-        class="mt-2.5 motion-preset-slide-up"
-        label="Написать отзыв"
-        @click="userStore.loggedIn ? navigateTo(`/review/my/${pageSlug}`) : tryActionThatRequiresAuth()"
-      />
+        <p class="text-sm text-muted">
+          {{ reviewsCount }} {{ pluralizationRu(reviewsCount, ['отзыв', 'отзыва', 'отзывов']) }}
+        </p>
+      </div>
     </div>
+
+    <PageReviewRatingBars :ratings="ratings" />
   </div>
 </template>
 
@@ -52,8 +29,6 @@ const props = defineProps<{
   reviewsCount2: number
   reviewsCount1: number
 }>()
-
-const userStore = useUserStore()
 
 const ratingMap = {
   5: props.reviewsCount5,

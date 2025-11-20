@@ -1,5 +1,3 @@
-import { db } from '@k39/database'
-
 const days: AdventDay[] = [
   {
     dayNumber: 1,
@@ -251,26 +249,16 @@ const days: AdventDay[] = [
   },
 ]
 
-export default defineEventHandler(async (event) => {
+export default defineEventHandler(async () => {
   try {
     const dayNow = 0
 
-    const userInDB = await db.user.find(event.context?.user?.id)
-    if (!userInDB) {
-      // Return base objects
-      return days.map((day) => ({
-        ...day,
-        isDayOver: dayNow >= day.dayNumber,
-        canOpen: dayNow >= day.dayNumber,
-        isOpened: false,
-      }))
-    }
-
-    // Return days with user data
+    // Return base objects
     return days.map((day) => ({
       ...day,
       isDayOver: dayNow >= day.dayNumber,
-      isOpened: dayNow >= day.dayNumber,
+      canOpen: dayNow >= day.dayNumber,
+      isOpened: false,
     }))
   } catch (error) {
     throw errorResolver(error)

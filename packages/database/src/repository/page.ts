@@ -1,32 +1,18 @@
-import type { PageDraft, Page as PageType, PageWithData } from '../types'
+import type { PageDraft, Page as PageType } from '../types'
 import { eq, sql } from 'drizzle-orm'
 import { useDatabase } from '../database'
 import { pages } from '../tables'
 
 export class Page {
-  static async find(id: string): Promise<PageWithData | undefined> {
+  static async find(id: string): Promise<PageType | undefined> {
     return useDatabase().query.pages.findFirst({
       where: (pages, { eq }) => eq(pages.id, id),
-      with: {
-        reviews: {
-          with: {
-            user: true,
-          },
-        },
-      },
     })
   }
 
-  static async findBySlug(slug: string): Promise<PageWithData | undefined> {
+  static async findBySlug(slug: string): Promise<PageType | undefined> {
     return useDatabase().query.pages.findFirst({
       where: (pages, { eq }) => eq(pages.slug, slug),
-      with: {
-        reviews: {
-          with: {
-            user: true,
-          },
-        },
-      },
     })
   }
 

@@ -2,9 +2,9 @@
   <UContainer class="mt-4 max-w-5xl">
     <div class="grid grid-cols-3 gap-10">
       <div class="col-span-2">
-        <div v-if="page?.reviews.length" class="flex flex-col gap-6">
+        <div v-if="pageReviews?.length" class="flex flex-col gap-6">
           <PageReviewCard
-            v-for="review in page?.reviews"
+            v-for="review in pageReviews"
             :key="review.id"
             :review="review"
             class="motion-preset-slide-left"
@@ -16,17 +16,24 @@
       </div>
 
       <div class="mt-4 col-span-1">
-        <PageReviewRatingBlock
-          v-if="page"
-          :page-slug="page.slug"
-          :rating="page.rating"
-          :reviews-count="page.reviewsCount"
-          :reviews-count5="page.reviewsCount5"
-          :reviews-count4="page.reviewsCount4"
-          :reviews-count3="page.reviewsCount3"
-          :reviews-count2="page.reviewsCount2"
-          :reviews-count1="page.reviewsCount1"
-        />
+        <div class="flex flex-col gap-8">
+          <PageReviewRatingBlock
+            v-if="page"
+            :page-slug="page.slug"
+            :rating="page.rating"
+            :reviews-count="page.reviewsCount"
+            :reviews-count5="page.reviewsCount5"
+            :reviews-count4="page.reviewsCount4"
+            :reviews-count3="page.reviewsCount3"
+            :reviews-count2="page.reviewsCount2"
+            :reviews-count1="page.reviewsCount1"
+          />
+
+          <PageReviewUserBlock
+            :page-slug="params.pageSlug"
+            :review="myReview"
+          />
+        </div>
       </div>
     </div>
   </UContainer>
@@ -36,6 +43,8 @@
 const { params } = useRoute('pageSlug-reviews___ru')
 
 const { data: page } = await useFetch(`/api/page/slug/${params.pageSlug}`)
+const { data: pageReviews } = await useFetch(`/api/page/id/${page.value?.id}/review/list`)
+const { data: myReview } = await useFetch(`/api/page/id/${page.value?.id}/review/my`)
 
 useBreadcrumb().setItems([
   {

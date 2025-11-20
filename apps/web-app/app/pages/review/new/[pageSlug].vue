@@ -31,7 +31,7 @@
 </template>
 
 <script setup lang="ts">
-const { params } = useRoute('review-my-pageSlug___ru')
+const { params } = useRoute('review-new-pageSlug___ru')
 
 const { data: page, error } = await useFetch(`/api/page/slug/${params.pageSlug}`)
 
@@ -56,13 +56,8 @@ setItems([
     to: `/${page.value?.slug}`,
   },
   {
-    label: 'Отзывы',
+    label: 'Новый отзыв',
     icon: 'i-lucide-user-star',
-    to: `/${page.value?.slug}/reviews`,
-  },
-  {
-    label: 'Мой отзыв',
-    icon: 'i-lucide-user',
     class: 'text-dimmed font-normal',
   },
 ])

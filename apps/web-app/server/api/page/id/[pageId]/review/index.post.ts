@@ -21,7 +21,8 @@ export default defineEventHandler(async (event) => {
       })
     }
 
-    const userId = event.context.user.id
+    const user = await getUserFromSession(event)
+
     const formData = await readMultipartFormData(event)
     if (!formData) {
       throw createError({
@@ -62,7 +63,7 @@ export default defineEventHandler(async (event) => {
     const data = createPageReviewServerSchema.parse(parsedFields)
 
     // Guard: Check if user already reviewed this page
-    const pageReviewInDb = await db.pageReview.findByPageIdAndUserId(pageId, userId)
+    const pageReviewInDb = await db.pageReview.findByPageIdAndUserId(pageId, user.id)
     if (pageReviewInDb) {
       throw createError({
         statusCode: 409,
@@ -76,7 +77,7 @@ export default defineEventHandler(async (event) => {
 
     const review = await db.pageReview.create({
       pageId,
-      userId,
+      userId: user.id,
       rating: data.rating,
       pros: data.pros,
       cons: data.cons,

@@ -91,7 +91,7 @@ const submenuItems = computed<NavigationMenuItem[]>(() => [
     badge: page.value?.reviewsCount ? page.value.reviewsCount : undefined, // show if more than 0
   },
   {
-    label: 'Филиалы',
+    label: 'Адреса',
     to: `/${params.pageSlug}/points`,
     icon: 'i-lucide-map',
     badge: 2,

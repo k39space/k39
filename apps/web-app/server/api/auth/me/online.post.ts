@@ -2,7 +2,7 @@ import { db } from '@k39/database'
 
 export default defineEventHandler(async (event) => {
   try {
-    const user = await db.user.find(event.context.user.id)
+    const user = await getUserFromSession(event)
     if (!user?.id) {
       throw createError({
         statusCode: 404,
