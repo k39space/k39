@@ -85,7 +85,7 @@
           Фото
         </h3>
 
-        <div class="flex flex-row gap-2">
+        <div class="grid grid-cols-3 lg:grid-cols-5 gap-2">
           <PageReviewCardPhoto
             v-for="photo in review.photos"
             :key="photo.id"

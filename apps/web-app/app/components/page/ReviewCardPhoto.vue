@@ -1,5 +1,5 @@
 <template>
-  <div class="shrink-0 size-28 rounded-lg border border-default">
+  <div class="shrink-0 aspect-square rounded-lg border border-default cursor-pointer hover:scale-105 transition duration-200">
     <img
       :src="src"
       :alt="alt"
