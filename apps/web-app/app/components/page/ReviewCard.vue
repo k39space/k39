@@ -80,19 +80,18 @@
         :content="review.comment"
       />
 
-      <div class="flex flex-col gap-2">
+      <div v-if="review.photos.length" class="flex flex-col gap-2">
         <h3 class="text-lg/5 font-bold">
           Фото
         </h3>
 
         <div class="flex flex-row gap-2">
-          {{ review.photos }}
-          <img
+          <PageReviewCardPhoto
             v-for="photo in review.photos"
             :key="photo.id"
-            :src="photo.photo.versions[0]?.format"
-            class="size-28 rounded-lg border border-default"
-          >
+            :photo="photo.photo"
+            :alt="`Фото ${photo.id} из отзыва к «${review.page.title}»`"
+          />
         </div>
       </div>
     </div>

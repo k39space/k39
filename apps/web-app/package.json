@@ -24,6 +24,7 @@
     "@vueuse/nuxt": "catalog:integrations",
     "aws4fetch": "catalog:integrations",
     "date-fns": "catalog:integrations",
+    "heic-convert": "2.1.0",
     "pinia": "catalog:integrations",
     "sharp": "catalog:integrations"
   },
@@ -38,6 +39,7 @@
     "@nuxt/image": "catalog:dev",
     "@nuxtjs/i18n": "catalog:dev",
     "@nuxtjs/seo": "catalog:dev",
+    "@types/heic-convert": "2.1.0",
     "@types/node": "catalog:types",
     "nuxt": "catalog:dev",
     "nuxt-auth-utils": "catalog:dev",
