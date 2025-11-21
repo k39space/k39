@@ -37,21 +37,21 @@
       <div class="flex flex-row gap-2 items-center">
         <UBadge
           size="lg"
-          variant="outline"
+          variant="soft"
           :color="review.recommends ? 'success' : 'error'"
           :icon="review.recommends ? 'i-lucide-thumbs-up' : 'i-lucide-thumbs-down'"
           :label="review.recommends ? 'Рекомендует' : 'Не рекомендует'"
-          class="px-3.5"
+          class="px-2.5"
         />
 
         <UBadge
           v-if="review.verified"
           size="lg"
-          variant="outline"
+          variant="soft"
           color="info"
           icon="i-lucide-badge-check"
           label="Подтвержденный отзыв"
-          class="px-3.5"
+          class="px-2.5"
         />
       </div>
 

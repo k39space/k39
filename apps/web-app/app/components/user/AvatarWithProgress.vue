@@ -29,10 +29,10 @@ function getSizes() {
   switch (size) {
     case 'sm': {
       return {
-        progress: 'size-16',
-        img: 'size-13',
+        progress: 'size-14',
+        img: 'size-11',
         thickness: '0.2rem',
-        scale: 'scale-70',
+        scale: 'scale-60',
       }
     }
     case 'md':

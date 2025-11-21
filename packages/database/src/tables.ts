@@ -99,6 +99,7 @@ export const pages = pgTable('pages', {
   slug: varchar('slug').notNull().unique(),
   title: varchar('title').notNull(),
   description: varchar('description'),
+  avatarUrl: varchar('avatar_url'),
   rating: numeric('rating', { mode: 'number' }).notNull().default(0),
   reviewsCount: integer('reviews_count').notNull().default(0),
   reviewsCount5: integer('reviews_count_5').notNull().default(0),
