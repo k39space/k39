@@ -35,13 +35,6 @@
 
     <div class="flex flex-col gap-4">
       <div class="flex flex-row gap-2 items-center">
-        <RatingStars :rating="review.rating" />
-        <p class="text-sm/4 text-muted">
-          Оценка {{ review.rating }} из 5
-        </p>
-      </div>
-
-      <div class="flex flex-row gap-2 items-center">
         <UBadge
           size="lg"
           variant="outline"
@@ -50,6 +43,23 @@
           :label="review.recommends ? 'Рекомендует' : 'Не рекомендует'"
           class="px-3.5"
         />
+
+        <UBadge
+          v-if="review.verified"
+          size="lg"
+          variant="outline"
+          color="info"
+          icon="i-lucide-badge-check"
+          label="Подтвержденный отзыв"
+          class="px-3.5"
+        />
+      </div>
+
+      <div class="flex flex-row gap-2 items-center">
+        <RatingStars :rating="review.rating" />
+        <p class="text-sm/4 text-muted">
+          Оценка {{ review.rating }} из 5
+        </p>
       </div>
 
       <PageReviewCardSection
@@ -76,7 +86,13 @@
         </h3>
 
         <div class="flex flex-row gap-2">
-          <img src="/img/page-avatar/muza-avatar.jpg" class="size-28 rounded-lg border border-default">
+          {{ review.photos }}
+          <img
+            v-for="photo in review.photos"
+            :key="photo.id"
+            :src="photo.photo.versions[0]?.format"
+            class="size-28 rounded-lg border border-default"
+          >
         </div>
       </div>
     </div>
@@ -112,11 +128,11 @@
 </template>
 
 <script setup lang="ts">
-import type { PageReviewWithUser } from '@k39/database'
+import type { PageReviewWithData } from '@k39/database'
 import { format } from 'date-fns'
 import { ru } from 'date-fns/locale'
 
-const { review } = defineProps<{ review: PageReviewWithUser }>()
+const { review } = defineProps<{ review: PageReviewWithData }>()
 
 function copyReviewUrlToClipboard() {
   navigator.clipboard.writeText(`${window.location.origin}/review/${review.id}`)

@@ -1,7 +1,7 @@
 import { db } from '@k39/database'
 import { createPageReviewServerSchema } from '@k39/types/server'
 import { createId } from '@paralleldrive/cuid2'
-import { createAndUploadOriginalPhoto, PHOTOS_MAX_COUNT_TO_UPLOAD, PRIVATE_PHOTOS_MAX_COUNT_TO_UPLOAD, validatePhoto } from '~~/server/services/photo'
+import { createAndUploadOriginalPhoto, createAndUploadPhotoVersion, optimizePhoto, PHOTOS_MAX_COUNT_TO_UPLOAD, PRIVATE_PHOTOS_MAX_COUNT_TO_UPLOAD, validatePhoto } from '~~/server/services/photo'
 
 export default defineEventHandler(async (event) => {
   try {
@@ -72,7 +72,6 @@ export default defineEventHandler(async (event) => {
     const parsedFields = {
       ...fields,
       rating: Number(fields.rating),
-      recommends: fields.recommends === 'true',
     }
 
     const data = createPageReviewServerSchema.parse(parsedFields)
@@ -97,6 +96,8 @@ export default defineEventHandler(async (event) => {
       pros: data.pros,
       cons: data.cons,
       comment: data.comment,
+      privateComment: data.privateComment,
+      recommends: data.recommends === 'yes',
     })
 
     // Upload Photos
@@ -112,6 +113,24 @@ export default defineEventHandler(async (event) => {
         pageReviewId: review.id,
         photoId: photo.id,
       })
+
+      // Create xs version for test
+      const size = 'xs'
+      const optimizedPhoto = await optimizePhoto({
+        size,
+        buffer: photo.data,
+        format: 'jpg',
+      })
+
+      if (optimizedPhoto) {
+        await createAndUploadPhotoVersion({
+          id: createId(),
+          photoId: photo.id,
+          size,
+          buffer: optimizedPhoto.buffer,
+          metadata: optimizedPhoto.metadata,
+        })
+      }
     }
 
     // Upload Private Photos

@@ -1,4 +1,4 @@
-import type { Photo, PhotoVersionFormat, PhotoVersionSize } from '@k39/database'
+import type { Photo, PhotoVersion, PhotoVersionFormat, PhotoVersionSize } from '@k39/database'
 import type { Buffer } from 'node:buffer'
 import { db } from '@k39/database'
 import sharp from 'sharp'
@@ -11,7 +11,7 @@ const IMAGE_MAX_DIMENSION_TO_UPLOAD = 8000
 const IMAGE_MIN_DIMENSION_TO_UPLOAD = 200
 const IMAGE_FORMATS_TO_UPLOAD: sharp.Metadata['format'][] = ['jpeg', 'jpg', 'png', 'webp', 'heif']
 
-const _IMAGE_SIZES_TO_SAVE: { size: PhotoVersionSize, width: number, height: number }[] = [
+const IMAGE_SIZES_TO_SAVE: { size: PhotoVersionSize, width: number, height: number }[] = [
   {
     size: 'xs',
     width: 320,
@@ -80,6 +80,49 @@ export async function validatePhoto(photo: FileLike): Promise<
   }
 }
 
+export async function optimizePhoto(data: { buffer: Buffer, format: sharp.Metadata['format'], size: PhotoVersionSize }): Promise<{ metadata: sharp.Metadata, buffer: Buffer } | null> {
+  let sharpStream
+
+  const size = IMAGE_SIZES_TO_SAVE.find((s) => s.size === data.size)
+  if (!size) {
+    return null
+  }
+
+  try {
+    const validated = await validatePhoto({
+      data: data.buffer,
+    })
+    if (!validated.ok) {
+      return null
+    }
+
+    sharp.cache(false)
+    sharp.concurrency(1)
+
+    sharpStream = sharp(data.buffer)
+
+    const buffer = await sharpStream
+      .resize({
+        width: size.width,
+        height: size.height,
+        fit: 'cover',
+        position: 'center',
+      })
+      .toFormat(data.format, { quality: 80 })
+      .toBuffer()
+
+    return {
+      metadata: validated.metadata,
+      buffer,
+    }
+  } catch (error) {
+    console.error(error)
+    return null
+  } finally {
+    sharpStream?.destroy()
+  }
+}
+
 export async function createAndUploadOriginalPhoto(data: {
   id: string
   buffer: Buffer
@@ -94,6 +137,34 @@ export async function createAndUploadOriginalPhoto(data: {
       name,
       id: data.id,
       format: data.metadata.format,
+      width: data.metadata.width,
+      height: data.metadata.height,
+      sizeBytes: data.metadata.size ?? data.buffer.byteLength,
+    })
+  } catch (error) {
+    console.error(error)
+    return null
+  }
+}
+
+export async function createAndUploadPhotoVersion(data: {
+  photoId: string
+  id: string
+  size: PhotoVersionSize
+  buffer: Buffer
+  metadata: sharp.Metadata
+}): Promise<PhotoVersion | null> {
+  try {
+    const storage = useStorage('s3')
+    const name = `${data.size}.${data.metadata.format}`
+    await storage.setItemRaw(`photos/${data.id}/${name}`, data.buffer)
+
+    return db.photo.createVersion({
+      name,
+      photoId: data.photoId,
+      id: data.id,
+      size: data.size,
+      format: data.metadata.format as PhotoVersionFormat,
       width: data.metadata.width,
       height: data.metadata.height,
       sizeBytes: data.metadata.size ?? data.buffer.byteLength,

@@ -197,7 +197,7 @@ const recommendsItems = [{
 const selectedRecommends = ref<'yes' | 'no'>()
 
 watch(selectedRecommends, (value) => {
-  state.value.recommends = value === 'yes'
+  state.value.recommends = value
 })
 
 const toast = useToast()

@@ -223,6 +223,7 @@ export const photoVersions = pgTable('photo_versions', {
   createdAt: timestamp('created_at', { precision: 3, withTimezone: true, mode: 'string' }).notNull().defaultNow(),
   updatedAt: timestamp('updated_at', { precision: 3, withTimezone: true, mode: 'string' }).notNull().defaultNow(),
   format: varchar('format').notNull().$type<PhotoVersionFormat>(),
+  name: varchar('name').notNull(),
   size: varchar('size').notNull().$type<PhotoVersionSize>(),
   width: integer('width').notNull(),
   height: integer('height').notNull(),

@@ -10,7 +10,16 @@ export class PageReview {
       with: {
         user: true,
         page: true,
-        photos: true,
+        photos: {
+          where: (pageReviewPhotos, { eq }) => eq(pageReviewPhotos.type, 'public'),
+          with: {
+            photo: {
+              with: {
+                versions: true,
+              },
+            },
+          },
+        },
       },
     })
   }
@@ -24,17 +33,36 @@ export class PageReview {
       with: {
         user: true,
         page: true,
-        photos: true,
+        photos: {
+          where: (pageReviewPhotos, { eq }) => eq(pageReviewPhotos.type, 'public'),
+          with: {
+            photo: {
+              with: {
+                versions: true,
+              },
+            },
+          },
+        },
       },
     })
   }
 
-  static async listByPageId(pageId: string) {
+  static async listByPageId(pageId: string): Promise<PageReviewWithData[]> {
     return useDatabase().query.pageReviews.findMany({
       where: (pageReviews, { eq }) => eq(pageReviews.pageId, pageId),
       with: {
         user: true,
-        photos: true,
+        page: true,
+        photos: {
+          where: (pageReviewPhotos, { eq }) => eq(pageReviewPhotos.type, 'public'),
+          with: {
+            photo: {
+              with: {
+                versions: true,
+              },
+            },
+          },
+        },
       },
       limit: 100,
     })

@@ -6,7 +6,7 @@ export const createPageReviewClientSchema = z.object({
     .number({ error: 'Укажите оценку от 1 до 5.' })
     .min(1, { error: 'Укажите оценку от 1 до 5.' })
     .max(5, { error: 'Укажите оценку от 1 до 5.' }),
-  recommends: z.boolean({ error: 'Укажите, рекомендуете ли вы другим.' }),
+  recommends: z.string({ error: 'Укажите, рекомендуете ли вы другим.' }),
   pros: z.string().max(1000, { error: 'Максимум 1000 символов.' }).optional(),
   cons: z.string().max(1000, { error: 'Максимум 1000 символов.' }).optional(),
   comment: z.string().max(3000, { error: 'Максимум 3000 символов.' }).optional(),
