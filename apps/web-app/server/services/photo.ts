@@ -80,7 +80,7 @@ export async function validatePhoto(photo: FileLike): Promise<
   }
 }
 
-export async function optimizePhoto(data: { buffer: Buffer, format: sharp.Metadata['format'], size: PhotoVersionSize }): Promise<{ metadata: sharp.Metadata, buffer: Buffer } | null> {
+export async function optimizePhoto(data: { buffer: Buffer, format: PhotoVersionFormat, size: PhotoVersionSize }): Promise<{ metadata: sharp.Metadata, buffer: Buffer } | null> {
   let sharpStream
 
   const size = IMAGE_SIZES_TO_SAVE.find((s) => s.size === data.size)
@@ -89,13 +89,6 @@ export async function optimizePhoto(data: { buffer: Buffer, format: sharp.Metada
   }
 
   try {
-    const validated = await validatePhoto({
-      data: data.buffer,
-    })
-    if (!validated.ok) {
-      return null
-    }
-
     sharp.cache(false)
     sharp.concurrency(1)
 
@@ -111,8 +104,10 @@ export async function optimizePhoto(data: { buffer: Buffer, format: sharp.Metada
       .toFormat(data.format, { quality: 80 })
       .toBuffer()
 
+    const optimizedMetadata = await sharp(buffer).metadata()
+
     return {
-      metadata: validated.metadata,
+      metadata: optimizedMetadata,
       buffer,
     }
   } catch (error) {
