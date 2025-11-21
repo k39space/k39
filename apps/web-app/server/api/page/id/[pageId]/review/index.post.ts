@@ -55,7 +55,7 @@ export default defineEventHandler(async (event) => {
       if (item.name === 'privatePhotos') {
         const itemValidated = await validatePhoto(item)
 
-        if (itemValidated.ok && photos.length < PRIVATE_PHOTOS_MAX_COUNT_TO_UPLOAD) {
+        if (itemValidated.ok && privatePhotos.length < PRIVATE_PHOTOS_MAX_COUNT_TO_UPLOAD) {
           privatePhotos.push({
             ...item,
             id: createId(),
@@ -72,7 +72,7 @@ export default defineEventHandler(async (event) => {
     const parsedFields = {
       ...fields,
       rating: Number(fields.rating),
-      recommends: Boolean(fields.recommends),
+      recommends: fields.recommends === 'true',
     }
 
     const data = createPageReviewServerSchema.parse(parsedFields)

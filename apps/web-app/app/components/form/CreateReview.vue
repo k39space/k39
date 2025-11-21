@@ -129,7 +129,7 @@
     <UFormField
       label="Фотографии для валидации"
       hint="Максимум 5"
-      name="photos"
+      name="privatePhotos"
     >
       <UFileUpload
         v-model="state.privatePhotos"
