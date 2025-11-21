@@ -1,6 +1,7 @@
 import type { Photo, PhotoVersion, PhotoVersionFormat, PhotoVersionSize } from '@k39/database'
 import type { Buffer } from 'node:buffer'
 import { db } from '@k39/database'
+import convert from 'heic-convert'
 import sharp from 'sharp'
 
 export const PHOTOS_MAX_COUNT_TO_UPLOAD = 10
@@ -11,7 +12,7 @@ const IMAGE_MAX_DIMENSION_TO_UPLOAD = 8000
 const IMAGE_MIN_DIMENSION_TO_UPLOAD = 200
 const IMAGE_FORMATS_TO_UPLOAD: sharp.Metadata['format'][] = ['jpeg', 'jpg', 'png', 'webp', 'heif']
 
-const IMAGE_SIZES_TO_SAVE: { size: PhotoVersionSize, width: number, height: number }[] = [
+export const IMAGE_SIZES_TO_SAVE: { size: PhotoVersionSize, width: number, height: number }[] = [
   {
     size: 'xs',
     width: 320,
@@ -38,7 +39,7 @@ const IMAGE_SIZES_TO_SAVE: { size: PhotoVersionSize, width: number, height: numb
     height: 1920,
   },
 ]
-const _IMAGE_FORMATS_TO_SAVE: PhotoVersionFormat[] = ['jpg', 'webp']
+export const IMAGE_FORMATS_TO_SAVE: PhotoVersionFormat[] = ['jpg', 'webp']
 
 export async function validatePhoto(photo: FileLike): Promise<
   | { ok: false, message: string }
@@ -80,10 +81,15 @@ export async function validatePhoto(photo: FileLike): Promise<
   }
 }
 
-export async function optimizePhoto(data: { buffer: Buffer, format: PhotoVersionFormat, size: PhotoVersionSize }): Promise<{ metadata: sharp.Metadata, buffer: Buffer } | null> {
+export async function optimizePhoto(data: {
+  buffer: Buffer<ArrayBufferLike>
+  format: sharp.Metadata['format']
+  formatTo: PhotoVersionFormat
+  sizeTo: PhotoVersionSize },
+): Promise<{ metadata: sharp.Metadata, buffer: Buffer<ArrayBufferLike> } | null> {
   let sharpStream
 
-  const size = IMAGE_SIZES_TO_SAVE.find((s) => s.size === data.size)
+  const size = IMAGE_SIZES_TO_SAVE.find((s) => s.size === data.sizeTo)
   if (!size) {
     return null
   }
@@ -92,23 +98,30 @@ export async function optimizePhoto(data: { buffer: Buffer, format: PhotoVersion
     sharp.cache(false)
     sharp.concurrency(1)
 
-    sharpStream = sharp(data.buffer)
-
-    const buffer = await sharpStream
-      .resize({
-        width: size.width,
-        height: size.height,
-        fit: 'cover',
-        position: 'center',
+    // If HEIF/HEIC is uploaded, then convert it to JPEG
+    if (data.format === 'heif') {
+      const converted = await convert({
+        buffer: data.buffer as unknown as ArrayBufferLike,
+        format: 'JPEG',
+        quality: 1, // the jpeg compression quality, between 0 and 1
       })
-      .toFormat(data.format, { quality: 80 })
+
+      sharpStream = sharp(converted)
+    } else {
+      sharpStream = sharp(data.buffer)
+    }
+
+    // Resize to the required size (without going beyond) with same aspect ratio
+    const optimizedBuffer = await sharpStream
+      .resize(size.width, size.height, { fit: 'inside' })
+      .toFormat(data.formatTo, { quality: 85 })
       .toBuffer()
 
-    const optimizedMetadata = await sharp(buffer).metadata()
+    const optimizedMetadata = await sharp(optimizedBuffer).metadata()
 
     return {
       metadata: optimizedMetadata,
-      buffer,
+      buffer: optimizedBuffer,
     }
   } catch (error) {
     console.error(error)
@@ -144,7 +157,6 @@ export async function createAndUploadOriginalPhoto(data: {
 
 export async function createAndUploadPhotoVersion(data: {
   photoId: string
-  id: string
   size: PhotoVersionSize
   buffer: Buffer
   metadata: sharp.Metadata
@@ -152,12 +164,11 @@ export async function createAndUploadPhotoVersion(data: {
   try {
     const storage = useStorage('s3')
     const name = `${data.size}.${data.metadata.format}`
-    await storage.setItemRaw(`photos/${data.id}/${name}`, data.buffer)
+    await storage.setItemRaw(`photos/${data.photoId}/${name}`, data.buffer)
 
     return db.photo.createVersion({
       name,
       photoId: data.photoId,
-      id: data.id,
       size: data.size,
       format: data.metadata.format as PhotoVersionFormat,
       width: data.metadata.width,
