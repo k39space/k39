@@ -1,5 +1,5 @@
 import type { PageDraft, PageFollower, PageFollowerDraft, PageFollowerWithData, Page as PageType, PageWithData } from '../types'
-import { eq, sql } from 'drizzle-orm'
+import { count, eq, sql } from 'drizzle-orm'
 import { useDatabase } from '../database'
 import { pageFollowers, pages } from '../tables'
 
@@ -111,15 +111,20 @@ export class Page {
   }
 
   static async recountFollowers(pageId: string) {
-    const followers = await useDatabase().query.pageFollowers.findMany({
-      columns: {
-        id: true,
-      },
-      where: (pageFollowers, { eq }) => eq(pageFollowers.pageId, pageId),
-    })
+    const [result] = await useDatabase()
+      .select({
+        value: count(pageFollowers.id),
+      })
+      .from(pageFollowers)
+      .where(eq(pageFollowers.pageId, pageId))
 
-    await useDatabase().update(pages).set({
-      followersCount: followers.length,
-    }).where(eq(pages.id, pageId))
+    const followersCount = result?.value ?? 0
+
+    await useDatabase()
+      .update(pages)
+      .set({
+        followersCount,
+      })
+      .where(eq(pages.id, pageId))
   }
 }
