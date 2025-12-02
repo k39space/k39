@@ -17,24 +17,34 @@
         <div class="flex flex-col gap-4">
           <div class="flex flex-row gap-6">
             <PageFollowers
-              :avatars="followers.top"
-              :count="followers.count"
+              :followers="topFollowers"
+              :count="page?.followersCount ?? 0"
             />
 
-            <PageRating :rating="page?.rating ?? 0" :url="`/${page?.slug}/reviews`" />
+            <PageRating :rating="page?.overallRating ?? 0" :url="`/${page?.slug}/reviews`" />
           </div>
 
           <USkeleton v-if="!userStore.ready" class="w-full h-9" />
-          <div v-else>
+          <div v-else-if="page?.id">
+            <FormDeletePageFollower
+              v-if="userStore.loggedIn && isFollower"
+              :page-id="page.id"
+              @success="() => { fetchPage(); fetchFollower() }"
+            />
+            <FormCreatePageFollower
+              v-else-if="userStore.loggedIn && !isFollower"
+              :page-id="page.id"
+              @success="() => { fetchPage(); fetchFollower() }"
+            />
             <UButton
-              v-if="canFollow"
-              icon="i-lucide-user-plus"
+              v-else
               size="lg"
               color="neutral"
-              variant="soft"
+              variant="solid"
               block
+              icon="i-lucide-user-plus"
               label="Подписаться"
-              @click="userStore.loggedIn ? () => {} : tryActionThatRequiresAuth()"
+              @click="tryActionThatRequiresAuth()"
             />
           </div>
         </div>
@@ -58,11 +68,12 @@
 </template>
 
 <script setup lang="ts">
+import type { PageFollowerWithData } from '@k39/database'
 import type { NavigationMenuItem } from '@nuxt/ui'
 
 const { params } = useRoute('pageSlug___ru')
 
-const { data: page, error } = await useFetch(`/api/page/slug/${params.pageSlug}`)
+const { data: page, error, execute: fetchPage } = await useFetch(`/api/page/slug/${params.pageSlug}`)
 
 if (!page.value || error.value) {
   throw createError({
@@ -71,9 +82,13 @@ if (!page.value || error.value) {
   })
 }
 
+const { data: follower, execute: fetchFollower } = await useFetch(`/api/page/id/${page.value?.id}/my`)
+
 const userStore = useUserStore()
 
-const canFollow = computed(() => true)
+const isFollower = computed<boolean>(() => userStore.id === follower.value?.userId)
+
+const topFollowers = computed<PageFollowerWithData[]>(() => page.value?.followers.slice(0, 3) || [])
 
 const { items } = useBreadcrumb()
 
@@ -94,22 +109,6 @@ const submenuItems = computed<NavigationMenuItem[]>(() => [
     label: 'Адреса',
     to: `/${params.pageSlug}/points`,
     icon: 'i-lucide-map',
-    badge: 2,
   },
 ])
-
-const followers = ref({
-  count: 9,
-  top: [
-    {
-      src: 'https://avatar.k39.online/12454343.svg',
-    },
-    {
-      src: 'https://avatar.k39.online/12452354543.svg',
-    },
-    {
-      src: 'https://avatar.k39.online/124552235343.svg',
-    },
-  ],
-})
 </script>

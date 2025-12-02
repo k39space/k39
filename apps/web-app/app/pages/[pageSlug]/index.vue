@@ -1,6 +1,12 @@
 <template>
-  <UContainer class="max-w-5xl">
-    Постов пока нет
+  <UContainer class="mt-4 max-w-5xl">
+    <div class="grid grid-cols-3 gap-10">
+      <div class="col-span-2">
+        <div class="text-muted">
+          Постов пока нет
+        </div>
+      </div>
+    </div>
   </UContainer>
 </template>
 

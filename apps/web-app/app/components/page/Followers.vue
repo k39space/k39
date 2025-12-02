@@ -9,16 +9,27 @@
       </p>
     </div>
 
-    <UAvatarGroup>
+    <UAvatarGroup v-if="followers.length">
+      <NuxtLink
+        v-for="follower in followers"
+        :key="follower.id"
+        :to="`/u/${follower.user.username}`"
+      >
+        <UAvatar :src="follower.user.avatarUrl ?? undefined" />
+      </NuxtLink>
+    </UAvatarGroup>
+    <UAvatarGroup v-else>
       <UAvatar
-        v-for="avatar in avatars"
-        :key="avatar.src"
-        :src="avatar.src"
+        v-for="i in 3"
+        :key="i"
+        :src="undefined"
       />
     </UAvatarGroup>
   </div>
 </template>
 
 <script lang="ts" setup>
-defineProps<{ count: number, avatars: { src: string }[] }>()
+import type { PageFollowerWithData } from '@k39/database'
+
+defineProps<{ count: number, followers: PageFollowerWithData[] }>()
 </script>

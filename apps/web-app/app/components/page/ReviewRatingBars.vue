@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col gap-0">
+  <div v-if="isShown" class="flex flex-col gap-0">
     <div
       v-for="rating in sortedRatings"
       :key="rating.rating"
@@ -24,4 +24,7 @@ const { ratings } = defineProps<{ ratings: { rating: number, percent: number }[]
 
 // 5 to 1
 const sortedRatings = computed(() => ratings.toSorted((a, b) => b.rating - a.rating))
+
+// Don't show if all ratings are 0
+const isShown = computed(() => sortedRatings.value.some((rating) => rating.percent > 0))
 </script>
