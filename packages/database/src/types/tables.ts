@@ -29,6 +29,13 @@ export type Page = InferSelectModel<typeof tables.pages>
 export type PageDraft = InferInsertModel<typeof tables.pages>
 export type PageWithData = Page & {
   categories: PageCategoryWithData[]
+  followers: PageFollowerWithData[]
+}
+
+export type PageFollower = InferSelectModel<typeof tables.pageFollowers>
+export type PageFollowerDraft = InferInsertModel<typeof tables.pageFollowers>
+export type PageFollowerWithData = PageFollower & {
+  user: User
 }
 
 export type PageCategory = InferSelectModel<typeof tables.pageCategories>

@@ -100,9 +100,9 @@
       <ULink
         to="#"
         size="lg"
-        class="font-medium"
+        class="font-medium opacity-50"
       >
-        Комментарии (2)
+        Комментарии
       </ULink>
 
       <div class="flex flex-row gap-2.5 items-center">

@@ -1,7 +1,7 @@
-import type { PageDraft, Page as PageType, PageWithData } from '../types'
+import type { PageDraft, PageFollower, PageFollowerDraft, PageFollowerWithData, Page as PageType, PageWithData } from '../types'
 import { eq, sql } from 'drizzle-orm'
 import { useDatabase } from '../database'
-import { pages } from '../tables'
+import { pageFollowers, pages } from '../tables'
 
 export class Page {
   static async find(id: string): Promise<PageWithData | undefined> {
@@ -11,6 +11,11 @@ export class Page {
         categories: {
           with: {
             category: true,
+          },
+        },
+        followers: {
+          with: {
+            user: true,
           },
         },
       },
@@ -26,16 +31,38 @@ export class Page {
             category: true,
           },
         },
+        followers: {
+          with: {
+            user: true,
+          },
+        },
       },
     })
   }
 
-  static async list() {
+  static async findFollowerByUserId(pageId: string, userId: string): Promise<PageFollowerWithData | undefined> {
+    return useDatabase().query.pageFollowers.findFirst({
+      where: (pageFollowers, { eq, and }) => and(
+        eq(pageFollowers.pageId, pageId),
+        eq(pageFollowers.userId, userId),
+      ),
+      with: {
+        user: true,
+      },
+    })
+  }
+
+  static async list(): Promise<PageWithData[]> {
     return useDatabase().query.pages.findMany({
       with: {
         categories: {
           with: {
             category: true,
+          },
+        },
+        followers: {
+          with: {
+            user: true,
           },
         },
       },
@@ -53,6 +80,16 @@ export class Page {
     return result[0] as PageType
   }
 
+  static async createFollower(data: PageFollowerDraft): Promise<PageFollower> {
+    const result = await useDatabase().insert(pageFollowers).values(data).returning()
+
+    if (result.length === 0) {
+      throw new Error('Page follower creation failed: no data returned from DB')
+    }
+
+    return result[0] as PageFollower
+  }
+
   static async update(id: string, data: Omit<Partial<PageDraft>, 'id' | 'createdAt'>) {
     const [page] = await useDatabase()
       .update(pages)
@@ -67,5 +104,22 @@ export class Page {
 
   static async delete(id: string) {
     return useDatabase().delete(pages).where(eq(pages.id, id))
+  }
+
+  static async deleteFollower(id: string) {
+    await useDatabase().delete(pageFollowers).where(eq(pageFollowers.id, id))
+  }
+
+  static async recountFollowers(pageId: string) {
+    const followers = await useDatabase().query.pageFollowers.findMany({
+      columns: {
+        id: true,
+      },
+      where: (pageFollowers, { eq }) => eq(pageFollowers.pageId, pageId),
+    })
+
+    await useDatabase().update(pages).set({
+      followersCount: followers.length,
+    }).where(eq(pages.id, pageId))
   }
 }

@@ -101,12 +101,14 @@ export const pages = pgTable('pages', {
   description: varchar('description'),
   avatarUrl: varchar('avatar_url'),
   rating: numeric('rating', { mode: 'number' }).notNull().default(0),
+  overallRating: numeric('overall_rating', { mode: 'number' }).notNull().default(0),
   reviewsCount: integer('reviews_count').notNull().default(0),
   reviewsCount5: integer('reviews_count_5').notNull().default(0),
   reviewsCount4: integer('reviews_count_4').notNull().default(0),
   reviewsCount3: integer('reviews_count_3').notNull().default(0),
   reviewsCount2: integer('reviews_count_2').notNull().default(0),
   reviewsCount1: integer('reviews_count_1').notNull().default(0),
+  followersCount: integer('followers_count').notNull().default(0),
 })
 
 export const points = pgTable('points', {
@@ -120,6 +122,22 @@ export const points = pgTable('points', {
     onUpdate: 'cascade',
   }),
 })
+
+export const pageFollowers = pgTable('page_followers', {
+  id: cuid2('id').defaultRandom().primaryKey(),
+  createdAt: timestamp('created_at', { precision: 3, withTimezone: true, mode: 'string' }).notNull().defaultNow(),
+  updatedAt: timestamp('updated_at', { precision: 3, withTimezone: true, mode: 'string' }).notNull().defaultNow(),
+  pageId: cuid2('page_id').notNull().references(() => pages.id, {
+    onDelete: 'cascade',
+    onUpdate: 'cascade',
+  }),
+  userId: cuid2('user_id').notNull().references(() => users.id, {
+    onDelete: 'cascade',
+    onUpdate: 'cascade',
+  }),
+}, (t) => [
+  uniqueIndex('unique_page_followers').on(t.pageId, t.userId),
+])
 
 export const pageCategories = pgTable('page_categories', {
   id: cuid2('id').defaultRandom().primaryKey(),
@@ -240,6 +258,7 @@ export const userRelations = relations(users, ({ many }) => ({
   badgeTasks: many(userBadgeTasks),
   pageReviews: many(pageReviews),
   pageReviewVotes: many(pageReviewVotes),
+  pageFollowers: many(pageFollowers),
 }))
 
 export const badgeRelations = relations(badges, ({ many }) => ({
@@ -286,6 +305,18 @@ export const pageRelations = relations(pages, ({ many }) => ({
   points: many(points),
   reviews: many(pageReviews),
   categories: many(pageCategories),
+  followers: many(pageFollowers),
+}))
+
+export const pageFollowerRelations = relations(pageFollowers, ({ one }) => ({
+  page: one(pages, {
+    fields: [pageFollowers.pageId],
+    references: [pages.id],
+  }),
+  user: one(users, {
+    fields: [pageFollowers.userId],
+    references: [users.id],
+  }),
 }))
 
 export const pageCategoryRelations = relations(pageCategories, ({ one }) => ({
