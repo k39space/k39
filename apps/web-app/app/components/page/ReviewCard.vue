@@ -1,5 +1,5 @@
 <template>
-  <div class="border border-default rounded-lg p-4 sm:p-5 flex flex-col gap-5">
+  <div class="border border-default rounded-lg p-4 sm:p-5 flex flex-col gap-5 group/card">
     <div class="grid grid-cols-3 gap-4">
       <NuxtLink
         :to="`/u/${review.user.username}`"
@@ -9,7 +9,7 @@
       </NuxtLink>
 
       <div class="flex flex-col gap-2 items-end">
-        <div class="flex flex-row gap-2">
+        <div class="flex flex-row gap-2 opacity-50 group-hover/card:opacity-100 transition duration-200">
           <UButton
             size="lg"
             color="neutral"
@@ -100,25 +100,25 @@
       <ULink
         to="#"
         size="lg"
-        class="font-medium opacity-50"
+        class="font-medium opacity-50 group-hover/card:opacity-100 transition duration-200"
       >
         Комментарии
       </ULink>
 
-      <div class="flex flex-row gap-2.5 items-center">
+      <div class="flex flex-row gap-2.5 items-center opacity-50 group-hover/card:opacity-100 transition duration-200">
         <UButton
-          size="xl"
+          size="lg"
           color="neutral"
-          variant="link"
+          variant="outline"
           icon="i-lucide-thumbs-down"
         />
-        <p class="text-lg">
+        <p class="text-lg font-medium">
           {{ review.voteBalance > 0 ? '+' : '' }}{{ review.voteBalance }}
         </p>
         <UButton
-          size="xl"
+          size="lg"
           color="neutral"
-          variant="link"
+          variant="outline"
           icon="i-lucide-thumbs-up"
         />
       </div>
