@@ -9,7 +9,11 @@
       </NuxtLink>
 
       <div class="flex flex-col gap-2 items-end">
-        <div class="flex flex-row gap-2 opacity-50 group-hover/card:opacity-100 transition duration-200">
+        <time :datetime="review.createdAt" class="text-sm/5 text-muted">
+          {{ format(review.createdAt, 'dd MMMM yyyy', { locale: ru }) }}
+        </time>
+
+        <div class="flex flex-row gap-2 opacity-35 group-hover/card:opacity-100 transition duration-200">
           <UButton
             size="lg"
             color="neutral"
@@ -26,10 +30,6 @@
             class="w-fit"
           />
         </div>
-
-        <time :datetime="review.createdAt" class="text-sm/5 text-muted">
-          {{ format(review.createdAt, 'dd MMMM yyyy', { locale: ru }) }}
-        </time>
       </div>
     </div>
 
@@ -100,12 +100,12 @@
       <ULink
         to="#"
         size="lg"
-        class="font-medium opacity-50 group-hover/card:opacity-100 transition duration-200"
+        class="font-medium opacity-35 group-hover/card:opacity-100 transition duration-200"
       >
         Комментарии
       </ULink>
 
-      <div class="flex flex-row gap-2.5 items-center opacity-50 group-hover/card:opacity-100 transition duration-200">
+      <div class="flex flex-row gap-2.5 items-center opacity-35 group-hover/card:opacity-100 transition duration-200">
         <UButton
           size="lg"
           color="neutral"

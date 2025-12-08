@@ -26,15 +26,15 @@
 
           <USkeleton v-if="!userStore.ready" class="w-full h-9" />
           <div v-else-if="page?.id">
-            <FormDeletePageFollower
+            <PageUnfollowButton
               v-if="userStore.loggedIn && isFollower"
               :page-id="page.id"
-              @success="() => { fetchPage(); fetchFollower() }"
+              :on-success="updateData"
             />
             <FormCreatePageFollower
               v-else-if="userStore.loggedIn && !isFollower"
               :page-id="page.id"
-              @success="() => { fetchPage(); fetchFollower() }"
+              @success="updateData()"
             />
             <UButton
               v-else
@@ -83,6 +83,11 @@ if (!page.value || error.value) {
 }
 
 const { data: follower, execute: fetchFollower } = await useFetch(`/api/page/id/${page.value?.id}/my`)
+
+function updateData() {
+  fetchPage()
+  fetchFollower()
+}
 
 const userStore = useUserStore()
 
