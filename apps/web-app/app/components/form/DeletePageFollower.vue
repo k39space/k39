@@ -2,16 +2,13 @@
   <UForm @submit="onSubmit">
     <UButton
       type="submit"
-      size="lg"
+      size="xl"
       color="neutral"
-      variant="soft"
+      variant="solid"
       block
-      :icon="followerButtonIcon"
-      :label="followerButtonLabel"
+      label="Да, отписаться"
       :loading="isSubmitting"
       :disabled="isSubmitting"
-      @mouseenter="handleFollowerButtonHover(true)"
-      @mouseleave="handleFollowerButtonHover(false)"
     />
   </UForm>
 </template>
@@ -22,18 +19,6 @@ const { pageId } = defineProps<{ pageId: string }>()
 const emit = defineEmits(['success', 'submitted'])
 
 const isSubmitting = ref(false)
-const followerButtonLabel = ref('Вы подписаны')
-const followerButtonIcon = ref('i-lucide-user-round-check')
-
-function handleFollowerButtonHover(isHovered: boolean) {
-  if (isHovered) {
-    followerButtonLabel.value = 'Отписаться'
-    followerButtonIcon.value = 'i-lucide-user-round-x'
-  } else {
-    followerButtonLabel.value = 'Вы подписаны'
-    followerButtonIcon.value = 'i-lucide-user-round-check'
-  }
-}
 
 const toast = useToast()
 

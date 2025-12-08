@@ -42,6 +42,13 @@
 </template>
 
 <script setup lang="ts">
+// If already logged in, redirect to feed
+const { loggedIn } = useUserSession()
+
+if (loggedIn.value) {
+  await navigateTo('/feed')
+}
+
 const { app } = useAppConfig()
 
 const title = 'Калининград онлайн: заведения, блоги и отзывы жителей области'
