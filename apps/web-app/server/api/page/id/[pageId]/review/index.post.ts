@@ -1,3 +1,4 @@
+import type { PageReviewPhotoType } from '@k39/database'
 import { db } from '@k39/database'
 import { createPageReviewServerSchema } from '@k39/types/server'
 import { createId } from '@paralleldrive/cuid2'
@@ -23,6 +24,19 @@ export default defineEventHandler(async (event) => {
 
     const user = await getUserFromSession(event)
 
+    // Guard: Check if user already reviewed this page
+    const pageReviewInDb = await db.pageReview.findByPageIdAndUserId(pageId, user.id)
+    if (pageReviewInDb) {
+      throw createError({
+        statusCode: 409,
+        statusMessage: 'Conflict',
+        data: {
+          code: 'PAGE_REVIEW_ALREADY_EXISTS',
+          message: 'У вас уже есть отзыв.',
+        },
+      })
+    }
+
     const formData = await readMultipartFormData(event)
     if (!formData) {
       throw createError({
@@ -32,34 +46,33 @@ export default defineEventHandler(async (event) => {
     }
 
     const fields: Record<string, string> = {}
-    const photos: OriginalPhoto[] = []
-    const privatePhotos: OriginalPhoto[] = []
+    const photos: (OriginalPhoto & { type: PageReviewPhotoType })[] = []
 
     for (const item of formData) {
       if (!item.name) {
         continue
       }
-      if (item.name === 'photos') {
+      if (item.name === 'photos' || item.name === 'privatePhotos') {
         const itemValidated = await validatePhoto(item)
+        if (!itemValidated.ok) {
+          continue
+        }
 
-        if (itemValidated.ok && photos.length < PHOTOS_MAX_COUNT_TO_UPLOAD) {
+        if (item.name === 'photos' && photos.filter((photo) => photo.type === 'public').length < PHOTOS_MAX_COUNT_TO_UPLOAD) {
           photos.push({
             ...item,
             id: createId(),
             metadata: itemValidated.metadata,
+            type: 'public',
           })
         }
 
-        continue
-      }
-      if (item.name === 'privatePhotos') {
-        const itemValidated = await validatePhoto(item)
-
-        if (itemValidated.ok && privatePhotos.length < PRIVATE_PHOTOS_MAX_COUNT_TO_UPLOAD) {
-          privatePhotos.push({
+        if (item.name === 'privatePhotos' && photos.filter((photo) => photo.type === 'private').length < PRIVATE_PHOTOS_MAX_COUNT_TO_UPLOAD) {
+          photos.push({
             ...item,
             id: createId(),
             metadata: itemValidated.metadata,
+            type: 'private',
           })
         }
 
@@ -75,19 +88,6 @@ export default defineEventHandler(async (event) => {
     }
 
     const data = createPageReviewServerSchema.parse(parsedFields)
-
-    // Guard: Check if user already reviewed this page
-    const pageReviewInDb = await db.pageReview.findByPageIdAndUserId(pageId, user.id)
-    if (pageReviewInDb) {
-      throw createError({
-        statusCode: 409,
-        statusMessage: 'Conflict',
-        data: {
-          code: 'PAGE_REVIEW_ALREADY_EXISTS',
-          message: 'У вас уже есть отзыв.',
-        },
-      })
-    }
 
     const review = await db.pageReview.create({
       pageId,
@@ -109,28 +109,13 @@ export default defineEventHandler(async (event) => {
       })
 
       await db.pageReview.createPhoto({
-        type: 'public',
+        type: photo.type,
         pageReviewId: review.id,
         photoId: photo.id,
       })
 
       // PhotoVersions
       await optimizeAllPhotos(photo)
-    }
-
-    // Upload Private Photos
-    for (const photo of privatePhotos) {
-      await createAndUploadOriginalPhoto({
-        id: photo.id,
-        buffer: photo.data,
-        metadata: photo.metadata,
-      })
-
-      await db.pageReview.createPhoto({
-        type: 'private',
-        pageReviewId: review.id,
-        photoId: photo.id,
-      })
     }
 
     return {

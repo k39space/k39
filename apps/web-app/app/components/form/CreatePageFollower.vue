@@ -22,6 +22,7 @@ const emit = defineEmits(['success', 'submitted'])
 const isSubmitting = ref(false)
 
 const toast = useToast()
+const { pop } = useConfetti()
 
 const userStore = useUserStore()
 
@@ -40,6 +41,7 @@ async function onSubmit() {
     await userStore.update()
 
     emit('success')
+    pop()
   } catch (error) {
     if (isApiError(error)) {
       toast.add({
