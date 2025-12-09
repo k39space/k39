@@ -41,6 +41,7 @@ catalogs:
     aws4fetch: ^1.0.20
     date-fns: ^4.1.0
     grammy: ^1.38.4
+    heic-convert: ^2.1.0
     ioredis: ^5.8.2
     libphonenumber-js: ^1.12.29
     pinia: ^3.0.4
@@ -53,6 +54,7 @@ catalogs:
     vitest: ^4.0.14
     vitest-browser-vue: ^2.0.1
   types:
+    '@types/heic-convert': ^2.1.0
     '@types/node': ^24.10.1
 
 ignoredBuiltDependencies:

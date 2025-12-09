@@ -2,7 +2,7 @@ import type { PageReviewPhotoType } from '@k39/database'
 import { db } from '@k39/database'
 import { createPageReviewServerSchema } from '@k39/types/server'
 import { createId } from '@paralleldrive/cuid2'
-import { createAndUploadOriginalPhoto, createAndUploadPhotoVersion, IMAGE_FORMATS_TO_SAVE, IMAGE_SIZES_TO_SAVE, optimizePhoto, PHOTOS_MAX_COUNT_TO_UPLOAD, PRIVATE_PHOTOS_MAX_COUNT_TO_UPLOAD, validatePhoto } from '~~/server/services/photo'
+import { createAndUploadOriginalPhoto, PHOTOS_MAX_COUNT_TO_UPLOAD, PRIVATE_PHOTOS_MAX_COUNT_TO_UPLOAD, validatePhoto } from '~~/server/services/photo'
 
 export default defineEventHandler(async (event) => {
   try {
@@ -113,9 +113,6 @@ export default defineEventHandler(async (event) => {
         pageReviewId: review.id,
         photoId: photo.id,
       })
-
-      // PhotoVersions
-      await optimizeAllPhotos(photo)
     }
 
     return {
@@ -126,32 +123,3 @@ export default defineEventHandler(async (event) => {
     throw errorResolver(error)
   }
 })
-
-async function optimizeAllPhotos(photo: OriginalPhoto) {
-  // Create all possible formats
-  for (const format of IMAGE_FORMATS_TO_SAVE) {
-    // Create all possible sizes
-    for (const size of IMAGE_SIZES_TO_SAVE) {
-      const isSmaller = photo.metadata.width < size.width || photo.metadata.height < size.height
-      if (isSmaller) {
-        continue
-      }
-
-      const optimizedPhoto = await optimizePhoto({
-        sizeTo: size.size,
-        buffer: photo.data,
-        format: photo.metadata.format,
-        formatTo: format,
-      })
-
-      if (optimizedPhoto) {
-        await createAndUploadPhotoVersion({
-          photoId: photo.id,
-          size: size.size,
-          buffer: optimizedPhoto.buffer,
-          metadata: optimizedPhoto.metadata,
-        })
-      }
-    }
-  }
-}
