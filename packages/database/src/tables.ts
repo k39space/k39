@@ -235,6 +235,7 @@ export const photos = pgTable('photos', {
   width: integer('width').notNull(),
   height: integer('height').notNull(),
   sizeBytes: integer('size_bytes').notNull(),
+  isOptimized: boolean('is_optimized').notNull().default(false),
 })
 
 export const photoVersions = pgTable('photo_versions', {

@@ -13,6 +13,12 @@ export class Photo {
     })
   }
 
+  static async findUnoptimized() {
+    return useDatabase().query.photos.findFirst({
+      where: (photos, { eq }) => eq(photos.isOptimized, false),
+    })
+  }
+
   static async create(data: PhotoDraft): Promise<PhotoType> {
     const result = await useDatabase().insert(photos).values(data).returning()
 
