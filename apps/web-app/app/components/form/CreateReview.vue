@@ -155,7 +155,7 @@
       size="xl"
       block
       class="mt-3"
-      label="Отправить"
+      :label="isSubmitting ? 'Отправляем...' : 'Отправить'"
       :loading="isSubmitting"
       :disabled="isSubmitting"
     />

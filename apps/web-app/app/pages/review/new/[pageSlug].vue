@@ -31,6 +31,10 @@
 </template>
 
 <script setup lang="ts">
+definePageMeta({
+  middleware: ['01-auth-only'],
+})
+
 const { params } = useRoute('review-new-pageSlug___ru')
 
 const { data: page, error } = await useFetch(`/api/page/slug/${params.pageSlug}`)
