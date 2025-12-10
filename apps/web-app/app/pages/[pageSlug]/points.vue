@@ -2,7 +2,7 @@
   <UContainer class="mt-4 max-w-5xl">
     <div class="grid grid-cols-3 gap-10">
       <div class="col-span-2">
-        <div class="text-muted">
+        <div class="text-muted min-h-80">
           Адресов пока нет
         </div>
       </div>

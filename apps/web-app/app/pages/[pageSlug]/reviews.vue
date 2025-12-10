@@ -1,6 +1,6 @@
 <template>
   <UContainer class="mt-4 max-w-5xl">
-    <div class="grid grid-cols-3 gap-10">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-10">
       <div class="col-span-2">
         <div v-if="pageReviews?.length" class="flex flex-col gap-6">
           <PageReviewCard
@@ -15,7 +15,7 @@
         </div>
       </div>
 
-      <div class="mt-4 col-span-1">
+      <div class="mb-4 md:mt-4 col-span-1 order-first md:order-last">
         <div class="flex flex-col gap-8">
           <PageReviewRatingBlock
             v-if="page"

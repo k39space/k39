@@ -1,12 +1,12 @@
 <template>
   <div class="flex flex-row gap-4">
     <div class="shrink-0 relative flex flex-col justify-start">
-      <img :src="page.avatarUrl ?? ''" class="size-26 rounded-lg border border-default">
+      <img :src="page.avatarUrl ?? ''" class="size-16 md:size-26 rounded-lg border border-default">
     </div>
 
     <div class="flex flex-col gap-3.5 justify-center">
       <div class="flex flex-col gap-2">
-        <h1 class="text-3xl/6 font-bold">
+        <h1 class="text-xl/4 md:text-3xl/6 font-bold">
           {{ page?.title }}
         </h1>
 

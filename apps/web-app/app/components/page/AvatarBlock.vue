@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-row gap-4">
+  <div class="flex flex-col md:flex-row gap-4">
     <div class="size-35 shrink-0 aspect-square rounded-lg border border-default">
       <img
         :src="page.avatarUrl ?? ''"
@@ -27,5 +27,5 @@
 <script setup lang="ts">
 import type { PageWithData } from '@k39/database'
 
-const { page } = defineProps<{ page: PageWithData }>()
+defineProps<{ page: PageWithData }>()
 </script>

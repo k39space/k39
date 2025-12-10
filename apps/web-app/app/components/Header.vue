@@ -27,13 +27,14 @@
             size="lg"
             color="error"
             inset
+            :show="!userStore.loggedIn"
           >
             <UButton
               size="lg"
               icon="i-lucide-bell"
               color="neutral"
               variant="ghost"
-              @click="tryActionThatRequiresAuth()"
+              @click="userStore.loggedIn ? () => {} : tryActionThatRequiresAuth()"
             />
           </UChip>
         </div>
@@ -67,4 +68,6 @@
 
 <script setup lang="ts">
 const { isMobileMenuOpened, mainNavigationItems } = useApp()
+
+const userStore = useUserStore()
 </script>

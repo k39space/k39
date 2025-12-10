@@ -3,32 +3,30 @@
 
   <div class="py-8 lg:py-12 border-b border-default">
     <UContainer>
-      <nav class="xl:grid xl:grid-cols-3 xl:gap-8">
-        <div class="flex flex-col lg:grid grid-flow-col auto-cols-fr gap-12 md:gap-8 xl:col-span-2">
-          <div v-for="column in columns" :key="column.label">
-            <h3 class="text-sm font-semibold">
-              {{ column.label }}
-            </h3>
-            <ul class="mt-6 space-y-4">
-              <li
-                v-for="item in column.children"
-                :key="item.label"
-                class="relative"
+      <nav class="grid grid-cols-1 gap-6 xl:grid-cols-3 xl:gap-8">
+        <div v-for="column in columns" :key="column.label">
+          <h3 class="text-sm font-semibold">
+            {{ column.label }}
+          </h3>
+          <ul class="mt-2 lg:mt-4 space-y-4">
+            <li
+              v-for="item in column.children"
+              :key="item.label"
+              class="relative"
+            >
+              <ULink
+                :to="item.to"
+                :target="item.target"
+                class="text-base"
               >
-                <ULink
-                  :to="item.to"
-                  :target="item.target"
-                  class="text-base"
-                >
-                  {{ item.label }}
-                </ULink>
+                {{ item.label }}
+              </ULink>
 
-                <p v-if="item?.description" class="text-xs text-muted">
-                  {{ item.description }}
-                </p>
-              </li>
-            </ul>
-          </div>
+              <p v-if="item?.description" class="text-xs text-muted">
+                {{ item.description }}
+              </p>
+            </li>
+          </ul>
         </div>
       </nav>
     </UContainer>
@@ -75,6 +73,15 @@ const columns: { label: string, children: NavigationMenuItem[] }[] = [
       {
         label: 'Каталог бизнес-страниц',
         to: '/pages',
+      },
+    ],
+  },
+  {
+    label: 'Информация',
+    children: [
+      {
+        label: 'Контакты',
+        to: '/info/contacts',
       },
     ],
   },

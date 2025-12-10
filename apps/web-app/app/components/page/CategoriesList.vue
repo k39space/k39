@@ -1,5 +1,5 @@
 <template>
-  <ul class="w-fit flex flex-row gap-0.5 text-base/4 text-muted">
+  <ul class="w-fit flex flex-row flex-wrap gap-0.5 text-base/4 text-muted">
     <li
       v-for="(category, index) in categories"
       :key="category.id"
