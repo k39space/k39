@@ -1,13 +1,26 @@
 <template>
   <div
     class="shrink-0 aspect-square rounded-lg border border-default cursor-pointer hover:scale-105 transition duration-200"
-    @click="modalShowPhoto.open({ src: maximalSrc, alt })"
   >
-    <img
-      :src="minimalSrc"
-      :alt="alt"
-      class="w-full h-full object-cover rounded-lg"
-    >
+    <picture v-if="minimalWebpPhoto || minimalJpegPhoto">
+      <source
+        v-if="minimalWebpPhoto"
+        :srcset="`${photoUrl}/${photo.id}/${minimalWebpPhoto.name}`"
+        type="image/webp"
+      >
+      <img
+        v-if="minimalJpegPhoto"
+        :src="`${photoUrl}/${photo.id}/${minimalJpegPhoto.name}`"
+        :alt="alt"
+        loading="lazy"
+        class="w-full h-full object-cover rounded-lg"
+        @click="modalShowPhoto.open({ jpegSrc: maximalJpegSrc, webpSrc: maximalWebpSrc, alt })"
+      >
+    </picture>
+    <div v-else class="h-full flex flex-col gap-2 items-center justify-center text-dimmed/50">
+      <UIcon name="i-lucide-scaling" class="size-12" />
+      <UIcon name="i-lucide-loader-2" class="size-6 motion-preset-spin motion-duration-2000" />
+    </div>
   </div>
 </template>
 
@@ -19,13 +32,18 @@ const { photo } = defineProps<{ photo: PhotoWithData, alt: string }>()
 
 const { public: { photoUrl } } = useRuntimeConfig()
 
-const format = ref('jpeg')
-const jpegPhotos = computed(() => photo.versions.filter((version) => version.format === format.value))
-const minimalJpegPhoto = computed(() => jpegPhotos.value.toSorted((a, b) => a.width - b.width)[0])
-const maximalJpegPhoto = computed(() => jpegPhotos.value.toSorted((a, b) => b.width - a.width)[0])
+const jpegPhotos = computed(() => photo.versions.filter((version) => version.format === 'jpeg'))
+const webpPhotos = computed(() => photo.versions.filter((version) => version.format === 'webp'))
 
-const minimalSrc = computed(() => `${photoUrl}/${photo.id}/${minimalJpegPhoto.value?.name}`)
-const maximalSrc = computed(() => `${photoUrl}/${photo.id}/${maximalJpegPhoto.value?.name}`)
+const minimalJpegPhoto = computed(() => jpegPhotos.value.toSorted((a, b) => a.width - b.width)[0])
+const minimalWebpPhoto = computed(() => webpPhotos.value.toSorted((a, b) => a.width - b.width)[0])
+
+// For modal show
+const maximalJpegPhoto = computed(() => jpegPhotos.value.toSorted((a, b) => b.width - a.width)[0])
+const maximalWebpPhoto = computed(() => webpPhotos.value.toSorted((a, b) => b.width - a.width)[0])
+
+const maximalJpegSrc = computed(() => `${photoUrl}/${photo.id}/${maximalJpegPhoto.value?.name}`)
+const maximalWebpSrc = computed(() => `${photoUrl}/${photo.id}/${maximalWebpPhoto.value?.name}`)
 
 const overlay = useOverlay()
 const modalShowPhoto = overlay.create(ModalShowPhoto)

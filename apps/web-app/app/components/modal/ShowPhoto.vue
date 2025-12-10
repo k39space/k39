@@ -8,15 +8,22 @@
     }"
   >
     <template #body>
-      <img
-        :src="src"
-        :alt="alt ?? ''"
-        class="w-full h-full object-cover rounded-lg"
-      >
+      <picture>
+        <source
+          v-if="webpSrc"
+          :srcset="webpSrc"
+          type="image/webp"
+        >
+        <img
+          :src="jpegSrc"
+          :alt="alt ?? ''"
+          class="w-full h-full object-cover rounded-lg"
+        >
+      </picture>
     </template>
   </UModal>
 </template>
 
 <script setup lang="ts">
-defineProps<{ src: string, alt?: string }>()
+defineProps<{ jpegSrc: string, webpSrc?: string, alt?: string }>()
 </script>

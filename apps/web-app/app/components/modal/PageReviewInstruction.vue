@@ -10,7 +10,7 @@
         <UIcon name="fluent-emoji-flat:black-nib" class="size-18 mx-auto" />
 
         <div class="flex flex-col gap-2">
-          <p class="text-muted">
+          <p>
             Пожалуйста, соблюдайте несколько простых правил:
           </p>
 

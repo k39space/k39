@@ -8,5 +8,5 @@ export type PageReviewPhotoType = 'public' | 'private'
 
 export type PageReviewModerationRequestStatus = 'pending' | 'approved' | 'rejected' | 'hidden'
 
-export type PhotoVersionFormat = 'jpg' | 'webp'
+export type PhotoVersionFormat = 'jpeg' | 'webp'
 export type PhotoVersionSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
