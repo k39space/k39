@@ -1,5 +1,5 @@
 <template>
-  <div class="pl-2.5 pr-3.5 pt-2 pb-3 w-full flex flex-row gap-2.5 border border-default rounded-lg">
+  <div class="flex flex-row gap-2.5">
     <UserAvatarWithProgress
       size="sm"
       :percent="progressPercent"
