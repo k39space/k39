@@ -1,6 +1,6 @@
 <template>
   <div class="border border-default rounded-lg p-4 sm:p-5 flex flex-col gap-5 group/card">
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-start">
       <NuxtLink
         :to="`/u/${review.user.username}`"
         class="col-span-2 w-fit group transition hover:scale-98 duration-200"
@@ -9,10 +9,6 @@
       </NuxtLink>
 
       <div class="flex flex-col gap-2 md:items-end">
-        <time :datetime="review.createdAt" class="text-sm/5 text-muted">
-          {{ format(review.createdAt, 'dd MMMM yyyy', { locale: ru }) }}
-        </time>
-
         <div class="flex flex-row gap-2 opacity-35 group-hover/card:opacity-100 transition duration-200">
           <UButton
             size="lg"
@@ -79,6 +75,10 @@
         title="Комментарий"
         :content="review.comment"
       />
+
+      <time :datetime="review.createdAt" class="text-sm/5 text-muted italic">
+        Опубликовано {{ format(review.createdAt, 'dd MMMM yyyy', { locale: ru }) }}
+      </time>
 
       <div v-if="review.photos.length" class="flex flex-col gap-2">
         <h3 class="text-lg/5 font-bold">

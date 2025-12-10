@@ -6,7 +6,11 @@
       :style="`--value: ${percent}; --thickness: ${getSizes().thickness};`"
     />
     <div class="absolute inset-0 m-auto" :class="getSizes().img">
-      <img :src="src ?? ''" class="rounded-full">
+      <img
+        :src="src ?? ''"
+        loading="lazy"
+        class="rounded-full"
+      >
     </div>
 
     <div v-if="level" class="absolute -bottom-2 left-0 right-0 flex flex-row justify-center items-center">
