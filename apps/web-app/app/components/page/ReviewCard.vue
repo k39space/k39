@@ -1,6 +1,6 @@
 <template>
   <div class="border border-default rounded-lg p-4 sm:p-5 flex flex-col gap-5 group/card">
-    <div class="grid grid-cols-3 gap-4">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
       <NuxtLink
         :to="`/u/${review.user.username}`"
         class="col-span-2 w-fit group transition hover:scale-98 duration-200"
@@ -8,7 +8,7 @@
         <UserProfileCard :user="review.user" />
       </NuxtLink>
 
-      <div class="flex flex-col gap-2 items-end">
+      <div class="flex flex-col gap-2 md:items-end">
         <time :datetime="review.createdAt" class="text-sm/5 text-muted">
           {{ format(review.createdAt, 'dd MMMM yyyy', { locale: ru }) }}
         </time>
@@ -34,7 +34,7 @@
     </div>
 
     <div class="flex flex-col gap-4">
-      <div class="flex flex-row gap-2 items-center">
+      <div class="flex flex-row flex-wrap gap-2 items-center">
         <UBadge
           size="lg"
           variant="soft"
@@ -90,7 +90,7 @@
             v-for="photo in review.photos"
             :key="photo.id"
             :photo="photo.photo"
-            :alt="`Фото ${photo.id} из отзыва к «${review.page.title}»`"
+            :alt="`Пользовательское фото из отзыва к «${review.page.title}»`"
           />
         </div>
       </div>

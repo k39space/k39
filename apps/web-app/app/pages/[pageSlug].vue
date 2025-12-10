@@ -10,44 +10,14 @@
       />
     </div>
 
-    <div class="my-4 lg:py-6 flex flex-col gap-4">
-      <div class="flex flex-col lg:flex-row gap-2 justify-between items-start">
-        <PageAvatarBlock v-if="page" :page="page" />
-
-        <div class="flex flex-col gap-4">
-          <div class="flex flex-row gap-6">
-            <PageFollowers
-              :followers="topFollowers"
-              :count="page?.followersCount ?? 0"
-            />
-
-            <PageRating :rating="page?.overallRating ?? 0" :url="`/${page?.slug}/reviews`" />
-          </div>
-
-          <USkeleton v-if="!userStore.ready" class="w-full h-9" />
-          <div v-else-if="page?.id">
-            <PageUnfollowButton
-              v-if="userStore.loggedIn && isFollower"
-              :page-id="page.id"
-              :on-success="updateData"
-            />
-            <FormCreatePageFollower
-              v-else-if="userStore.loggedIn && !isFollower"
-              :page-id="page.id"
-              @success="updateData()"
-            />
-            <UButton
-              v-else
-              size="lg"
-              color="neutral"
-              variant="solid"
-              block
-              icon="i-lucide-user-plus"
-              label="Подписаться"
-              @click="tryActionThatRequiresAuth()"
-            />
-          </div>
-        </div>
+    <div class="my-4 py-3 lg:py-6 flex flex-col gap-4">
+      <div v-if="page" class="flex flex-col lg:flex-row gap-6 lg:gap-2 justify-between items-start">
+        <PageAvatarBlock :page="page" />
+        <PageFollowersBlock
+          :page="page"
+          :follower="follower"
+          :update-data="updateData"
+        />
       </div>
     </div>
   </UContainer>
@@ -68,7 +38,6 @@
 </template>
 
 <script setup lang="ts">
-import type { PageFollowerWithData } from '@k39/database'
 import type { NavigationMenuItem } from '@nuxt/ui'
 
 const { params } = useRoute('pageSlug___ru')
@@ -88,12 +57,6 @@ function updateData() {
   fetchPage()
   fetchFollower()
 }
-
-const userStore = useUserStore()
-
-const isFollower = computed<boolean>(() => userStore.id === follower.value?.userId)
-
-const topFollowers = computed<PageFollowerWithData[]>(() => page.value?.followers.slice(0, 3) || [])
 
 const { items } = useBreadcrumb()
 
