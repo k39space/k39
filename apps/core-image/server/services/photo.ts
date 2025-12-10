@@ -31,7 +31,7 @@ export const IMAGE_SIZES_TO_SAVE: { size: PhotoVersionSize, width: number, heigh
     height: 1920,
   },
 ]
-export const IMAGE_FORMATS_TO_SAVE: PhotoVersionFormat[] = ['jpg', 'webp']
+export const IMAGE_FORMATS_TO_SAVE: PhotoVersionFormat[] = ['jpeg', 'webp']
 
 export async function prepareSharp(format: sharp.Metadata['format'], buffer: Buffer<ArrayBufferLike>): Promise<sharp.Sharp | null> {
   let sharpStream: sharp.Sharp

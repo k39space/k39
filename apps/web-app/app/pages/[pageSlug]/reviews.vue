@@ -10,7 +10,7 @@
             class="motion-preset-slide-left"
           />
         </div>
-        <div v-else class="text-muted">
+        <div v-else class="text-muted min-h-80">
           Отзывов пока нет
         </div>
       </div>

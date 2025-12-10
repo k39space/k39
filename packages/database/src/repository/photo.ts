@@ -13,7 +13,7 @@ export class Photo {
     })
   }
 
-  static async findUnoptimized() {
+  static async findUnoptimized(): Promise<PhotoType | undefined> {
     return useDatabase().query.photos.findFirst({
       where: (photos, { eq }) => eq(photos.isOptimized, false),
     })

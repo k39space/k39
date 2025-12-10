@@ -15,6 +15,6 @@ export default defineNitroConfig({
     tasks: true,
   },
   scheduledTasks: {
-    '0/20 * * * * ?': ['photos:optimize'], // Every 20 seconds
+    '* * * * *': ['photos:optimize'], // Every minute
   },
 })

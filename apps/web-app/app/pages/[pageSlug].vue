@@ -10,15 +10,13 @@
       />
     </div>
 
-    <div class="my-4 py-3 lg:py-6 flex flex-col gap-4">
-      <div v-if="page" class="flex flex-col lg:flex-row gap-6 lg:gap-2 justify-between items-start">
-        <PageAvatarBlock :page="page" />
-        <PageFollowersBlock
-          :page="page"
-          :follower="follower"
-          :update-data="updateData"
-        />
-      </div>
+    <div v-if="page" class="my-4 py-3 lg:py-6 flex flex-col lg:flex-row gap-6 lg:gap-4 justify-between items-start">
+      <PageAvatarBlock :page="page" />
+      <PageFollowersBlock
+        :page="page"
+        :follower="follower"
+        :update-data="updateData"
+      />
     </div>
   </UContainer>
 
