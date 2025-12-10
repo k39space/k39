@@ -14,7 +14,7 @@
         :alt="alt"
         loading="lazy"
         class="w-full h-full object-cover rounded-lg"
-        @click="modalShowPhoto.open({ jpegSrc: maximalJpegSrc, webpSrc: maximalWebpSrc, alt })"
+        @click="maximalJpegSrc && modalShowPhoto.open({ jpegSrc: maximalJpegSrc, webpSrc: maximalWebpSrc, alt })"
       >
     </picture>
     <div v-else class="h-full flex flex-col gap-2 items-center justify-center text-dimmed/50">
@@ -42,8 +42,8 @@ const minimalWebpPhoto = computed(() => webpPhotos.value.toSorted((a, b) => a.wi
 const maximalJpegPhoto = computed(() => jpegPhotos.value.toSorted((a, b) => b.width - a.width)[0])
 const maximalWebpPhoto = computed(() => webpPhotos.value.toSorted((a, b) => b.width - a.width)[0])
 
-const maximalJpegSrc = computed(() => `${photoUrl}/${photo.id}/${maximalJpegPhoto.value?.name}`)
-const maximalWebpSrc = computed(() => `${photoUrl}/${photo.id}/${maximalWebpPhoto.value?.name}`)
+const maximalJpegSrc = computed(() => maximalJpegPhoto.value ? `${photoUrl}/${photo.id}/${maximalJpegPhoto.value?.name}` : undefined)
+const maximalWebpSrc = computed(() => maximalWebpPhoto.value ? `${photoUrl}/${photo.id}/${maximalWebpPhoto.value?.name}` : undefined)
 
 const overlay = useOverlay()
 const modalShowPhoto = overlay.create(ModalShowPhoto)
