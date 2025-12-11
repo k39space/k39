@@ -1,5 +1,11 @@
+autoInstallPeers: true
 catalogMode: prefer
+nodeLinker: hoisted
+shamefullyHoist: true
 shellEmulator: true
+supportedArchitectures:
+  cpu: [x64, arm64]
+  os: [linux, darwin, win32]
 trustPolicy: no-downgrade
 
 packages:
@@ -65,8 +71,11 @@ catalogs:
 
 ignoredBuiltDependencies:
   - '@parcel/watcher'
+  - cpu-features
   - esbuild
   - msw
+  - protobufjs
+  - ssh2
   - vue-demi
 
 onlyBuiltDependencies:
