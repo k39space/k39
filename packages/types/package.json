@@ -13,7 +13,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "zod": "4.1.12"
+    "zod": "catalog:integrations"
   },
   "devDependencies": {
     "@types/node": "catalog:types",

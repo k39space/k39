@@ -19,13 +19,15 @@
     "@neoconfetti/vue": "catalog:integrations",
     "@nuxt/content": "catalog:integrations",
     "@nuxt/ui": "catalog:integrations",
+    "@paralleldrive/cuid2": "catalog:integrations",
     "@pinia/nuxt": "catalog:integrations",
     "@vueuse/core": "catalog:integrations",
     "@vueuse/nuxt": "catalog:integrations",
     "aws4fetch": "catalog:integrations",
     "date-fns": "catalog:integrations",
     "pinia": "catalog:integrations",
-    "sharp": "catalog:integrations"
+    "sharp": "catalog:integrations",
+    "zod": "catalog:integrations"
   },
   "devDependencies": {
     "@iconify-json/circle-flags": "catalog:dev",
