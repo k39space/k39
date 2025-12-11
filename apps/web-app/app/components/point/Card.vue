@@ -15,7 +15,7 @@
           variant="soft"
           icon="i-lucide-map"
           class="w-fit"
-          label="на Яндекс.Карте"
+          label="на Яндекс Карте"
         />
         <UButton
           v-if="point.gisUrl"
