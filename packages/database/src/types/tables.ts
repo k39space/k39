@@ -30,6 +30,7 @@ export type PageDraft = InferInsertModel<typeof tables.pages>
 export type PageWithData = Page & {
   categories: PageCategoryWithData[]
   followers: PageFollowerWithData[]
+  points: Point[]
 }
 
 export type PageFollower = InferSelectModel<typeof tables.pageFollowers>

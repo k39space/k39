@@ -75,6 +75,7 @@ const submenuItems = computed<NavigationMenuItem[]>(() => [
     label: 'Адреса',
     to: `/${params.pageSlug}/points`,
     icon: 'i-lucide-map',
+    badge: page.value?.points?.length ? page.value.points.length : undefined, // show if more than 0
   },
 ])
 </script>

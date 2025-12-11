@@ -115,8 +115,9 @@ export const points = pgTable('points', {
   id: cuid2('id').defaultRandom().primaryKey(),
   createdAt: timestamp('created_at', { precision: 3, withTimezone: true, mode: 'string' }).notNull().defaultNow(),
   updatedAt: timestamp('updated_at', { precision: 3, withTimezone: true, mode: 'string' }).notNull().defaultNow(),
-  title: varchar('name').notNull(),
   address: varchar('address').notNull(),
+  yandexUrl: varchar('yandex_url'),
+  gisUrl: varchar('2gis_url'),
   pageId: cuid2('page_id').notNull().references(() => pages.id, {
     onDelete: 'cascade',
     onUpdate: 'cascade',

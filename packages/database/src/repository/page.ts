@@ -18,6 +18,7 @@ export class Page {
             user: true,
           },
         },
+        points: true,
       },
     })
   }
@@ -36,6 +37,7 @@ export class Page {
             user: true,
           },
         },
+        points: true,
       },
     })
   }
@@ -65,6 +67,7 @@ export class Page {
             user: true,
           },
         },
+        points: true,
       },
       limit: 100,
     })
