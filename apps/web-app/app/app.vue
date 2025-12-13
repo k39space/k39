@@ -32,13 +32,6 @@ useHead({
     lang,
     dir,
   },
-  link: [
-    {
-      rel: 'icon',
-      type: 'image/png',
-      href: '/favicon.png',
-    },
-  ],
 })
 
 const userStore = useUserStore()
