@@ -76,17 +76,20 @@
 
 <script setup lang="ts">
 import type { PagePinWithData } from '@k39/database'
+import type { ShallowRef, ShallowUnwrapRef } from 'vue'
+import { useMouseInElement } from '@vueuse/core'
 
 const { pins } = defineProps<{ pins: PagePinWithData[] }>()
 
 const carousel = useTemplateRef('carousel')
+const { isOutside } = useMouseInElement(carousel as unknown as ShallowRef<ShallowUnwrapRef<HTMLElement>>)
 
 onMounted(() => {
   const interval = setInterval(() => {
-    if (carousel.value) {
+    if (carousel.value && isOutside.value) {
       carousel.value?.emblaApi?.plugins().autoScroll.play()
     }
-  }, 6000)
+  }, 2000)
   onBeforeUnmount(() => clearInterval(interval))
 })
 
