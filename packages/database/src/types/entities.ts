@@ -1,5 +1,7 @@
 export type UserBadgeTaskStatus = 'active' | 'completed' | 'failed' | 'expired'
 
+export type PagePinType = 'review_quote_with_image' | 'image' | 'video' | 'empty'
+
 export type PageReviewStatus = 'draft' | 'pending' | 'approved' | 'rejected' | 'hidden'
 
 export type PageReviewVoteType = 'like' | 'dislike'

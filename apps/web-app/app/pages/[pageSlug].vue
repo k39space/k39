@@ -60,7 +60,7 @@ const { items } = useBreadcrumb()
 
 const submenuItems = computed<NavigationMenuItem[]>(() => [
   {
-    label: 'Лента постов',
+    label: 'Информация',
     to: `/${params.pageSlug}`,
     icon: 'i-lucide-newspaper',
     exact: true,

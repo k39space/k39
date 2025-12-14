@@ -1,4 +1,4 @@
-import type { PageReviewModerationRequestStatus, PageReviewPhotoType, PageReviewStatus, PageReviewVoteType, PhotoVersionFormat, PhotoVersionSize, UserBadgeTaskStatus } from './types/entities'
+import type { PagePinType, PageReviewModerationRequestStatus, PageReviewPhotoType, PageReviewStatus, PageReviewVoteType, PhotoVersionFormat, PhotoVersionSize, UserBadgeTaskStatus } from './types/entities'
 import { cuid2 } from 'drizzle-cuid2/postgres'
 import { relations } from 'drizzle-orm'
 import { boolean, integer, jsonb, numeric, pgTable, text, timestamp, uniqueIndex, varchar } from 'drizzle-orm/pg-core'
@@ -156,6 +156,20 @@ export const pageCategories = pgTable('page_categories', {
   uniqueIndex('unique_page_categories').on(t.pageId, t.categoryId),
 ])
 
+export const pagePins = pgTable('page_pins', {
+  id: cuid2('id').defaultRandom().primaryKey(),
+  createdAt: timestamp('created_at', { precision: 3, withTimezone: true, mode: 'string' }).notNull().defaultNow(),
+  updatedAt: timestamp('updated_at', { precision: 3, withTimezone: true, mode: 'string' }).notNull().defaultNow(),
+  type: varchar('type').notNull().$type<PagePinType>(),
+  text: varchar('text'),
+  mediaUrl: varchar('media_url'),
+  userId: cuid2('user_id').references(() => users.id),
+  pageId: cuid2('page_id').notNull().references(() => pages.id, {
+    onDelete: 'cascade',
+    onUpdate: 'cascade',
+  }),
+})
+
 export const pageReviews = pgTable('page_reviews', {
   id: cuid2('id').defaultRandom().primaryKey(),
   createdAt: timestamp('created_at', { precision: 3, withTimezone: true, mode: 'string' }).notNull().defaultNow(),
@@ -261,6 +275,7 @@ export const userRelations = relations(users, ({ many }) => ({
   pageReviews: many(pageReviews),
   pageReviewVotes: many(pageReviewVotes),
   pageFollowers: many(pageFollowers),
+  pagePins: many(pagePins),
 }))
 
 export const badgeRelations = relations(badges, ({ many }) => ({
@@ -308,6 +323,7 @@ export const pageRelations = relations(pages, ({ many }) => ({
   reviews: many(pageReviews),
   categories: many(pageCategories),
   followers: many(pageFollowers),
+  pins: many(pagePins),
 }))
 
 export const pageFollowerRelations = relations(pageFollowers, ({ one }) => ({
@@ -329,6 +345,17 @@ export const pageCategoryRelations = relations(pageCategories, ({ one }) => ({
   category: one(categories, {
     fields: [pageCategories.categoryId],
     references: [categories.id],
+  }),
+}))
+
+export const pagePinRelations = relations(pagePins, ({ one }) => ({
+  page: one(pages, {
+    fields: [pagePins.pageId],
+    references: [pages.id],
+  }),
+  user: one(users, {
+    fields: [pagePins.userId],
+    references: [users.id],
   }),
 }))
 
