@@ -18,6 +18,12 @@ export class Page {
             user: true,
           },
         },
+        pins: {
+          orderBy: (pagePins, { desc }) => desc(pagePins.createdAt),
+          with: {
+            user: true,
+          },
+        },
         points: true,
       },
     })
@@ -33,6 +39,12 @@ export class Page {
           },
         },
         followers: {
+          with: {
+            user: true,
+          },
+        },
+        pins: {
+          orderBy: (pagePins, { desc }) => desc(pagePins.createdAt),
           with: {
             user: true,
           },
@@ -63,6 +75,12 @@ export class Page {
           },
         },
         followers: {
+          with: {
+            user: true,
+          },
+        },
+        pins: {
+          orderBy: (pagePins, { desc }) => desc(pagePins.createdAt),
           with: {
             user: true,
           },

@@ -1,5 +1,7 @@
 <template>
-  <UContainer class="mt-4 max-w-5xl">
+  <PagePinsBlock v-if="page?.pins" :pins="page.pins" />
+
+  <!-- <UContainer class="mt-4 max-w-5xl">
     <div class="grid grid-cols-3 gap-10">
       <div class="col-span-2">
         <div class="text-muted min-h-80">
@@ -7,7 +9,7 @@
         </div>
       </div>
     </div>
-  </UContainer>
+  </UContainer> -->
 </template>
 
 <script setup lang="ts">

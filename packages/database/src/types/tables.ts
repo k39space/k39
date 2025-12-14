@@ -31,6 +31,7 @@ export type PageWithData = Page & {
   categories: PageCategoryWithData[]
   followers: PageFollowerWithData[]
   points: Point[]
+  pins: PagePinWithData[]
 }
 
 export type PageFollower = InferSelectModel<typeof tables.pageFollowers>
@@ -43,6 +44,12 @@ export type PageCategory = InferSelectModel<typeof tables.pageCategories>
 export type PageCategoryDraft = InferInsertModel<typeof tables.pageCategories>
 export type PageCategoryWithData = PageCategory & {
   category: Category
+}
+
+export type PagePin = InferSelectModel<typeof tables.pagePins>
+export type PagePinDraft = InferInsertModel<typeof tables.pagePins>
+export type PagePinWithData = PagePin & {
+  user: User | null
 }
 
 export type PageReview = InferSelectModel<typeof tables.pageReviews>
