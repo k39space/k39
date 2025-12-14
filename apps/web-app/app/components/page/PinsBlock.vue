@@ -1,6 +1,7 @@
 <template>
   <div class="mt-8 w-full">
     <UCarousel
+      ref="carousel"
       v-slot="{ item }"
       :items="preparedPins"
       loop
@@ -77,6 +78,17 @@
 import type { PagePinWithData } from '@k39/database'
 
 const { pins } = defineProps<{ pins: PagePinWithData[] }>()
+
+const carousel = useTemplateRef('carousel')
+
+onMounted(() => {
+  const interval = setInterval(() => {
+    if (carousel.value) {
+      carousel.value?.emblaApi?.plugins().autoScroll.play()
+    }
+  }, 6000)
+  onBeforeUnmount(() => clearInterval(interval))
+})
 
 const minimum = 9
 
