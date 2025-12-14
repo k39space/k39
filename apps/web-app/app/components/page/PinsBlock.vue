@@ -78,22 +78,22 @@ import type { PagePinWithData } from '@k39/database'
 
 const { pins } = defineProps<{ pins: PagePinWithData[] }>()
 
-const minimum = 10
-const preparedPins = computed(() => pins.filter((pin) => pin.type !== 'empty'))
+const minimum = 9
 
-if (pins.length < minimum) {
-  for (let i = 0; i < minimum - pins.length; i++) {
-    preparedPins.value.push({
-      id: `empty-${i}`,
-      createdAt: new Date().toString(),
-      updatedAt: new Date().toString(),
-      type: 'empty',
-      userId: null,
-      user: null,
-      text: null,
-      mediaUrl: null,
-      pageId: '1',
-    })
-  }
-}
+const preparedPins = computed(() => {
+  const filtered = pins.filter((pin) => pin.type !== 'empty')
+  const emptyCount = Math.max(0, minimum - filtered.length)
+  const emptyPins: PagePinWithData[] = Array.from({ length: emptyCount }, (_, i) => ({
+    id: `empty-${i}`,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    type: 'empty',
+    userId: null,
+    user: null,
+    text: null,
+    mediaUrl: null,
+    pageId: 'placeholder',
+  }))
+  return [...filtered, ...emptyPins]
+})
 </script>
