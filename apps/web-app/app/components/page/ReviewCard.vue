@@ -105,21 +105,11 @@
         Комментарии
       </ULink>
 
-      <div class="flex flex-row gap-2.5 items-center opacity-35 group-hover/card:opacity-100 transition duration-200">
-        <UButton
-          size="lg"
-          color="neutral"
-          variant="outline"
-          icon="i-lucide-thumbs-down"
-        />
-        <p class="text-lg font-medium">
-          {{ review.voteBalance > 0 ? '+' : '' }}{{ review.voteBalance }}
-        </p>
-        <UButton
-          size="lg"
-          color="neutral"
-          variant="outline"
-          icon="i-lucide-thumbs-up"
+      <div class="opacity-35 group-hover/card:opacity-100 transition duration-200">
+        <PageReviewCardVotes
+          :review-id="review.id"
+          :vote-balance="review.voteBalance"
+          :update-data="updateData"
         />
       </div>
     </div>
@@ -131,7 +121,7 @@ import type { PageReviewWithData } from '@k39/database'
 import { format } from 'date-fns'
 import { ru } from 'date-fns/locale'
 
-const { review } = defineProps<{ review: PageReviewWithData }>()
+const { review } = defineProps<{ review: PageReviewWithData, updateData: () => void }>()
 
 function copyReviewUrlToClipboard() {
   navigator.clipboard.writeText(`${window.location.origin}/review/${review.id}`)

@@ -7,6 +7,7 @@
             v-for="review in pageReviews"
             :key="review.id"
             :review="review"
+            :update-data="updateData"
             class="motion-preset-slide-left"
           />
         </div>
@@ -43,8 +44,12 @@
 const { params } = useRoute('pageSlug-reviews___ru')
 
 const { data: page } = await useFetch(`/api/page/slug/${params.pageSlug}`)
-const { data: pageReviews } = await useFetch(`/api/page/id/${page.value?.id}/review/list`)
+const { data: pageReviews, execute: fetchPageReviews } = await useFetch(`/api/page/id/${page.value?.id}/review/list`)
 const { data: myReview } = await useFetch(`/api/page/id/${page.value?.id}/review/my`)
+
+function updateData() {
+  fetchPageReviews()
+}
 
 const mainCategory = computed(() => page.value?.categories[0]?.category)
 
