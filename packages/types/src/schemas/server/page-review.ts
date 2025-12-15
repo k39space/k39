@@ -22,3 +22,8 @@ export const createPageReviewServerSchema = z.object({
     .optional(),
 })
 export type CreatePageReviewServerSchema = z.output<typeof createPageReviewServerSchema>
+
+export const createPageReviewVoteServerSchema = z.object({
+  type: z.enum(['like', 'dislike'], { error: 'Выберите тип' }),
+})
+export type CreatePageReviewVoteServerSchema = z.output<typeof createPageReviewVoteServerSchema>

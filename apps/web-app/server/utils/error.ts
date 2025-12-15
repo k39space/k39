@@ -9,9 +9,15 @@ export function errorResolver(exception: unknown) {
   }
 
   if (exception instanceof ZodError) {
+    const message = exception.issues?.[0]?.message ?? exception.message
+
     return createError({
       statusCode: 400,
-      statusMessage: exception.message,
+      statusMessage: 'Bad request',
+      data: {
+        code: 'BAD_REQUEST',
+        message,
+      },
     })
   }
 
