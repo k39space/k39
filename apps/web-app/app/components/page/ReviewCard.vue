@@ -1,5 +1,10 @@
 <template>
-  <div class="border border-default rounded-lg p-4 sm:p-5 flex flex-col gap-5 group/card">
+  <div
+    class="border border-default rounded-lg p-4 sm:p-5 flex flex-col gap-5 group/card"
+    itemscope
+    itemprop="review"
+    itemtype="https://schema.org/Review"
+  >
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-start">
       <NuxtLink
         :to="`/u/${review.user.username}`"
@@ -53,6 +58,15 @@
 
       <div class="flex flex-row gap-2 items-center">
         <RatingStars :rating="review.rating" />
+        <span
+          itemscope
+          itemprop="reviewRating"
+          itemtype="http://schema.org/Rating"
+        >
+          <meta itemprop="bestRating" content="5">
+          <meta itemprop="worstRating" content="1">
+          <meta itemprop="ratingValue" :content="review.rating.toFixed(1)">
+        </span>
         <p class="text-sm/4 text-muted">
           Оценка {{ review.rating }} из 5
         </p>
@@ -74,11 +88,15 @@
         v-if="review.comment"
         title="Комментарий"
         :content="review.comment"
+        itemprop="reviewBody"
       />
 
-      <time :datetime="review.createdAt" class="text-sm/5 text-muted italic">
-        Опубликовано {{ format(review.createdAt, 'dd MMMM yyyy', { locale: ru }) }}
-      </time>
+      <div>
+        <time :datetime="review.createdAt" class="text-sm/5 text-muted italic">
+          Опубликовано {{ format(review.createdAt, 'dd MMMM yyyy', { locale: ru }) }}
+        </time>
+        <meta itemprop="datePublished" :content="format(review.createdAt, 'yyyy-MM-dd')">
+      </div>
 
       <div v-if="review.photos.length" class="flex flex-col gap-2">
         <h3 class="text-lg/5 font-bold">

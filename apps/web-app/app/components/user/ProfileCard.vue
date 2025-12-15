@@ -1,5 +1,10 @@
 <template>
-  <div class="flex flex-row gap-2.5">
+  <div
+    class="flex flex-row gap-2.5"
+    itemscope
+    itemprop="author"
+    itemtype="http://schema.org/Person"
+  >
     <UserAvatarWithProgress
       size="sm"
       :percent="progressPercent"
@@ -9,7 +14,12 @@
     />
 
     <div class="mt-1 flex flex-col gap-1 items-start justify-center">
-      <h3 class="text-lg/5 font-bold">
+      <meta itemprop="image" :content="user.avatarUrl ?? undefined">
+
+      <h3
+        class="text-lg/5 font-bold"
+        itemprop="name"
+      >
         {{ user?.name }}
       </h3>
 
