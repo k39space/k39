@@ -7,6 +7,15 @@
 
       <div class="flex flex-row flex-wrap gap-2">
         <UButton
+          v-if="point.location"
+          size="lg"
+          color="info"
+          variant="soft"
+          icon="i-lucide-map-pin"
+          class="w-fit"
+          :label="`${point.location.type} ${point.location.name}`"
+        />
+        <UButton
           v-if="point.yandexUrl"
           :to="point.yandexUrl"
           target="_blank"
@@ -34,7 +43,7 @@
 </template>
 
 <script setup lang="ts">
-import type { Point } from '@k39/database'
+import type { PointWithData } from '@k39/database'
 
-defineProps<{ point: Point }>()
+defineProps<{ point: PointWithData }>()
 </script>

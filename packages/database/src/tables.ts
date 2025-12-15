@@ -111,6 +111,16 @@ export const pages = pgTable('pages', {
   followersCount: integer('followers_count').notNull().default(0),
 })
 
+export const locations = pgTable('locations', {
+  id: cuid2('id').defaultRandom().primaryKey(),
+  createdAt: timestamp('created_at', { precision: 3, withTimezone: true, mode: 'string' }).notNull().defaultNow(),
+  updatedAt: timestamp('updated_at', { precision: 3, withTimezone: true, mode: 'string' }).notNull().defaultNow(),
+  name: varchar('name').notNull(),
+  type: varchar('type'),
+  fias: varchar('fias'),
+  kladr: varchar('kladr'),
+})
+
 export const points = pgTable('points', {
   id: cuid2('id').defaultRandom().primaryKey(),
   createdAt: timestamp('created_at', { precision: 3, withTimezone: true, mode: 'string' }).notNull().defaultNow(),
@@ -122,6 +132,7 @@ export const points = pgTable('points', {
     onDelete: 'cascade',
     onUpdate: 'cascade',
   }),
+  locationId: cuid2('location_id').references(() => locations.id),
 })
 
 export const pageFollowers = pgTable('page_followers', {
@@ -401,10 +412,18 @@ export const pageReviewModerationRequestRelations = relations(pageReviewModerati
   }),
 }))
 
+export const locationRelations = relations(locations, ({ many }) => ({
+  points: many(points),
+}))
+
 export const pointRelations = relations(points, ({ one }) => ({
   page: one(pages, {
     fields: [points.pageId],
     references: [pages.id],
+  }),
+  location: one(locations, {
+    fields: [points.locationId],
+    references: [locations.id],
   }),
 }))
 

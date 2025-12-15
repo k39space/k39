@@ -30,7 +30,7 @@ export type PageDraft = InferInsertModel<typeof tables.pages>
 export type PageWithData = Page & {
   categories: PageCategoryWithData[]
   followers: PageFollowerWithData[]
-  points: Point[]
+  points: PointWithData[]
   pins: PagePinWithData[]
 }
 
@@ -75,8 +75,14 @@ export type PageReviewVoteDraft = InferInsertModel<typeof tables.pageReviewVotes
 export type PageReviewModerationRequest = InferSelectModel<typeof tables.pageReviewModerationRequests>
 export type PageReviewModerationRequestDraft = InferInsertModel<typeof tables.pageReviewModerationRequests>
 
+export type Location = InferSelectModel<typeof tables.locations>
+export type LocationDraft = InferInsertModel<typeof tables.locations>
+
 export type Point = InferSelectModel<typeof tables.points>
 export type PointDraft = InferInsertModel<typeof tables.points>
+export type PointWithData = Point & {
+  location: Location | null
+}
 
 export type Photo = InferSelectModel<typeof tables.photos>
 export type PhotoDraft = InferInsertModel<typeof tables.photos>
