@@ -24,7 +24,11 @@ export class Page {
             user: true,
           },
         },
-        points: true,
+        points: {
+          with: {
+            location: true,
+          },
+        },
       },
     })
   }
@@ -49,7 +53,11 @@ export class Page {
             user: true,
           },
         },
-        points: true,
+        points: {
+          with: {
+            location: true,
+          },
+        },
       },
     })
   }
@@ -85,10 +93,49 @@ export class Page {
             user: true,
           },
         },
-        points: true,
+        points: {
+          with: {
+            location: true,
+          },
+        },
       },
       limit: 100,
     })
+  }
+
+  static async listByCategory(categoryId: string): Promise<PageWithData[]> {
+    const result = await useDatabase().query.pageCategories.findMany({
+      where: (pages, { eq }) => eq(pages.categoryId, categoryId),
+      with: {
+        page: {
+          with: {
+            categories: {
+              with: {
+                category: true,
+              },
+            },
+            followers: {
+              with: {
+                user: true,
+              },
+            },
+            pins: {
+              orderBy: (pagePins, { desc }) => desc(pagePins.createdAt),
+              with: {
+                user: true,
+              },
+            },
+            points: {
+              with: {
+                location: true,
+              },
+            },
+          },
+        },
+      },
+    })
+
+    return result.map(({ page }) => page)
   }
 
   static async create(data: PageDraft): Promise<PageType> {

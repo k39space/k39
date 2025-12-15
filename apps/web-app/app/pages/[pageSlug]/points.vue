@@ -1,6 +1,6 @@
 <template>
   <UContainer class="mt-4 max-w-5xl">
-    <div class="grid grid-cols-3 gap-10">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
       <div class="col-span-2">
         <div v-if="page?.points?.length" class="flex flex-col gap-4">
           <PointCard

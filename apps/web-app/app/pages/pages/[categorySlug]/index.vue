@@ -9,8 +9,26 @@
         }"
       />
     </div>
+  </UContainer>
 
-    {{ category?.title }}
+  <UPageHero
+    orientation="vertical"
+    :title="title"
+    :ui="{
+      wrapper: 'lg:px-8',
+      title: 'wrap-break-word',
+      description: 'mx-auto max-w-4xl',
+    }"
+  />
+
+  <UContainer class="max-w-5xl">
+    <div class="flex flex-col gap-6">
+      <PageSmallBlock
+        v-for="page in pages"
+        :key="page.id"
+        :page="page"
+      />
+    </div>
   </UContainer>
 </template>
 
@@ -25,6 +43,8 @@ if (!category.value || error.value) {
     message: 'Категория не найдена',
   })
 }
+
+const { data: pages } = await useFetch(`/api/page/category/${category.value.id}/list`)
 
 const { items, setItems } = useBreadcrumb()
 
@@ -45,4 +65,10 @@ setItems([
     class: 'text-dimmed font-normal',
   },
 ])
+
+const title = `${category.value?.title}`
+
+useHead({
+  title,
+})
 </script>
