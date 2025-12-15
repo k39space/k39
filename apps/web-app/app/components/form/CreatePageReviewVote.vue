@@ -1,5 +1,5 @@
 <template>
-  <UForm @submit="onSubmit">
+  <UForm @submit="userStore.loggedIn ? onSubmit() : tryActionThatRequiresAuth()">
     <UTooltip :text="text">
       <UButton
         type="submit"
