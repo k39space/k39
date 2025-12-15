@@ -16,10 +16,24 @@ export default defineEventHandler(async (event) => {
     const body = await readBody(event)
     const data = createPageReviewVoteServerSchema.parse(body)
 
+    // Guard: Check if review exists
+    const pageReview = await db.pageReview.find(reviewId)
+    if (!pageReview) {
+      throw createError({
+        statusCode: 404,
+        statusMessage: 'Review not found',
+        data: {
+          code: 'PAGE_REVIEW_NOT_FOUND',
+          message: 'Отзыв не найден.',
+        },
+      })
+    }
+
+    // Guard: Check if user already voted
     const vote = await db.pageReview.findVoteByReviewIdAndUserId(reviewId, user.id)
     if (vote) {
       throw createError({
-        statusCode: 400,
+        statusCode: 409,
         statusMessage: 'Conflict',
         data: {
           code: 'PAGE_REVIEW_VOTE_ALREADY_EXISTS',
