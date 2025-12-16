@@ -76,7 +76,7 @@
         :content="review.comment"
       />
 
-      <time :datetime="review.createdAt" class="text-sm/5 text-muted italic">
+      <time :datetime="new Date(review.createdAt).toISOString()" class="text-sm/5 text-muted italic">
         Опубликовано {{ format(review.createdAt, 'dd MMMM yyyy', { locale: ru }) }}
       </time>
 
@@ -126,4 +126,41 @@ const { review } = defineProps<{ review: PageReviewWithData, updateData: () => v
 function copyReviewUrlToClipboard() {
   navigator.clipboard.writeText(`${window.location.origin}/review/${review.id}`)
 }
+
+const { app } = useAppConfig()
+
+useSchemaOrg([
+  defineReview({
+    '@type': 'Review',
+    'reviewRating': {
+      '@type': 'Rating',
+      'bestRating': 5,
+      'worstRating': 1,
+      'ratingValue': review.rating,
+    },
+    'headline': review.comment?.slice(0, 100),
+    'reviewBody': review.comment,
+    'positiveNotes': review.pros,
+    'negativeNotes': review.cons,
+    'datePublished': format(review.createdAt, 'yyyy-MM-dd'),
+    'author': {
+      '@type': 'Person',
+      'name': review.user.name,
+      'image': review.user.avatarUrl,
+      'url': `${app.url}/u/${review.user.username}`,
+    },
+    'interactionStatistic': [
+      {
+        '@type': 'InteractionCounter',
+        'interactionType': 'https://schema.org/LikeAction',
+        'userInteractionCount': review.likesCount,
+      },
+      {
+        '@type': 'InteractionCounter',
+        'interactionType': 'https://schema.org/DislikeAction',
+        'userInteractionCount': review.dislikesCount,
+      },
+    ],
+  }),
+])
 </script>

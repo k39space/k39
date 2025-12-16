@@ -30,4 +30,14 @@ import { getUserXpPercent } from '#shared/utils/user'
 const { user } = defineProps<{ user: User }>()
 
 const progressPercent = computed(() => getUserXpPercent(user.xp, user.xpToNextLevel))
+
+const { app } = useAppConfig()
+
+useSchemaOrg([
+  definePerson({
+    name: user.name,
+    image: user.avatarUrl,
+    url: `${app.url}/u/${user.username}`,
+  }),
+])
 </script>
