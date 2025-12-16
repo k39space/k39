@@ -35,9 +35,10 @@ const { app } = useAppConfig()
 
 useSchemaOrg([
   definePerson({
-    name: user.name,
-    image: user.avatarUrl,
-    url: `${app.url}/u/${user.username}`,
+    '@type': 'Person',
+    'name': user.name,
+    'image': user.avatarUrl,
+    'url': `${app.url}/u/${user.username}`,
   }),
 ])
 </script>
