@@ -3,7 +3,7 @@
     class="flex flex-row gap-2.5"
     itemscope
     itemprop="author"
-    itemtype="http://schema.org/Person"
+    itemtype="https://schema.org/Person"
   >
     <UserAvatarWithProgress
       size="sm"
@@ -15,6 +15,7 @@
 
     <div class="mt-1 flex flex-col gap-1 items-start justify-center">
       <meta itemprop="image" :content="user.avatarUrl ?? undefined">
+      <meta itemprop="url" :content="`https://k39.online/u/${user.username}`">
 
       <h3
         class="text-lg/5 font-bold"

@@ -61,7 +61,7 @@
         <span
           itemscope
           itemprop="reviewRating"
-          itemtype="http://schema.org/Rating"
+          itemtype="https://schema.org/Rating"
         >
           <meta itemprop="bestRating" content="5">
           <meta itemprop="worstRating" content="1">
@@ -76,13 +76,21 @@
         v-if="review.pros"
         title="Достоинства"
         :content="review.pros"
+        itemprop="positiveNotes"
       />
 
       <PageReviewCardSection
         v-if="review.cons"
         title="Недостатки"
         :content="review.cons"
+        itemprop="negativeNotes"
       />
+
+      <meta
+        v-if="review.comment"
+        itemprop="headline"
+        :content="review.comment.slice(0, 100)"
+      >
 
       <PageReviewCardSection
         v-if="review.comment"
@@ -92,7 +100,7 @@
       />
 
       <div>
-        <time :datetime="review.createdAt" class="text-sm/5 text-muted italic">
+        <time :datetime="new Date(review.createdAt).toISOString()" class="text-sm/5 text-muted italic">
           Опубликовано {{ format(review.createdAt, 'dd MMMM yyyy', { locale: ru }) }}
         </time>
         <meta itemprop="datePublished" :content="format(review.createdAt, 'yyyy-MM-dd')">
@@ -104,12 +112,20 @@
         </h3>
 
         <div class="grid grid-cols-3 lg:grid-cols-5 gap-2">
-          <PageReviewCardPhoto
-            v-for="photo in review.photos"
-            :key="photo.id"
-            :photo="photo.photo"
-            :alt="`Пользовательское фото из отзыва к «${review.page.title}»`"
-          />
+          <span
+            itemscope
+            itemprop="itemReviewed"
+            itemtype="https://schema.org/LocalBusiness"
+          >
+            <meta itemprop="url" :content="`https://k39.online/${review.page.slug}`">
+
+            <PageReviewCardPhoto
+              v-for="photo in review.photos"
+              :key="photo.id"
+              :photo="photo.photo"
+              :alt="`Пользовательское фото из отзыва к «${review.page.title}»`"
+            />
+          </span>
         </div>
       </div>
     </div>
@@ -124,6 +140,24 @@
       </ULink>
 
       <div class="opacity-35 group-hover/card:opacity-100 transition duration-200">
+        <span
+          itemscope
+          itemprop="interactionStatistic"
+          itemtype="https://schema.org/InteractionCounter"
+        >
+          <meta itemprop="interactionType" content="https://schema.org/LikeAction">
+          <meta itemprop="userInteractionCount" :content="review.likesCount.toString()">
+        </span>
+
+        <span
+          itemscope
+          itemprop="interactionStatistic"
+          itemtype="https://schema.org/InteractionCounter"
+        >
+          <meta itemprop="interactionType" content="https://schema.org/DislikeAction">
+          <meta itemprop="userInteractionCount" :content="review.dislikesCount.toString()">
+        </span>
+
         <PageReviewCardVotes
           :review-id="review.id"
           :vote-balance="review.voteBalance"

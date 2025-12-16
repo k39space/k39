@@ -12,6 +12,7 @@
         v-if="minimalJpegPhoto"
         :src="`${photoUrl}/${photo.id}/${minimalJpegPhoto.name}`"
         :alt="alt"
+        itemprop="image"
         loading="lazy"
         class="w-full h-full object-cover rounded-lg"
         @click="maximalJpegSrc && modalShowPhoto.open({ jpegSrc: maximalJpegSrc, webpSrc: maximalWebpSrc, alt })"
