@@ -57,6 +57,7 @@ function updateData() {
 }
 
 const { items } = useBreadcrumb()
+const { app } = useAppConfig()
 
 const submenuItems = computed<NavigationMenuItem[]>(() => [
   {
@@ -77,5 +78,19 @@ const submenuItems = computed<NavigationMenuItem[]>(() => [
     icon: 'i-lucide-map',
     badge: page.value?.points?.length ? page.value.points.length : undefined, // show if more than 0
   },
+])
+
+useSchemaOrg([
+  defineLocalBusiness({
+    url: `${app.url}/${params.pageSlug}`,
+    name: page.value?.title,
+  }),
+  defineAggregateRating({
+    '@type': 'AggregateRating',
+    'ratingValue': page.value?.rating,
+    'ratingCount': page.value?.reviewsCount,
+    'bestRating': 5,
+    'worstRating': 1,
+  }),
 ])
 </script>

@@ -1,5 +1,6 @@
 export default defineAppConfig({
   app: {
+    url: 'https://k39.online',
     githubUrl: 'https://github.com/k39space/k39',
   },
   ui: {

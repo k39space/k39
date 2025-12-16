@@ -1,10 +1,5 @@
 <template>
-  <div
-    class="flex flex-row gap-2.5"
-    itemscope
-    itemprop="author"
-    itemtype="https://schema.org/Person"
-  >
+  <div class="flex flex-row gap-2.5">
     <UserAvatarWithProgress
       size="sm"
       :percent="progressPercent"
@@ -14,13 +9,7 @@
     />
 
     <div class="mt-1 flex flex-col gap-1 items-start justify-center">
-      <meta itemprop="image" :content="user.avatarUrl ?? undefined">
-      <meta itemprop="url" :content="`https://k39.online/u/${user.username}`">
-
-      <h3
-        class="text-lg/5 font-bold"
-        itemprop="name"
-      >
+      <h3 class="text-lg/5 font-bold">
         {{ user?.name }}
       </h3>
 
@@ -41,4 +30,14 @@ import { getUserXpPercent } from '#shared/utils/user'
 const { user } = defineProps<{ user: User }>()
 
 const progressPercent = computed(() => getUserXpPercent(user.xp, user.xpToNextLevel))
+
+const { app } = useAppConfig()
+
+useSchemaOrg([
+  definePerson({
+    name: user.name,
+    image: user.avatarUrl,
+    url: `${app.url}/u/${user.username}`,
+  }),
+])
 </script>

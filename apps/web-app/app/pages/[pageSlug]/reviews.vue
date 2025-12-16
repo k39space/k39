@@ -3,17 +3,6 @@
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-10">
       <div class="col-span-2">
         <div v-if="pageReviews?.length" class="flex flex-col gap-6">
-          <span
-            itemscope
-            itemprop="aggregateRating"
-            itemtype="https://schema.org/AggregateRating"
-          >
-            <meta itemprop="ratingValue" :content="page?.rating.toString()">
-            <meta itemprop="reviewCount" :content="page?.reviewsCount.toString()">
-            <meta itemprop="bestRating" content="5">
-            <meta itemprop="worstRating" content="1">
-          </span>
-
           <PageReviewCard
             v-for="review in pageReviews"
             :key="review.id"
