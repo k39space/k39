@@ -81,11 +81,12 @@ const submenuItems = computed<NavigationMenuItem[]>(() => [
 ])
 
 useSchemaOrg([
-  defineLocalBusiness({
-    name: page.value?.title,
-    url: `${app.url}/${params.pageSlug}`,
-    priceRange: '₽',
-    aggregateRating: {
+  defineOrganization({
+    '@type': 'LocalBusiness',
+    'name': page.value?.title,
+    'url': `${app.url}/${page.value?.slug}`,
+    'priceRange': '₽',
+    'aggregateRating': {
       '@type': 'AggregateRating',
       'ratingValue': page.value?.rating,
       'ratingCount': page.value?.reviewsCount,
