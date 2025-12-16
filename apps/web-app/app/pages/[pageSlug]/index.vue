@@ -19,7 +19,7 @@ const { data: page } = await useFetch(`/api/page/slug/${params.pageSlug}`)
 
 const mainCategory = computed(() => page.value?.categories[0]?.category)
 
-useBreadcrumb().setItems([
+const breadcrumbItems = computed(() => [
   {
     label: 'Главная',
     icon: 'i-lucide-house',
@@ -30,6 +30,20 @@ useBreadcrumb().setItems([
     icon: 'i-lucide-layout-template',
     class: 'text-dimmed font-normal',
   },
+])
+
+useBreadcrumb().setItems(breadcrumbItems.value)
+
+useSchemaOrg([
+  defineBreadcrumb({
+    '@type': 'BreadcrumbList',
+    'itemListElement': breadcrumbItems.value.map((item, index) => ({
+      '@type': 'ListItem',
+      'position': index + 1,
+      'name': item.label,
+      'item': item.to ?? undefined,
+    })),
+  }),
 ])
 
 useHead({
